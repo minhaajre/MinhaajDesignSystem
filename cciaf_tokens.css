@@ -1,0 +1,229 @@
+/* ============================================================
+   CCIAF — CSS Design Tokens
+   Source: cciaf.minhaaj.com (extracted from live HTML)
+   Cross-Civilization Intelligence and Action Framework
+   ============================================================ */
+
+/* ── Fonts (Google Fonts) ─────────────────────────────────── */
+/* EB Garamond  — primary body/prose (serif) */
+/* Cormorant Garamond — display headings, eyebrows, brand */
+
+/* ── Light Mode ───────────────────────────────────────────── */
+[data-theme="light"] {
+  --cciaf-bg:           #F9F6F0;   /* warm off-white */
+  --cciaf-bg-alt:       #F2EDE3;   /* slightly darker warm bg */
+  --cciaf-bg-contrast:  #1A1510;   /* dark contrast sections */
+  --cciaf-surface:      #FFFFFF;
+  --cciaf-border:       #DDD8CE;
+
+  --cciaf-ink-1:        #1A1510;   /* headings — near black warm */
+  --cciaf-ink-2:        #3D3830;   /* body text */
+  --cciaf-ink-3:        #6B6358;   /* secondary / subdued */
+  --cciaf-ink-4:        #A09890;   /* muted / captions */
+
+  --cciaf-gold:         #8B6510;   /* primary accent — dark gold */
+  --cciaf-gold-mid:     #B8922A;   /* mid gold */
+  --cciaf-gold-light:   #D4AE60;   /* light gold — underlines, borders */
+
+  /* Contrast section (dark bg in light mode) */
+  --cciaf-cs-bg:        #1A1510;
+  --cciaf-cs-h:         #F5F0E8;
+  --cciaf-cs-body:      rgba(245,240,232,0.70);
+  --cciaf-cs-border:    rgba(245,240,232,0.15);
+  --cciaf-cs-gold:      #D4AE60;
+
+  --cciaf-nav-bg:       rgba(249,246,240,0.95);
+  --cciaf-shadow:       0 1px 3px rgba(26,21,16,0.08), 0 4px 16px rgba(26,21,16,0.05);
+}
+
+/* ── Dark Mode ────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --cciaf-bg:           #131008;   /* very dark warm black */
+  --cciaf-bg-alt:       #1B170D;
+  --cciaf-bg-contrast:  #0D0B06;
+  --cciaf-surface:      #1E1A10;
+  --cciaf-border:       #2E2918;
+
+  --cciaf-ink-1:        #F0EAD8;   /* warm cream — headings */
+  --cciaf-ink-2:        #C0B89E;   /* body */
+  --cciaf-ink-3:        #7A7260;   /* secondary */
+  --cciaf-ink-4:        #4A4438;   /* muted */
+
+  --cciaf-gold:         #C8A03A;   /* brighter gold on dark */
+  --cciaf-gold-mid:     #A07818;
+  --cciaf-gold-light:   #E0BC70;
+
+  /* Contrast section (light bg in dark mode — inverted) */
+  --cciaf-cs-bg:        #F5F0E8;
+  --cciaf-cs-h:         #1A1510;
+  --cciaf-cs-body:      rgba(26,21,16,0.68);
+  --cciaf-cs-border:    rgba(26,21,16,0.14);
+  --cciaf-cs-gold:      #7A5810;
+
+  --cciaf-nav-bg:       rgba(19,16,8,0.95);
+  --cciaf-shadow:       0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
+}
+
+/* ── Typography ───────────────────────────────────────────── */
+:root {
+  --cciaf-font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --cciaf-font-body:    'EB Garamond', Georgia, 'Times New Roman', serif;
+
+  /* Type scale */
+  --cciaf-text-hero:    clamp(2.6rem, 6vw, 5rem);     /* h1 hero */
+  --cciaf-text-h2:      clamp(1.7rem, 3vw, 2.6rem);   /* section h2 */
+  --cciaf-text-h3:      clamp(1.2rem, 2vw, 1.5rem);   /* subtitle h3 */
+  --cciaf-text-body:    1.1rem;                         /* ≈20px prose */
+  --cciaf-text-small:   0.85rem;                        /* labels, captions */
+  --cciaf-text-eyebrow: 0.72rem;                        /* section eyebrow */
+  --cciaf-text-nav:     15px;                           /* nav links */
+  --cciaf-text-label:   12px;                           /* layer labels */
+
+  /* Line heights */
+  --cciaf-lh-display:   1.08;
+  --cciaf-lh-h2:        1.15;
+  --cciaf-lh-body:      1.82;
+  --cciaf-lh-quote:     1.42;
+
+  /* Letter spacing */
+  --cciaf-ls-eyebrow:   0.22em;
+  --cciaf-ls-brand:     0.20em;
+  --cciaf-ls-label:     0.18em;
+  --cciaf-ls-nav:       0.04em;
+
+  /* Layout */
+  --cciaf-nav-h:        58px;
+  --cciaf-pad-x:        clamp(20px, 8vw, 120px);
+  --cciaf-max-w:        900px;
+
+  /* Radii */
+  --cciaf-radius-sm:    2px;   /* surface cards, detail boxes */
+  --cciaf-radius-md:    4px;   /* tooltip labels */
+  --cciaf-radius-pill:  13px;  /* theme toggle */
+
+  /* Transitions */
+  --cciaf-transition:   background 0.4s, color 0.4s, border-color 0.4s;
+}
+
+/* ── Shared utility classes ───────────────────────────────── */
+.cciaf-eyebrow {
+  font-family: var(--cciaf-font-display);
+  font-size: var(--cciaf-text-eyebrow);
+  font-weight: 300;
+  letter-spacing: var(--cciaf-ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--cciaf-gold);
+}
+
+.cciaf-h1 {
+  font-family: var(--cciaf-font-display);
+  font-size: var(--cciaf-text-hero);
+  font-weight: 300;
+  line-height: var(--cciaf-lh-display);
+  letter-spacing: -0.01em;
+  color: var(--cciaf-ink-1);
+}
+
+.cciaf-h2 {
+  font-family: var(--cciaf-font-display);
+  font-size: var(--cciaf-text-h2);
+  font-weight: 300;
+  line-height: var(--cciaf-lh-h2);
+  color: var(--cciaf-ink-1);
+}
+
+.cciaf-prose {
+  font-family: var(--cciaf-font-body);
+  font-size: var(--cciaf-text-body);
+  color: var(--cciaf-ink-2);
+  line-height: var(--cciaf-lh-body);
+}
+
+.cciaf-blockquote {
+  border-left: 2px solid var(--cciaf-cs-gold);
+  padding-left: 28px;
+  font-family: var(--cciaf-font-display);
+  font-size: clamp(1.2rem, 2.4vw, 1.65rem);
+  font-style: italic;
+  font-weight: 300;
+  line-height: var(--cciaf-lh-quote);
+  color: var(--cciaf-cs-h);
+}
+
+.cciaf-rule {
+  width: 50px;
+  height: 1.5px;
+  background: var(--cciaf-gold);
+}
+
+/* Layer card grid */
+.cciaf-layers {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border: 1px solid var(--cciaf-border);
+}
+
+.cciaf-layer-card {
+  padding: 26px 20px;
+  border-right: 1px solid var(--cciaf-border);
+  transition: var(--cciaf-transition), background 0.2s;
+}
+.cciaf-layer-card:last-child { border-right: none; }
+.cciaf-layer-card:hover { background: var(--cciaf-bg-alt); }
+
+.cciaf-layer-num {
+  font-family: var(--cciaf-font-display);
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cciaf-gold);
+  margin-bottom: 12px;
+}
+
+.cciaf-layer-title {
+  font-family: var(--cciaf-font-display);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--cciaf-ink-1);
+  margin-bottom: 6px;
+}
+
+.cciaf-layer-question {
+  font-style: italic;
+  font-size: 14px;
+  color: var(--cciaf-ink-3);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.cciaf-layer-sub {
+  font-size: 13px;
+  color: var(--cciaf-ink-4);
+  line-height: 1.65;
+}
+
+/* Engagement tier card */
+.cciaf-tier {
+  padding: 30px 26px;
+  border-right: 1px solid var(--cciaf-border);
+  transition: var(--cciaf-transition), background 0.2s;
+}
+.cciaf-tier:last-child { border-right: none; }
+.cciaf-tier:hover { background: var(--cciaf-bg-alt); }
+.cciaf-tier-eye {
+  font-family: var(--cciaf-font-display);
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--cciaf-gold);
+  margin-bottom: 10px;
+}
+.cciaf-tier-name {
+  font-family: var(--cciaf-font-display);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--cciaf-ink-1);
+  margin-bottom: 8px;
+}
