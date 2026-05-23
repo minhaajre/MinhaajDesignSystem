@@ -1,0 +1,395 @@
+/* ============================================================
+   MINHAAJ DESIGN SYSTEM — colors_and_type.css
+   Primary source: PsydaOfficialWebsite / IbnArbi codebases
+   ============================================================ */
+
+/* ── Google Fonts ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Inter:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+/* ============================================================
+   PSYDA / MINHAAJ.COM — WARM PARCHMENT PALETTE
+   ============================================================ */
+:root {
+  /* ── Backgrounds ─────────────────────────────────────────── */
+  --bg:              #F7F3EC;   /* page background — warm parchment */
+  --bg-alt:          #EDE8DE;   /* alternating section bg */
+  --bg-deep:         #E3DCCE;   /* footer, contact section */
+  --bg-dark:         #14120F;   /* full-bleed dark editorial panels */
+  --bg-dark-alt:     #2A2620;   /* dark panel gradient end */
+
+  /* ── Text ────────────────────────────────────────────────── */
+  --text-primary:    #1E1C18;   /* headings, primary body */
+  --text-secondary:  #6B6457;   /* subtitles, secondary body */
+  --text-muted:      #9A9383;   /* labels, captions, metadata */
+  --text-on-dark:    #FAFAF7;   /* text on dark panels */
+
+  /* ── Accent / Brand ──────────────────────────────────────── */
+  --accent:          #8C7355;   /* copper-tan — primary accent */
+  --accent-soft:     #B89A78;   /* lighter accent, hover */
+  --accent-deep:     #6B5538;   /* darker accent, pressed */
+
+  /* ── Borders ──────────────────────────────────────────────── */
+  --border:          #D6CFC3;   /* standard dividers */
+  --border-soft:     rgba(30, 28, 24, 0.08); /* subtle borders */
+
+  /* ── Surface ──────────────────────────────────────────────── */
+  --white:           #FAFAF7;   /* selection bg, button fill on dark */
+  --surface-raised:  rgba(247, 243, 236, 0.78); /* frosted nav bg */
+
+  /* ── Semantic ─────────────────────────────────────────────── */
+  --color-success:   #3A5A40;   /* success / positive */
+  --color-error:     #8B2E2E;   /* error / destructive */
+  --color-warning:   #8C7355;   /* warning (same as accent) */
+  --color-info:      #4A6B8A;   /* informational */
+
+  /* ── Typography ───────────────────────────────────────────── */
+  --font-display:    'Cormorant Garamond', Georgia, serif;
+  --font-ui:         'DM Sans', system-ui, sans-serif;
+  --font-body:       'Inter', system-ui, sans-serif;
+
+  /* ── Type Scale ───────────────────────────────────────────── */
+  --text-hero:       clamp(3.4rem, 8.5vw, 7.5rem);   /* hero headline */
+  --text-display:    clamp(3rem, 8vw, 6.5rem);        /* media/section headline */
+  --text-h1:         clamp(2.2rem, 4.2vw, 3.6rem);   /* chapter title */
+  --text-h2:         clamp(1.8rem, 3vw, 2.4rem);     /* section title */
+  --text-h3:         1.8rem;                           /* list item headings */
+  --text-lede:       1.25rem;                          /* italic lead paragraph */
+  --text-body:       1rem;                             /* standard body */
+  --text-small:      0.95rem;                          /* captions, footnotes */
+  --text-label:      0.68rem;                          /* eyebrows, metadata labels */
+  --text-micro:      0.62rem;                          /* fine print, corner meta */
+
+  /* ── Chapter numeral ──────────────────────────────────────── */
+  --text-chapter-num: clamp(5rem, 10vw, 8rem);
+
+  /* ── Line Heights ─────────────────────────────────────────── */
+  --lh-tight:        0.95;   /* hero headlines */
+  --lh-heading:      1.1;    /* chapter titles */
+  --lh-lede:         1.55;   /* lead paragraphs */
+  --lh-body:         1.7;    /* body text */
+  --lh-relaxed:      1.75;   /* sub-copy */
+
+  /* ── Letter Spacing ───────────────────────────────────────── */
+  --ls-tight:        -0.025em;  /* contact email, large display */
+  --ls-heading:      -0.015em;  /* chapter titles */
+  --ls-normal:        0;
+  --ls-label:         0.22em;   /* nav links, CTA text */
+  --ls-eyebrow:       0.28em;   /* eyebrows, metadata */
+  --ls-wide:          0.3em;    /* side rail, fine labels */
+
+  /* ── Spacing Scale ────────────────────────────────────────── */
+  --space-1:   0.25rem;   /* 4px */
+  --space-2:   0.5rem;    /* 8px */
+  --space-3:   0.75rem;   /* 12px */
+  --space-4:   1rem;      /* 16px */
+  --space-5:   1.25rem;   /* 20px */
+  --space-6:   1.5rem;    /* 24px */
+  --space-8:   2rem;      /* 32px */
+  --space-10:  2.5rem;    /* 40px */
+  --space-12:  3rem;      /* 48px */
+  --space-16:  4rem;      /* 64px */
+  --space-20:  5rem;      /* 80px */
+  --space-24:  6rem;      /* 96px */
+
+  /* ── Layout ───────────────────────────────────────────────── */
+  --nav-h:     76px;
+  --max-w:     1280px;
+  --pad-x:     clamp(1.5rem, 5vw, 3.5rem);
+  --sec-py:    clamp(6rem, 14vw, 12rem);
+  --sidebar-w: 280px;
+
+  /* ── Radii ────────────────────────────────────────────────── */
+  --radius-none:  0;
+  --radius-sm:    0.25rem;    /* 4px — Psyda inline elements */
+  --radius-md:    0.5rem;     /* 8px — IbnArbi base radius */
+  --radius-lg:    0.75rem;    /* 12px — IbnArbi cards */
+  --radius-xl:    1rem;       /* 16px — IbnArbi large cards */
+  --radius-full:  9999px;     /* pills, toggle switches */
+
+  /* ── Shadows ──────────────────────────────────────────────── */
+  --shadow-sm:     0 1px 3px rgba(30, 28, 24, 0.08);
+  --shadow-md:     0 4px 16px rgba(30, 28, 24, 0.10);
+  --shadow-lg:     0 10px 40px rgba(30, 28, 24, 0.12);
+  --shadow-accent: 0 0 8px rgba(140, 115, 85, 0.25);  /* progress bar glow */
+
+  /* ── Easing ───────────────────────────────────────────────── */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0.05, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ── Transition durations ─────────────────────────────────── */
+  --dur-fast:    0.2s;
+  --dur-base:    0.35s;
+  --dur-slow:    0.5s;
+  --dur-reveal:  0.9s;
+}
+
+
+/* ============================================================
+   IBNARBI — WARM PARCHMENT / DEEP NAVY (light + dark)
+   Using HSL as in the source code
+   ============================================================ */
+:root {
+  /* ── IbnArbi fonts ────────────────────────────────────────── */
+  --ib-font-serif:   'Lora', Georgia, serif;
+  --ib-font-sans:    'Source Sans 3', system-ui, sans-serif;
+  --ib-font-arabic:  'Amiri', Georgia, serif;
+
+  /* ── IbnArbi light mode ──────────────────────────────────── */
+  --ib-bg:           hsl(40, 30%, 96%);
+  --ib-bg-card:      hsl(40, 25%, 92%);
+  --ib-fg:           hsl(240, 25%, 12%);
+  --ib-fg-muted:     hsl(240, 15%, 35%);
+  --ib-primary:      hsl(35, 85%, 35%);    /* warm gold-brown */
+  --ib-primary-fg:   hsl(0, 0%, 100%);
+  --ib-secondary:    hsl(260, 15%, 88%);   /* lavender-grey */
+  --ib-secondary-fg: hsl(260, 40%, 20%);
+  --ib-accent:       hsl(260, 25%, 82%);   /* lavender accent */
+  --ib-border:       hsl(40, 20%, 80%);
+  --ib-muted:        hsl(40, 20%, 88%);
+
+  /* ── IbnArbi dark mode ───────────────────────────────────── */
+  --ib-dark-bg:      hsl(240, 30%, 4%);
+  --ib-dark-card:    hsl(240, 25%, 6%);
+  --ib-dark-fg:      hsl(210, 20%, 90%);
+  --ib-dark-fg-muted:hsl(215, 20%, 65%);
+  --ib-dark-primary: hsl(45, 90%, 60%);    /* bright gold */
+  --ib-dark-primary-fg: hsl(240, 30%, 4%);
+  --ib-dark-secondary:  hsl(260, 30%, 15%);
+  --ib-dark-accent:  hsl(260, 50%, 30%);   /* deep purple */
+  --ib-dark-border:  hsl(240, 20%, 15%);
+  --ib-dark-muted:   hsl(240, 20%, 12%);
+
+  --ib-radius:       0.5rem;
+}
+
+
+/* ============================================================
+   SEMANTIC CSS VARS — element-level
+   ============================================================ */
+:root {
+  /* Headings */
+  --h1-font:    var(--font-display);
+  --h1-size:    var(--text-h1);
+  --h1-weight:  300;
+  --h1-lh:      var(--lh-heading);
+  --h1-ls:      var(--ls-heading);
+  --h1-color:   var(--text-primary);
+
+  --h2-font:    var(--font-display);
+  --h2-size:    var(--text-h2);
+  --h2-weight:  300;
+  --h2-lh:      var(--lh-heading);
+  --h2-color:   var(--text-primary);
+
+  --h3-font:    var(--font-display);
+  --h3-size:    var(--text-h3);
+  --h3-weight:  400;
+  --h3-color:   var(--text-primary);
+
+  /* Body */
+  --p-font:     var(--font-ui);
+  --p-size:     var(--text-body);
+  --p-weight:   300;
+  --p-lh:       var(--lh-body);
+  --p-color:    var(--text-secondary);
+
+  /* Lede / italic lead */
+  --lede-font:  var(--font-display);
+  --lede-size:  var(--text-lede);
+  --lede-style: italic;
+  --lede-lh:    var(--lh-lede);
+  --lede-color: var(--text-secondary);
+
+  /* Labels / eyebrows */
+  --label-font: var(--font-ui);
+  --label-size: var(--text-label);
+  --label-weight: 500;
+  --label-ls:   var(--ls-eyebrow);
+  --label-transform: uppercase;
+  --label-color: var(--text-muted);
+
+  /* Accent label (colored) */
+  --label-accent-color: var(--accent);
+
+  /* Code / mono (not a primary use case, but defined) */
+  --code-font:  'Courier New', Courier, monospace;
+  --code-size:  0.875rem;
+  --code-color: var(--accent);
+  --code-bg:    var(--bg-alt);
+
+  /* Links */
+  --link-color:       var(--text-primary);
+  --link-hover-color: var(--accent);
+  --link-underline:   var(--accent);
+
+  /* Selection */
+  --selection-bg:     var(--accent);
+  --selection-color:  var(--white);
+}
+
+
+/* ============================================================
+   BASE RESET & DEFAULTS (apply when using this design system)
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: var(--lh-lede);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  font-feature-settings: "ss01", "kern";
+  text-wrap: pretty;
+}
+
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-color);
+}
+
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; }
+img { display: block; max-width: 100%; }
+em { font-style: italic; }
+
+/* ── Semantic heading defaults ─────────────────────────────── */
+h1 {
+  font-family: var(--h1-font);
+  font-size: var(--h1-size);
+  font-weight: var(--h1-weight);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-heading);
+  color: var(--h1-color);
+}
+
+h2 {
+  font-family: var(--h2-font);
+  font-size: var(--h2-size);
+  font-weight: var(--h2-weight);
+  line-height: var(--lh-heading);
+  color: var(--h2-color);
+}
+
+h3 {
+  font-family: var(--h3-font);
+  font-size: var(--h3-size);
+  font-weight: var(--h3-weight);
+  color: var(--h3-color);
+}
+
+p {
+  font-family: var(--p-font);
+  font-size: var(--p-size);
+  font-weight: var(--p-weight);
+  line-height: var(--p-lh);
+  color: var(--p-color);
+}
+
+/* ── Utility classes ───────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+}
+
+.text-display {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+}
+
+.text-display em {
+  color: var(--accent);
+  font-weight: 400;
+}
+
+.text-lede {
+  font-family: var(--lede-font);
+  font-size: var(--lede-size);
+  font-style: var(--lede-style);
+  font-weight: 300;
+  line-height: var(--lede-lh);
+  color: var(--lede-color);
+}
+
+.text-label {
+  font-family: var(--label-font);
+  font-size: var(--label-size);
+  font-weight: var(--label-weight);
+  letter-spacing: var(--label-ls);
+  text-transform: var(--label-transform);
+  color: var(--label-color);
+}
+
+.text-accent { color: var(--accent); }
+.text-muted  { color: var(--text-muted); }
+.text-secondary { color: var(--text-secondary); }
+
+/* Hover underline grow — left to right */
+.link-grow {
+  position: relative;
+  display: inline-block;
+}
+.link-grow::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 100%; bottom: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: right 0.5s var(--ease-out);
+}
+.link-grow:hover::after { right: 0; }
+
+/* Button — Psyda style */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1rem 1.8rem;
+  font-family: var(--font-ui);
+  font-size: var(--text-label);
+  font-weight: 400;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--text-primary);
+  border: 1px solid var(--text-primary);
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: color var(--dur-base) var(--ease-out);
+}
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--text-primary);
+  transform: translateY(101%);
+  transition: transform 0.45s var(--ease-out);
+  z-index: -1;
+}
+.btn:hover { color: var(--white); }
+.btn:hover::before { transform: translateY(0); }
+
+/* Fade-up reveal */
+.fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+.fade-up.visible { opacity: 1; transform: none; }

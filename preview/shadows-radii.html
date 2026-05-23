@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:#F7F3EC;padding:28px 32px;display:flex;flex-direction:column;gap:14px}
+  .label{font-size:8px;letter-spacing:0.24em;text-transform:uppercase;color:#9A9383;margin-bottom:4px}
+  .rule{height:1px;background:#D6CFC3;margin:4px 0}
+
+  /* Radii */
+  .radii-row{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}
+  .radius-box{background:#EDE8DE;border:1px solid #D6CFC3;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:8px;gap:4px;width:72px;height:60px}
+  .r-label{font-size:7.5px;letter-spacing:0.1em;text-transform:uppercase;color:#9A9383}
+  .r-val{font-size:8px;color:#1E1C18;font-weight:500}
+
+  /* Shadows */
+  .shadow-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:6px}
+  .shadow-box{background:#FAFAF7;padding:12px 16px;font-size:8.5px;color:#1E1C18;letter-spacing:0.08em}
+  .shadow-name{font-size:7.5px;letter-spacing:0.2em;text-transform:uppercase;color:#9A9383;margin-bottom:4px}
+
+  /* Easing */
+  .ease-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:6px}
+  .ease-item{display:flex;flex-direction:column;gap:4px}
+  .ease-name{font-size:7.5px;letter-spacing:0.18em;text-transform:uppercase;color:#9A9383}
+  .ease-track{width:120px;height:3px;background:#D6CFC3;position:relative;overflow:visible}
+  .ease-ball{width:12px;height:12px;border-radius:50%;background:#8C7355;position:absolute;top:-4.5px;left:0}
+  .ease-val{font-size:7.5px;color:#6B6457;font-weight:400;max-width:180px}
+</style>
+</head>
+<body>
+  <div class="label">Corner Radii</div>
+  <div class="radii-row">
+    <div class="radius-box" style="border-radius:0"><div class="r-label">none</div><div class="r-val">0</div></div>
+    <div class="radius-box" style="border-radius:4px"><div class="r-label">sm</div><div class="r-val">4px</div></div>
+    <div class="radius-box" style="border-radius:8px"><div class="r-label">md</div><div class="r-val">8px</div></div>
+    <div class="radius-box" style="border-radius:12px"><div class="r-label">lg</div><div class="r-val">12px</div></div>
+    <div class="radius-box" style="border-radius:16px"><div class="r-label">xl</div><div class="r-val">16px</div></div>
+    <div class="radius-box" style="border-radius:9999px;width:60px;height:60px"><div class="r-label">full</div><div class="r-val">pill</div></div>
+  </div>
+  <div class="label" style="margin-top:4px">Psyda = radius-none · IbnArbi = radius-lg/xl</div>
+  <div class="rule"></div>
+  <div class="label">Shadow System</div>
+  <div class="shadow-row">
+    <div><div class="shadow-name">shadow-sm</div><div class="shadow-box" style="box-shadow:0 1px 3px rgba(30,28,24,0.08)">0 1px 3px · 8% opacity</div></div>
+    <div><div class="shadow-name">shadow-md</div><div class="shadow-box" style="box-shadow:0 4px 16px rgba(30,28,24,0.10)">0 4px 16px · 10% opacity</div></div>
+    <div><div class="shadow-name">shadow-lg</div><div class="shadow-box" style="box-shadow:0 10px 40px rgba(30,28,24,0.12)">0 10px 40px · 12% opacity</div></div>
+    <div><div class="shadow-name">shadow-accent</div><div class="shadow-box" style="box-shadow:0 0 8px rgba(140,115,85,0.25);background:#8C7355;color:#fff">0 0 8px copper · 25%</div></div>
+  </div>
+  <div class="rule"></div>
+  <div class="label">Easing Curves</div>
+  <div class="ease-row">
+    <div class="ease-item">
+      <div class="ease-name">ease-out (default)</div>
+      <div class="ease-track"></div>
+      <div class="ease-val">cubic-bezier(0.22, 1, 0.36, 1)</div>
+    </div>
+    <div class="ease-item">
+      <div class="ease-name">ease-in-out</div>
+      <div class="ease-track"></div>
+      <div class="ease-val">cubic-bezier(0.65, 0.05, 0.36, 1)</div>
+    </div>
+    <div class="ease-item">
+      <div class="ease-name">dur-reveal</div>
+      <div class="ease-track"></div>
+      <div class="ease-val">0.9s · word reveals</div>
+    </div>
+  </div>
+</body>
+</html>

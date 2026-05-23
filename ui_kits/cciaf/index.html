@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CCIAF — Cross-Civilization Intelligence and Action Framework</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet"/>
+  <style>
+    /* ─── TOKENS ─── */
+    [data-theme="light"] {
+      --bg:#F9F6F0; --bg-alt:#F2EDE3; --bg-contrast:#1A1510;
+      --surface:#FFFFFF; --border:#DDD8CE;
+      --ink-1:#1A1510; --ink-2:#3D3830; --ink-3:#6B6358; --ink-4:#A09890;
+      --gold:#8B6510; --gold-mid:#B8922A; --gold-light:#D4AE60;
+      --cs-bg:#1A1510; --cs-h:#F5F0E8; --cs-body:rgba(245,240,232,.70);
+      --cs-border:rgba(245,240,232,.15); --cs-gold:#D4AE60;
+      --nav-bg:rgba(249,246,240,.95);
+      --tog-bg:#DDD8CE; --tog-knob:#8B6510;
+      --shadow:0 1px 3px rgba(26,21,16,.08),0 4px 16px rgba(26,21,16,.05);
+    }
+    [data-theme="dark"] {
+      --bg:#131008; --bg-alt:#1B170D; --bg-contrast:#0D0B06;
+      --surface:#1E1A10; --border:#2E2918;
+      --ink-1:#F0EAD8; --ink-2:#C0B89E; --ink-3:#7A7260; --ink-4:#4A4438;
+      --gold:#C8A03A; --gold-mid:#A07818; --gold-light:#E0BC70;
+      --cs-bg:#F5F0E8; --cs-h:#1A1510; --cs-body:rgba(26,21,16,.68);
+      --cs-border:rgba(26,21,16,.14); --cs-gold:#7A5810;
+      --nav-bg:rgba(19,16,8,.95);
+      --tog-bg:#2E2918; --tog-knob:#C8A03A;
+      --shadow:0 1px 3px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.2);
+    }
+
+    /* ─── RESET ─── */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:18px;scroll-behavior:smooth;}
+    body{
+      font-family:'EB Garamond',Georgia,serif;
+      background:var(--bg);color:var(--ink-2);
+      line-height:1.75;-webkit-font-smoothing:antialiased;
+      transition:background .4s,color .4s;overflow-x:hidden;
+    }
+    img{max-width:100%;display:block;}
+    a{color:var(--gold);text-decoration:none;transition:color .2s;}
+    a:hover{color:var(--ink-1);}
+    ::selection{background:var(--gold);color:var(--cs-h);}
+
+    /* ─── HEADER ─── */
+    header{
+      position:fixed;top:0;left:0;right:0;z-index:500;
+      background:var(--nav-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+      height:58px;padding:0 clamp(20px,5vw,72px);
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      transition:background .4s,border-color .4s;
+    }
+    .brand{
+      font-family:'Cormorant Garamond',Georgia,serif;
+      font-size:15px;font-weight:300;letter-spacing:.20em;text-transform:uppercase;
+      color:var(--ink-1);flex-shrink:0;transition:color .4s;
+    }
+    .brand em{color:var(--gold);font-style:normal;}
+    .top-nav{display:flex;gap:24px;align-items:center;}
+    .top-nav a{font-size:15px;color:var(--ink-3);letter-spacing:.04em;transition:color .2s;}
+    .top-nav a:hover{color:var(--ink-1);}
+    .hdr-right{display:flex;align-items:center;gap:14px;flex-shrink:0;}
+
+    /* ─── THEME TOGGLE ─── */
+    .tog{
+      width:46px;height:26px;border-radius:13px;
+      background:var(--tog-bg);border:1px solid var(--border);
+      cursor:pointer;position:relative;flex-shrink:0;
+      transition:background .35s,border-color .35s;
+      appearance:none;-webkit-appearance:none;
+    }
+    .tog::after{
+      content:'';position:absolute;top:3px;left:3px;
+      width:18px;height:18px;border-radius:50%;
+      background:var(--tog-knob);transition:transform .3s ease,background .35s;
+    }
+    [data-theme="dark"] .tog::after{transform:translateX(20px);}
+
+    /* ─── HAMBURGER ─── */
+    .hbg{
+      display:none;background:none;border:1px solid var(--border);border-radius:5px;
+      padding:6px 10px;cursor:pointer;font-family:'EB Garamond',serif;
+      font-size:14px;color:var(--ink-3);transition:color .2s,border-color .2s;
+    }
+    .mob-menu{
+      display:none;position:fixed;top:58px;left:0;right:0;z-index:490;
+      background:var(--nav-bg);backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);flex-direction:column;
+      transition:background .4s;
+    }
+    .mob-menu.open{display:flex;}
+    .mob-menu a{
+      font-size:16px;color:var(--ink-2);padding:14px 24px;
+      border-bottom:1px solid var(--border);transition:background .15s,color .15s;
+    }
+    .mob-menu a:hover{background:var(--bg-alt);color:var(--ink-1);}
+    .mob-menu a:last-child{border-bottom:none;}
+
+    /* ─── SCROLL DOTS ─── */
+    .sn{
+      position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:400;
+      display:flex;flex-direction:column;gap:12px;
+    }
+    .sn-d{
+      width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;
+      transition:background .25s,transform .25s;position:relative;
+    }
+    .sn-d:hover,.sn-d.on{background:var(--gold);}
+    .sn-d.on{transform:scale(1.35);}
+    .sn-d::before{
+      content:attr(data-lbl);position:absolute;right:18px;top:50%;transform:translateY(-50%);
+      font-family:'EB Garamond',serif;font-size:13px;color:var(--ink-3);white-space:nowrap;
+      background:var(--surface);border:1px solid var(--border);
+      padding:3px 9px;border-radius:4px;opacity:0;pointer-events:none;transition:opacity .2s;
+    }
+    .sn-d:hover::before{opacity:1;}
+
+    /* ─── SCROLL TOP ─── */
+    .st{
+      position:fixed;bottom:28px;right:22px;z-index:400;
+      width:42px;height:42px;border-radius:50%;
+      background:var(--surface);border:1px solid var(--border);
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;box-shadow:var(--shadow);
+      opacity:0;pointer-events:none;transition:opacity .3s,background .2s,border-color .4s;
+    }
+    .st.on{opacity:1;pointer-events:all;}
+    .st:hover{background:var(--bg-alt);}
+    .st svg{stroke:var(--ink-3);transition:stroke .2s;}
+    .st:hover svg{stroke:var(--gold);}
+
+    /* ─── REVEAL ─── */
+    .r{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;}
+    .r.on{opacity:1;transform:none;}
+
+    /* ─── HERO ─── */
+    #hero{
+      min-height:100vh;padding-top:58px;
+      display:flex;flex-direction:column;justify-content:center;
+      padding:calc(58px + clamp(40px,8vw,80px)) clamp(20px,8vw,120px) clamp(60px,8vw,100px);
+      position:relative;overflow:hidden;
+      background:var(--bg);transition:background .4s;
+    }
+    #hero::before{
+      content:'';position:absolute;inset:0;pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 50% at 78% 35%,rgba(184,146,42,.07) 0%,transparent 65%),
+        radial-gradient(ellipse 35% 60% at 15% 75%,rgba(139,101,16,.04) 0%,transparent 60%);
+    }
+    .h-eye{
+      font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:300;
+      letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;
+      opacity:0;animation:fu .8s ease .15s forwards;
+    }
+    .h-h1{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.6rem,6vw,5rem);font-weight:300;line-height:1.08;letter-spacing:-.01em;
+      color:var(--ink-1);max-width:900px;margin-bottom:36px;
+      opacity:0;animation:fu .9s ease .3s forwards;transition:color .4s;
+    }
+    .h-h1 em{font-style:italic;color:var(--ink-3);}
+    .h-rule{width:50px;height:1.5px;background:var(--gold);margin-bottom:32px;opacity:0;animation:fu .8s ease .5s forwards;}
+    .h-p{
+      font-size:clamp(1rem,1.8vw,1.2rem);color:var(--ink-2);max-width:58ch;line-height:1.8;
+      margin-bottom:18px;opacity:0;animation:fu .8s ease .6s forwards;transition:color .4s;
+    }
+    .h-p+.h-p{animation-delay:.72s;}
+    .h-note{
+      font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--ink-4);
+      margin-top:40px;opacity:0;animation:fu .8s ease .9s forwards;transition:color .4s;
+    }
+    @keyframes fu{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+
+    /* ─── SECTION ─── */
+    .sec{padding:clamp(70px,9vw,120px) clamp(20px,8vw,120px);transition:background .4s;}
+    .div{height:1px;background:var(--border);transition:background .4s;}
+
+    .s-eye{
+      font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:300;
+      letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;
+    }
+    .s-h2{
+      font-family:'Cormorant Garamond',serif;font-size:clamp(1.7rem,3vw,2.6rem);
+      font-weight:300;line-height:1.15;color:var(--ink-1);max-width:700px;margin-bottom:36px;
+      transition:color .4s;
+    }
+    .prose{font-size:clamp(1rem,1.5vw,1.1rem);color:var(--ink-2);max-width:60ch;line-height:1.82;transition:color .4s;}
+    .prose p+p{margin-top:1.4em;}
+
+    /* ─── CONTRAST / GAP SECTION ─── */
+    #gap{background:var(--cs-bg);transition:background .4s;}
+    #gap .s-eye{color:var(--cs-gold);}
+    #gap .s-h2{color:var(--cs-h);transition:color .4s;}
+    #gap .prose{color:var(--cs-body);}
+    .gap-q{border-left:2px solid var(--cs-gold);padding-left:28px;margin:44px 0;max-width:600px;}
+    .gap-q p{
+      font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem,2.4vw,1.65rem);
+      font-style:italic;font-weight:300;line-height:1.42;color:var(--cs-h);transition:color .4s;
+    }
+    .gap-q footer{margin-top:12px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--cs-body);font-style:normal;}
+
+    /* ─── LAYERS GRID ─── */
+    .layers{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--border);margin:44px 0;transition:border-color .4s;}
+    .lc{padding:26px 20px;border-right:1px solid var(--border);transition:border-color .4s,background .2s;}
+    .lc:last-child{border-right:none;}
+    .lc:hover{background:var(--bg-alt);}
+    .lc-n{font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+    .lc-t{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:var(--ink-1);margin-bottom:8px;line-height:1.2;transition:color .4s;}
+    .lc-q{font-style:italic;font-size:14px;color:var(--ink-3);margin-bottom:12px;line-height:1.4;transition:color .4s;}
+    .lc-s{font-size:13px;color:var(--ink-4);line-height:1.65;transition:color .4s;}
+
+    /* ─── TRADITIONS ─── */
+    #trad{background:var(--bg-alt);}
+    .tg{display:grid;grid-template-columns:1fr 1fr;gap:40px 72px;margin:44px 0;max-width:920px;}
+    .tc{border-top:2px solid var(--border);padding-top:22px;transition:border-color .4s;}
+    .tc-n{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:var(--ink-1);margin-bottom:5px;transition:color .4s;}
+    .tc-o{font-size:12px;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;}
+    .tc-r{font-size:15px;color:var(--ink-2);line-height:1.72;transition:color .4s;}
+
+    /* ─── ENGAGEMENT TIERS ─── */
+    .eg{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);margin:44px 0;transition:border-color .4s;}
+    .et{padding:30px 26px;border-right:1px solid var(--border);transition:border-color .4s,background .2s;}
+    .et:last-child{border-right:none;}
+    .et:hover{background:var(--bg-alt);}
+    .et-eye{font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:300;letter-spacing:.20em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+    .et-n{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;color:var(--ink-1);margin-bottom:8px;transition:color .4s;}
+    .et-w{font-size:14px;color:var(--ink-3);font-style:italic;line-height:1.65;margin-bottom:18px;transition:color .4s;}
+    .et-aud{font-size:13.5px;color:var(--ink-3);line-height:1.55;margin:-6px 0 18px;padding-left:14px;border-left:2px solid var(--gold-light);transition:color .4s,border-color .4s;}
+    .et-l{list-style:none;border-top:1px solid var(--border);padding-top:14px;transition:border-color .4s;}
+    .et-l li{font-size:15px;color:var(--ink-2);padding:5px 0;border-bottom:1px dashed rgba(0,0,0,.08);line-height:1.4;transition:color .4s;}
+    [data-theme="dark"] .et-l li{border-bottom:1px dashed rgba(255,255,255,.06);}
+    .et-l li:last-child{border-bottom:none;}
+
+    /* ─── CONTACT ─── */
+    #contact{text-align:center;}
+    .ct-eye{font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:300;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;}
+    #contact .s-h2{margin:0 auto 28px;text-align:center;}
+    .ct-p{font-size:clamp(1rem,1.5vw,1.1rem);color:var(--ink-3);max-width:46ch;margin:0 auto 36px;line-height:1.8;transition:color .4s;}
+    .ct-a{
+      display:inline-block;font-family:'Cormorant Garamond',serif;font-size:15px;
+      letter-spacing:.14em;text-transform:uppercase;color:var(--gold);
+      border-bottom:1px solid var(--gold-light);padding-bottom:3px;
+      transition:color .2s,border-color .2s;
+    }
+    .ct-a:hover{color:var(--ink-1);border-color:var(--ink-1);}
+    .ct-note{
+      margin:40px auto 0;font-family:'Cormorant Garamond',serif;
+      font-size:14px;font-style:italic;color:var(--ink-4);
+      max-width:44ch;line-height:1.75;transition:color .4s;
+    }
+
+    /* ─── ORN ─── */
+    .orn{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--border);text-align:center;padding:28px 0;letter-spacing:.5em;user-select:none;transition:color .4s;}
+
+    /* ─── FOOTER ─── */
+    .f-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;align-items:flex-start;max-width:1200px;margin:0 auto;padding:0 0 22px;}
+    .f-col h4{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);font-weight:400;margin-bottom:14px;transition:color .4s;}
+    .f-col ul{list-style:none;}
+    .f-col li{padding:4px 0;font-size:14px;}
+    .f-col a{color:var(--ink-2);transition:color .4s;}
+    .f-col a:hover{color:var(--gold);}
+    .f-bottom{border-top:1px solid var(--border);padding-top:18px;display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-4);transition:border-color .4s,color .4s;}
+    .f-disc{max-width:640px;line-height:1.6;font-style:italic;}
+    footer{border-top:1px solid var(--border);padding:36px clamp(20px,8vw,120px);transition:border-color .4s,color .4s;}
+
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:900px){
+      .layers{grid-template-columns:1fr 1fr;}
+      .lc{border-bottom:1px solid var(--border);}
+      .lc:nth-child(even){border-right:none;}
+      .lc:last-child{border-bottom:none;}
+      .tg{grid-template-columns:1fr;gap:30px;}
+      .eg{grid-template-columns:1fr;}
+      .et{border-right:none;border-bottom:1px solid var(--border);}
+      .et:last-child{border-bottom:none;}
+      .f-grid{grid-template-columns:1fr;gap:24px;}
+    }
+    @media(max-width:720px){
+      .sn{display:none;}
+      .top-nav{display:none;}
+      .hbg{display:block;}
+      .layers{grid-template-columns:1fr;}
+      .lc{border-right:none;border-bottom:1px solid var(--border);}
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a class="brand" href="#hero"><em>CCIAF</em></a>
+  <nav class="top-nav">
+    <a href="#gap">The Problem</a>
+    <a href="#framework">The Framework</a>
+    <a href="#trad">Traditions</a>
+    <a href="#engage">Engagement</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="hdr-right">
+    <button class="hbg" id="hbg">Menu</button>
+    <button class="tog" id="tog" role="switch" aria-checked="false" aria-label="Toggle dark mode"></button>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<nav class="mob-menu" id="mobMenu">
+  <a href="#gap"       onclick="cm()">The Problem</a>
+  <a href="#framework" onclick="cm()">The Framework</a>
+  <a href="#trad"      onclick="cm()">Traditions</a>
+  <a href="#engage"    onclick="cm()">Engagement</a>
+  <a href="#about"     onclick="cm()">About</a>
+  <a href="#contact"   onclick="cm()">Contact</a>
+</nav>
+
+<!-- SCROLL DOTS -->
+<div class="sn">
+  <div class="sn-d" data-t="hero"      data-lbl="Introduction"></div>
+  <div class="sn-d" data-t="gap"       data-lbl="The Problem"></div>
+  <div class="sn-d" data-t="framework" data-lbl="The Framework"></div>
+  <div class="sn-d" data-t="trad"      data-lbl="Traditions"></div>
+  <div class="sn-d" data-t="engage"    data-lbl="Engagement"></div>
+  <div class="sn-d" data-t="about"     data-lbl="About"></div>
+  <div class="sn-d" data-t="contact"   data-lbl="Contact"></div>
+</div>
+
+<!-- SCROLL TOP -->
+<button class="st" id="st" aria-label="Scroll to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 15V3M4 8l5-5 5 5"/>
+  </svg>
+</button>
+
+<!-- ══ HERO ══ -->
+<section id="hero" data-screen-label="01 Hero">
+  <p class="h-eye">Cross-Civilization Intelligence and Action Framework</p>
+  <h1 class="h-h1">
+    Every serious decision has a <em>when</em>.<br>
+    Most advisory work leaves it unexamined.
+  </h1>
+  <div class="h-rule"></div>
+  <p class="h-p">
+    Strategic consultancies map what to do and how to structure it.
+    Risk intelligence firms map the external environment.
+    Neither addresses the timing dimension of consequential decisions —
+    when to act, when to wait, and what kind of period is actually
+    unfolding for this person or institution.
+  </p>
+  <p class="h-p">
+    CCIAF is a structured methodology for timing intelligence, drawing on
+    five cross-civilizational analytical traditions, reconciled through the
+    founder's calibrated decision logic into a single recommendation with
+    a stated confidence rating.
+  </p>
+  <p class="h-note">
+    Volume I — The Argument &nbsp;·&nbsp; Completed 2026 &nbsp;·&nbsp; Available on request
+  </p>
+</section>
+
+<div class="div"></div>
+
+<!-- ══ THE PROBLEM ══ -->
+<section class="sec" id="gap" data-screen-label="02 The Problem">
+  <p class="s-eye r">The Problem</p>
+  <h2 class="s-h2 r">
+    The timing dimension of high-stakes decisions receives almost no systematic
+    treatment in any professional advisory discipline.
+  </h2>
+  <div class="prose r">
+    <p>A board considering a capital allocation decision, a founder timing a launch, a political office planning a campaign — each has access to frameworks for what to do and how to structure it. What none of them has is a framework for determining whether the timing of that decision is working with or against a broader cycle they have not yet been able to see.</p>
+    <p>The same is true at the individual level. Career transitions, strategic partnerships, major financial moves — timing considerations that no existing advisory methodology addresses with any rigour.</p>
+  </div>
+  <blockquote class="gap-q r">
+    <p>The greatest errors in strategic decision-making are rarely errors of analysis. They are errors of timing.</p>
+  </blockquote>
+  <div class="prose r">
+    <p>CCIAF does not replace structural analysis, risk intelligence, or domain expertise. It addresses the layer every other advisory discipline leaves implicit: a systematic reading of the timing conditions surrounding a decision, derived from traditions that spent centuries developing exactly this kind of analysis.</p>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ══ FRAMEWORK ══ -->
+<section class="sec" id="framework" data-screen-label="03 The Framework">
+  <p class="s-eye r">The Architecture</p>
+  <h2 class="s-h2 r">
+    Five analytical layers. One calibrated decision logic.
+    A single recommendation when traditions disagree.
+  </h2>
+  <div class="prose r">
+    <p>The framework operates through five distinct layers, each derived from a different civilizational tradition and each answering a different question. The Conflict Resolution Codex — the founder's calibrated decision logic, developed over a decade of practice — reconciles the five into a single recommendation with a stated confidence rating.</p>
+  </div>
+  <div class="layers r">
+    <div class="lc">
+      <div class="lc-n">Layer I</div>
+      <div class="lc-t">Identity</div>
+      <div class="lc-q">"What are you made of?"</div>
+      <div class="lc-s">BaZi Four Pillars · Numerology — elemental composition and enduring capacities</div>
+    </div>
+    <div class="lc">
+      <div class="lc-n">Layer II</div>
+      <div class="lc-t">Timing</div>
+      <div class="lc-q">"What time is it for you?"</div>
+      <div class="lc-s">Vedic dashas · Islamic firdaria · Hellenistic profections — multi-year and annual cycle analysis</div>
+    </div>
+    <div class="lc">
+      <div class="lc-n">Layer III</div>
+      <div class="lc-t">Action</div>
+      <div class="lc-q">"What to do today?"</div>
+      <div class="lc-s">28 Lunar Mansions · Electional timing — day-resolution guidance for high-stakes decisions</div>
+    </div>
+    <div class="lc">
+      <div class="lc-n">Layer IV</div>
+      <div class="lc-t">Interpretation</div>
+      <div class="lc-q">"What does it mean?"</div>
+      <div class="lc-s">Jungian synthesis · Archetypal mapping — narrative integration and behavioural translation</div>
+    </div>
+    <div class="lc">
+      <div class="lc-n">Layer V</div>
+      <div class="lc-t">Risk Awareness</div>
+      <div class="lc-q">"What to anticipate."</div>
+      <div class="lc-s">Constitutional vulnerability windows · Institutional stress periods · Senior engagements only</div>
+    </div>
+  </div>
+  <div class="prose r">
+    <p>The Conflict Resolution Codex is the framework's primary intellectual contribution and remains the founder's private intellectual property. Clients receive a single recommendation, a stated confidence rating, and a brief reasoning summary.</p>
+  </div>
+</section>
+
+<!-- ══ TRADITIONS ══ -->
+<section class="sec" id="trad" data-screen-label="04 Traditions">
+  <p class="s-eye r">The Source Traditions</p>
+  <h2 class="s-h2 r">Five traditions. Each contributing what the others cannot.</h2>
+  <div class="prose r">
+    <p>Each tradition was developed over centuries within a specific cosmological and intellectual context, with extensive cross-pollination between them. CCIAF extracts the mechanisms each tradition developed with the most rigour, assigns them bounded roles, and reconciles their outputs through the founder's calibrated decision logic.</p>
+  </div>
+  <div class="tg">
+    <div class="tc r">
+      <div class="tc-n">Hellenistic and Persian Tradition</div>
+      <div class="tc-o">Mediterranean foundations through medieval Persian synthesis</div>
+      <div class="tc-r">Hellenistic foundations (Ptolemy, Vettius Valens) extended through the Persian medieval synthesis (Abu Ma'shar, Al-Biruni). Lord of Year and profections — the most operationally precise system for determining which period is active and what it governs.</div>
+    </div>
+    <div class="tc r">
+      <div class="tc-n">Vedic Tradition</div>
+      <div class="tc-o">South Asia · classical period through medieval codification</div>
+      <div class="tc-r">Vimshottari and planetary dasha systems — multi-decade unfoldings of temperament, codified in the <em>Brihat Parashara Hora Shastra</em> and refined across two millennia. The longest-horizon character-trajectory instrument in the synthesis.</div>
+    </div>
+    <div class="tc r">
+      <div class="tc-n">Islamic Tradition</div>
+      <div class="tc-o">Persian and Andalusian · 800–1300 CE</div>
+      <div class="tc-r">Firdaria and the 28 lunar mansions (<em>manazil al-qamar</em>) — contributions to both the Timing and Action layers. Uniquely rigorous at both the multi-year and day-resolution ends of the temporal spectrum.</div>
+    </div>
+    <div class="tc r">
+      <div class="tc-n">Chinese BaZi</div>
+      <div class="tc-o">East Asia · classical codification through Song-Ming refinement</div>
+      <div class="tc-r">BaZi Four Pillars — elemental composition and structural capacity, codified across the <em>Yuan Hai Zi Ping</em> and <em>San Ming Tong Hui</em> classical canon. Produces the Identity Layer's foundational profile.</div>
+    </div>
+    <div class="tc r">
+      <div class="tc-n">Jungian Psychology</div>
+      <div class="tc-o">Switzerland · 20th century</div>
+      <div class="tc-r">Archetypal cartography and individuation — the interpretive bridge between timing signals and human behaviour. The only tradition in the synthesis that is modern, clinically grounded, and cross-cultural by explicit design.</div>
+    </div>
+  </div>
+</section>
+
+<div class="orn r">· · ·</div>
+
+<!-- ══ ABOUT ══ -->
+<section class="sec" id="about" data-screen-label="05 About">
+  <p class="s-eye r">The Founder</p>
+  <h2 class="s-h2 r">Minhaaj Rehman</h2>
+  <div class="prose r">
+    <p>Minhaaj Rehman is a data scientist and systems thinker whose consulting practice has spanned technology strategy, organizational decision-making, and applied research across multiple industries and cultural contexts. That work raised a question no existing advisory methodology adequately addressed: how to treat timing as a structured variable in consequential decisions.</p>
+    <p>The answer required working across five intellectual traditions simultaneously — not as a scholar of any single one, but as a practitioner using each under pressure. What was missing was not another tradition; it was a calibrated decision logic for reconciling their disagreements case by case. That logic is the Conflict Resolution Codex, and it is CCIAF's primary intellectual contribution.</p>
+    <p>He is the founder of Psyda Solutions and the originator of CCIAF. Books, prior research, podcast, and applied work — <a href="https://www.minhaaj.com" target="_blank" rel="noopener">minhaaj.com</a>.</p>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ══ ENGAGEMENT ══ -->
+<section class="sec" id="engage" data-screen-label="06 Engagement">
+  <p class="s-eye r">Engagement</p>
+  <h2 class="s-h2 r">Three tiers. Each designed for a different decision context and depth of engagement.</h2>
+  <div class="prose r">
+    <p>CCIAF engagements are by introduction and referral. A written briefing memorandum is prepared before any meeting. Pricing is not published; it reflects the scope of each engagement and is discussed privately. Client information is held under strict confidentiality.</p>
+  </div>
+  <div class="eg r">
+    <div class="et">
+      <div class="et-eye">Tier I · The Election</div>
+      <div class="et-n">Single Decision</div>
+      <div class="et-w">For individuals and institutions facing one specific high-stakes decision with a material timing dimension.</div>
+      <p class="et-aud"><em>Typically engaged by founders, fund principals, board directors, family-office decision-makers, and senior officials.</em></p>
+      <ul class="et-l">
+        <li>Written intelligence brief — full five-layer analysis</li>
+        <li>Ranked timing windows with stated confidence ratings</li>
+        <li>One private session for interpretation and questions</li>
+        <li>No ongoing commitment required</li>
+      </ul>
+    </div>
+    <div class="et">
+      <div class="et-eye">Tier II · Retainer</div>
+      <div class="et-n">Ongoing Advisory</div>
+      <div class="et-w">For individuals and institutions for whom timing intelligence is a persistent strategic variable across multiple decisions.</div>
+      <p class="et-aud"><em>Typically engaged by family enterprises, institutional investors, venture and private-capital principals, multi-asset family offices.</em></p>
+      <ul class="et-l">
+        <li>Monthly written intelligence briefings</li>
+        <li>Quarterly in-depth strategic sessions</li>
+        <li>Electional guidance for decisions as they arise</li>
+        <li>Direct written access between sessions</li>
+      </ul>
+    </div>
+    <div class="et">
+      <div class="et-eye">Tier III · Senior</div>
+      <div class="et-n">Bespoke Engagement</div>
+      <div class="et-w">For long-term relationships where the full depth of the framework — including the Risk Awareness layer — is warranted.</div>
+      <p class="et-aud"><em>Long-term engagements with heads of family businesses, sovereign and institutional principals. By introduction only.</em></p>
+      <ul class="et-l">
+        <li>All five layers including Risk Awareness</li>
+        <li>Generational and institutional lifecycle analysis</li>
+        <li>Bespoke scope, depth, and engagement terms</li>
+        <li>By invitation and introduction only</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section class="sec" id="contact" data-screen-label="07 Contact">
+  <p class="ct-eye r">Enquiries</p>
+  <h2 class="s-h2 r">
+    If CCIAF addresses a decision you are currently facing,
+    a single written note is sufficient to begin a conversation.
+  </h2>
+  <p class="ct-p r">
+    No standard intake form. No discovery call. A brief description of
+    your context — who you are, what you are navigating — is enough.
+  </p>
+  <a class="ct-a r" href="mailto:contact@psyda.org">contact@psyda.org</a>
+  <p class="ct-note r">
+    To request Volume I — The Argument, include a short note on your
+    background and what brought you to this work.
+  </p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-grid">
+    <div class="f-col">
+      <h4>CCIAF</h4>
+      <p style="font-size:14px;color:var(--ink-3);line-height:1.6;">Cross-Civilization Intelligence and Action Framework. A structured methodology for timing intelligence in consequential decisions.</p>
+      <p style="margin-top:10px;font-size:12.5px;color:var(--ink-4);font-style:italic;">A sub-domain of <a href="https://www.minhaaj.com" target="_blank" rel="noopener">minhaaj.com</a>.</p>
+    </div>
+    <div class="f-col">
+      <h4>Site</h4>
+      <ul>
+        <li><a href="#framework">The Framework</a></li>
+        <li><a href="#trad">Traditions</a></li>
+        <li><a href="#engage">Engagement</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Disclaimer</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Engagement</a></li>
+        <li><a href="mailto:contact@psyda.org">contact@psyda.org</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="f-bottom">
+    <span>© 2026 CCIAF &nbsp;·&nbsp; Minhaaj Rehman &nbsp;·&nbsp; All rights reserved</span>
+    <p class="f-disc">CCIAF is a structured interpretive framework. It is decision-support, not prediction. It does not constitute medical, psychiatric, legal, or financial advice. All decisions remain the client's own responsibility.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const html = document.documentElement;
+  const tog  = document.getElementById('tog');
+  const saved = localStorage.getItem('cciaf-theme') || 'light';
+  html.setAttribute('data-theme', saved);
+  tog.setAttribute('aria-checked', saved === 'dark');
+
+  tog.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', next);
+    tog.setAttribute('aria-checked', next === 'dark');
+    localStorage.setItem('cciaf-theme', next);
+  });
+
+  // Hamburger
+  const hbg = document.getElementById('hbg');
+  const mob = document.getElementById('mobMenu');
+  function cm(){ mob.classList.remove('open'); }
+  window.cm = cm;
+  hbg.addEventListener('click', e => { e.stopPropagation(); mob.classList.toggle('open'); });
+  document.addEventListener('click', e => { if(!mob.contains(e.target) && e.target !== hbg) cm(); });
+
+  // Scroll top
+  const st = document.getElementById('st');
+  window.addEventListener('scroll', () => st.classList.toggle('on', window.scrollY > 500), {passive:true});
+  st.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+  // Scroll dots
+  const secs = ['hero','gap','framework','trad','engage','about','contact'];
+  const dots = document.querySelectorAll('.sn-d');
+  dots.forEach(d => {
+    d.addEventListener('click', () => document.getElementById(d.dataset.t)?.scrollIntoView({behavior:'smooth'}));
+  });
+  function updateDots(){
+    const mid = window.innerHeight * .38;
+    let cur = secs[0];
+    secs.forEach(id => { const el = document.getElementById(id); if(el && el.getBoundingClientRect().top <= mid) cur = id; });
+    dots.forEach(d => d.classList.toggle('on', d.dataset.t === cur));
+  }
+  window.addEventListener('scroll', updateDots, {passive:true});
+  updateDots();
+
+  // Reveal
+  const revs = document.querySelectorAll('.r');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e,i) => {
+      if(e.isIntersecting){ setTimeout(() => e.target.classList.add('on'), i * 55); obs.unobserve(e.target); }
+    });
+  }, {threshold:.06, rootMargin:'0px 0px -30px 0px'});
+  revs.forEach(el => obs.observe(el));
+})();
+</script>
+</body>
+</html>

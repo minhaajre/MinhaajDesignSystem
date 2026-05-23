@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:#F7F3EC;padding:28px 32px;display:flex;flex-direction:column;gap:16px}
+  .label{font-size:8px;letter-spacing:0.24em;text-transform:uppercase;color:#9A9383;margin-bottom:6px}
+  .row{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
+  .token{display:flex;flex-direction:column;align-items:center;gap:5px}
+  .bar{background:#8C7355;width:36px}
+  .token-name{font-size:7.5px;letter-spacing:0.1em;color:#9A9383;text-align:center}
+  .token-val{font-size:7.5px;color:#1E1C18;text-align:center;font-weight:500}
+  .rule{height:1px;background:#D6CFC3}
+  .layout-row{display:flex;gap:6px;align-items:center;margin-top:4px}
+  .layout-box{background:#EDE8DE;border:1px solid #D6CFC3;display:flex;align-items:center;justify-content:center;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:#9A9383}
+</style>
+</head>
+<body>
+  <div class="label">Spacing Scale</div>
+  <div class="row">
+    <div class="token"><div class="bar" style="height:4px"></div><div class="token-name">space-1</div><div class="token-val">4px</div></div>
+    <div class="token"><div class="bar" style="height:8px"></div><div class="token-name">space-2</div><div class="token-val">8px</div></div>
+    <div class="token"><div class="bar" style="height:12px"></div><div class="token-name">space-3</div><div class="token-val">12px</div></div>
+    <div class="token"><div class="bar" style="height:16px"></div><div class="token-name">space-4</div><div class="token-val">16px</div></div>
+    <div class="token"><div class="bar" style="height:20px"></div><div class="token-name">space-5</div><div class="token-val">20px</div></div>
+    <div class="token"><div class="bar" style="height:24px"></div><div class="token-name">space-6</div><div class="token-val">24px</div></div>
+    <div class="token"><div class="bar" style="height:32px"></div><div class="token-name">space-8</div><div class="token-val">32px</div></div>
+    <div class="token"><div class="bar" style="height:40px"></div><div class="token-name">space-10</div><div class="token-val">40px</div></div>
+    <div class="token"><div class="bar" style="height:48px"></div><div class="token-name">space-12</div><div class="token-val">48px</div></div>
+    <div class="token"><div class="bar" style="height:64px"></div><div class="token-name">space-16</div><div class="token-val">64px</div></div>
+    <div class="token"><div class="bar" style="height:80px"></div><div class="token-name">space-20</div><div class="token-val">80px</div></div>
+    <div class="token"><div class="bar" style="height:96px"></div><div class="token-name">space-24</div><div class="token-val">96px</div></div>
+  </div>
+  <div class="rule"></div>
+  <div class="label">Layout Tokens</div>
+  <div class="layout-row">
+    <div class="layout-box" style="width:76px;height:28px">nav-h · 76px</div>
+    <div class="layout-box" style="width:120px;height:28px">max-w · 1280px</div>
+    <div class="layout-box" style="width:80px;height:28px">pad-x · clamp</div>
+    <div class="layout-box" style="width:72px;height:28px">sidebar · 280px</div>
+  </div>
+  <div class="layout-row">
+    <div class="layout-box" style="width:280px;height:36px">sidebar (280px)</div>
+    <div class="layout-box" style="flex:1;height:36px">content (1fr)</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:#F7F3EC;padding:28px 32px;display:flex;flex-direction:column;gap:16px}
+  .section-label{font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:#9A9383;margin-bottom:2px}
+  .row{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap}
+  .swatch{min-width:80px;min-height:56px;flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding:8px 10px;border:1px solid rgba(30,28,24,0.08)}
+  .swatch-label{font-size:8px;letter-spacing:0.18em;text-transform:uppercase;opacity:0.7;margin-bottom:2px}
+  .swatch-hex{font-size:10px;letter-spacing:0.04em;font-weight:500}
+  .swatch-name{font-size:8px;opacity:0.6;margin-top:1px}
+  .pair{display:flex;gap:0;border:1px solid rgba(30,28,24,0.1);flex:1;overflow:hidden}
+  .pair-half{flex:1;padding:8px 10px;display:flex;flex-direction:column;justify-content:flex-end}
+  .pair-label{font-size:7px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.6;margin-bottom:1px}
+  .pair-val{font-size:9px;font-weight:500}
+</style>
+</head>
+<body>
+<div class="section-label">Semantic / State Colors</div>
+<div class="row">
+  <div class="swatch" style="background:#3A5A40;color:#fff">
+    <div class="swatch-label">success</div>
+    <div class="swatch-hex">#3A5A40</div>
+    <div class="swatch-name">Forest</div>
+  </div>
+  <div class="swatch" style="background:#8B2E2E;color:#fff">
+    <div class="swatch-label">error</div>
+    <div class="swatch-hex">#8B2E2E</div>
+    <div class="swatch-name">Crimson</div>
+  </div>
+  <div class="swatch" style="background:#8C7355;color:#fff">
+    <div class="swatch-label">warning</div>
+    <div class="swatch-hex">#8C7355</div>
+    <div class="swatch-name">Copper (accent)</div>
+  </div>
+  <div class="swatch" style="background:#4A6B8A;color:#fff">
+    <div class="swatch-label">info</div>
+    <div class="swatch-hex">#4A6B8A</div>
+    <div class="swatch-name">Slate Blue</div>
+  </div>
+</div>
+<div class="section-label" style="margin-top:8px">Selection · Surface · Overlay</div>
+<div class="row">
+  <div class="pair">
+    <div class="pair-half" style="background:#8C7355">
+      <div class="pair-label" style="color:rgba(255,255,255,0.6)">selection-bg</div>
+      <div class="pair-val" style="color:#fff">#8C7355</div>
+    </div>
+    <div class="pair-half" style="background:#FAFAF7;border-left:1px solid #D6CFC3">
+      <div class="pair-label" style="color:#9A9383">selection-text</div>
+      <div class="pair-val" style="color:#1E1C18">#FAFAF7</div>
+    </div>
+  </div>
+  <div class="swatch" style="background:rgba(247,243,236,0.78);color:#1E1C18;border:1px solid #D6CFC3">
+    <div class="swatch-label">surface-raised</div>
+    <div class="swatch-hex">rgba(247,243,236,0.78)</div>
+    <div class="swatch-name">Frosted Nav</div>
+  </div>
+  <div class="swatch" style="background:rgba(30,28,24,0.08);color:#1E1C18;border:1px solid #D6CFC3">
+    <div class="swatch-label">border-soft</div>
+    <div class="swatch-hex">rgba(30,28,24,0.08)</div>
+    <div class="swatch-name">Transparent Rule</div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#F7F3EC;padding:28px 36px;display:flex;flex-direction:column;gap:20px}
+  .label{font-family:'DM Sans',sans-serif;font-size:8px;letter-spacing:0.24em;text-transform:uppercase;color:#9A9383;margin-bottom:8px}
+  .rule{height:1px;background:#D6CFC3}
+  .row{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start}
+
+  /* Psyda contact email link */
+  .contact-email{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(1.8rem,5vw,3rem);font-weight:300;
+    line-height:0.95;letter-spacing:-0.025em;color:#1E1C18;
+    position:relative;display:inline-block;
+  }
+  .contact-email em{color:#8C7355;font-weight:400}
+  .contact-email::after{
+    content:'';position:absolute;left:0;right:100%;bottom:0.08em;
+    height:2px;background:#8C7355;transition:right 0.7s cubic-bezier(0.22,1,0.36,1);
+  }
+  .contact-email:hover::after{right:0}
+
+  /* Psyda-style inputs (minimal) */
+  .psyda-input{
+    width:100%;padding:0.8rem 0;
+    font-family:'DM Sans',sans-serif;font-size:0.95rem;font-weight:300;
+    color:#1E1C18;background:transparent;
+    border:none;border-bottom:1px solid #D6CFC3;
+    outline:none;transition:border-color 0.3s;
+  }
+  .psyda-input::placeholder{color:#9A9383}
+  .psyda-input:focus{border-color:#8C7355}
+  .field-wrap{display:flex;flex-direction:column;gap:4px;flex:1;min-width:160px}
+  .field-label{font-family:'DM Sans',sans-serif;font-size:0.62rem;letter-spacing:0.24em;text-transform:uppercase;color:#9A9383}
+
+  /* IbnArbi inputs */
+  .ib-input{
+    width:100%;padding:0.5rem 0.75rem;
+    font-family:'DM Sans',sans-serif;font-size:0.875rem;font-weight:300;
+    color:hsl(240,25%,12%);
+    background:hsl(40,30%,96%);
+    border:1px solid hsl(40,20%,80%);border-radius:0.5rem;
+    outline:none;transition:border-color 0.25s,box-shadow 0.25s;
+  }
+  .ib-input:focus{border-color:hsl(35,85%,35%);box-shadow:0 0 0 3px hsl(35,85%,35%,0.12)}
+  .ib-input::placeholder{color:hsl(240,15%,55%)}
+
+  /* IbnArbi switch */
+  .ib-switch{width:40px;height:22px;border-radius:9999px;background:hsl(40,20%,80%);position:relative;cursor:pointer;border:none}
+  .ib-switch.on{background:hsl(35,85%,35%)}
+  .ib-switch::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform 0.25s}
+  .ib-switch.on::after{transform:translateX(18px)}
+
+  /* Contact meta */
+  .contact-meta{display:flex;gap:32px;flex-wrap:wrap;padding-top:20px;border-top:1px solid #D6CFC3}
+  .cm-group{display:flex;flex-direction:column;gap:4px}
+  .cm-label{font-family:'DM Sans',sans-serif;font-size:0.62rem;letter-spacing:0.24em;text-transform:uppercase;color:#9A9383}
+  .cm-value{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:300;color:#1E1C18}
+</style>
+</head>
+<body>
+  <div class="label">Contact / Large Link — Psyda underline grow</div>
+  <div class="contact-email"><em>contact</em>@psyda.org</div>
+  <div class="contact-meta">
+    <div class="cm-group"><div class="cm-label">Phone</div><div class="cm-value">+1 (209) 880 6192</div></div>
+    <div class="cm-group"><div class="cm-label">Location</div><div class="cm-value">Kigali, Rwanda</div></div>
+    <div class="cm-group"><div class="cm-label">Social</div><div class="cm-value" style="color:#8C7355">LinkedIn ↗</div></div>
+  </div>
+  <div class="rule"></div>
+  <div class="label">Psyda — Minimalist borderless input fields</div>
+  <div class="row">
+    <div class="field-wrap">
+      <div class="field-label">Name</div>
+      <input class="psyda-input" type="text" placeholder="Your full name"/>
+    </div>
+    <div class="field-wrap">
+      <div class="field-label">Email</div>
+      <input class="psyda-input" type="email" placeholder="your@email.com"/>
+    </div>
+    <div class="field-wrap">
+      <div class="field-label">Message</div>
+      <input class="psyda-input" type="text" placeholder="How can we help?"/>
+    </div>
+  </div>
+  <div class="rule"></div>
+  <div class="label">IbnArbi — Rounded bordered inputs + toggle switch</div>
+  <div class="row">
+    <div class="field-wrap">
+      <div class="field-label" style="color:hsl(240,15%,35%)">City / Location</div>
+      <input class="ib-input" type="text" placeholder="Search city..."/>
+    </div>
+    <div class="field-wrap">
+      <div class="field-label" style="color:hsl(240,15%,35%)">Date of birth</div>
+      <input class="ib-input" type="date"/>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;margin-top:4px">
+    <button class="ib-switch on"></button>
+    <span style="font-family:'DM Sans',sans-serif;font-size:0.85rem;color:hsl(240,25%,12%)">Dark mode enabled</span>
+    <button class="ib-switch" style="margin-left:20px"></button>
+    <span style="font-family:'DM Sans',sans-serif;font-size:0.85rem;color:hsl(240,15%,35%)">Show advanced</span>
+  </div>
+</body>
+</html>

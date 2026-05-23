@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+  [data-theme="light"]{--bg:#F9F6F0;--bg-alt:#F2EDE3;--surface:#fff;--border:#DDD8CE;--ink-1:#1A1510;--ink-2:#3D3830;--ink-3:#6B6358;--ink-4:#A09890;--gold:#8B6510;--gold-light:#D4AE60;}
+  [data-theme="dark"]{--bg:#131008;--bg-alt:#1B170D;--surface:#1E1A10;--border:#2E2918;--ink-1:#F0EAD8;--ink-2:#C0B89E;--ink-3:#7A7260;--ink-4:#4A4438;--gold:#C8A03A;--gold-light:#E0BC70;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'EB Garamond',Georgia,serif;background:var(--bg);padding:28px 32px;display:flex;flex-direction:column;gap:18px;transition:background .4s}
+  .row{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap}
+  .swatch{flex:1;min-height:64px;min-width:80px;display:flex;flex-direction:column;justify-content:flex-end;padding:10px 12px;border:1px solid var(--border)}
+  .sl{font-family:'Cormorant Garamond',serif;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.7;margin-bottom:2px}
+  .sh{font-size:10.5px;font-weight:500;letter-spacing:0.04em}
+  .sn{font-size:8.5px;opacity:0.6;margin-top:1px}
+  .section-label{font-family:'Cormorant Garamond',serif;font-size:9px;letter-spacing:0.24em;text-transform:uppercase;color:var(--ink-4)}
+  .rule{height:1px;background:var(--border)}
+  .pair{display:flex;gap:0;flex:1;overflow:hidden;border:1px solid var(--border)}
+  .pair-h{flex:1;padding:8px 10px;display:flex;flex-direction:column;justify-content:flex-end;gap:2px}
+  .tog-demo{display:flex;align-items:center;gap:10px}
+  .tog{width:40px;height:22px;border-radius:11px;position:relative;flex-shrink:0;border:1px solid var(--border)}
+  .tog.light{background:#DDD8CE}.tog.light::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#8B6510}
+  .tog.dark{background:#2E2918}.tog.dark::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#C8A03A;transform:translateX(18px)}
+  .tog-label{font-family:'Cormorant Garamond',serif;font-size:0.72rem;font-style:italic;color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="section-label">CCIAF Colors — Light Mode</div>
+<div class="row">
+  <div class="swatch" style="background:#F9F6F0;color:#1A1510"><div class="sl">bg</div><div class="sh">#F9F6F0</div><div class="sn">Warm off-white</div></div>
+  <div class="swatch" style="background:#F2EDE3;color:#1A1510"><div class="sl">bg-alt</div><div class="sh">#F2EDE3</div><div class="sn">Section alternate</div></div>
+  <div class="swatch" style="background:#FFFFFF;color:#1A1510;border:1px solid #DDD8CE"><div class="sl">surface</div><div class="sh">#FFFFFF</div><div class="sn">Card surface</div></div>
+  <div class="swatch" style="background:#DDD8CE;color:#1A1510"><div class="sl">border</div><div class="sh">#DDD8CE</div><div class="sn">Dividers</div></div>
+</div>
+<div class="row">
+  <div class="swatch" style="background:#1A1510;color:#F5F0E8"><div class="sl">ink-1</div><div class="sh">#1A1510</div><div class="sn">Headings</div></div>
+  <div class="swatch" style="background:#3D3830;color:#F5F0E8"><div class="sl">ink-2</div><div class="sh">#3D3830</div><div class="sn">Body</div></div>
+  <div class="swatch" style="background:#6B6358;color:#F5F0E8"><div class="sl">ink-3</div><div class="sh">#6B6358</div><div class="sn">Secondary</div></div>
+  <div class="swatch" style="background:#A09890;color:#1A1510"><div class="sl">ink-4</div><div class="sh">#A09890</div><div class="sn">Muted</div></div>
+</div>
+<div class="row">
+  <div class="swatch" style="background:#8B6510;color:#fff"><div class="sl">gold</div><div class="sh">#8B6510</div><div class="sn">Primary accent</div></div>
+  <div class="swatch" style="background:#B8922A;color:#fff"><div class="sl">gold-mid</div><div class="sh">#B8922A</div><div class="sn">Mid gold</div></div>
+  <div class="swatch" style="background:#D4AE60;color:#1A1510"><div class="sl">gold-light</div><div class="sh">#D4AE60</div><div class="sn">Underlines, borders</div></div>
+  <div class="swatch" style="background:#1A1510;color:#D4AE60"><div class="sl">cs-gold (dark panel)</div><div class="sh">#D4AE60</div><div class="sn">On contrast bg</div></div>
+</div>
+<div class="rule"></div>
+<div class="section-label">Dark Mode & Theme Toggle</div>
+<div class="row">
+  <div class="swatch" style="background:#131008;color:#F0EAD8"><div class="sl">bg</div><div class="sh">#131008</div><div class="sn">Near black warm</div></div>
+  <div class="swatch" style="background:#1E1A10;color:#F0EAD8"><div class="sl">surface</div><div class="sh">#1E1A10</div></div>
+  <div class="swatch" style="background:#C8A03A;color:#131008"><div class="sl">gold (dark)</div><div class="sh">#C8A03A</div><div class="sn">Brighter on dark</div></div>
+  <div class="swatch" style="background:#F0EAD8;color:#1A1510"><div class="sl">ink-1 (dark)</div><div class="sh">#F0EAD8</div><div class="sn">Warm cream</div></div>
+</div>
+<div class="row" style="align-items:center;gap:20px;margin-top:4px">
+  <div class="tog-demo"><div class="tog light"></div><span class="tog-label">Light mode</span></div>
+  <div class="tog-demo"><div class="tog dark"></div><span class="tog-label">Dark mode</span></div>
+</div>
+</body>
+</html>

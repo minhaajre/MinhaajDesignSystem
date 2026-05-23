@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#F9F6F0;padding:24px 28px;display:flex;flex-direction:column;gap:14px}
+  .label{font-family:'Cormorant Garamond',serif;font-size:8px;letter-spacing:0.24em;text-transform:uppercase;color:#A09890;margin-bottom:4px}
+  .rule{height:1px;background:#DDD8CE}
+
+  /* Layer grid */
+  .layers{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid #DDD8CE}
+  .lc{padding:16px 14px;border-right:1px solid #DDD8CE;transition:background 0.2s}
+  .lc:last-child{border-right:none}
+  .lc:hover{background:#F2EDE3}
+  .lc-n{font-family:'Cormorant Garamond',serif;font-size:10px;font-weight:300;letter-spacing:0.18em;text-transform:uppercase;color:#8B6510;margin-bottom:8px}
+  .lc-t{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;color:#1A1510;margin-bottom:5px}
+  .lc-q{font-style:italic;font-size:11px;color:#6B6358;margin-bottom:8px;line-height:1.4}
+  .lc-s{font-size:11px;color:#A09890;line-height:1.5}
+
+  /* Tier grid */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #DDD8CE}
+  .tier{padding:16px 14px;border-right:1px solid #DDD8CE;transition:background 0.2s}
+  .tier:last-child{border-right:none}
+  .tier:hover{background:#F2EDE3}
+  .tier-eye{font-family:'Cormorant Garamond',serif;font-size:10px;font-weight:300;letter-spacing:0.20em;text-transform:uppercase;color:#8B6510;margin-bottom:8px}
+  .tier-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:#1A1510;margin-bottom:6px}
+  .tier-desc{font-size:12px;color:#6B6358;font-style:italic;line-height:1.55;margin-bottom:10px}
+  .tier-list{list-style:none;border-top:1px solid #DDD8CE;padding-top:8px}
+  .tier-list li{font-size:11.5px;color:#3D3830;padding:3px 0;border-bottom:1px dashed rgba(0,0,0,.07);line-height:1.3}
+  .tier-list li:last-child{border-bottom:none}
+</style>
+</head>
+<body>
+  <div class="label">CCIAF — Five-Layer Framework Grid</div>
+  <div class="layers">
+    <div class="lc"><div class="lc-n">Layer I</div><div class="lc-t">Identity</div><div class="lc-q">"What are you made of?"</div><div class="lc-s">BaZi · Numerology</div></div>
+    <div class="lc"><div class="lc-n">Layer II</div><div class="lc-t">Timing</div><div class="lc-q">"What time is it for you?"</div><div class="lc-s">Vedic dashas · Firdaria · Profections</div></div>
+    <div class="lc"><div class="lc-n">Layer III</div><div class="lc-t">Action</div><div class="lc-q">"What to do today?"</div><div class="lc-s">28 Lunar Mansions · Electional timing</div></div>
+    <div class="lc"><div class="lc-n">Layer IV</div><div class="lc-t">Interpretation</div><div class="lc-q">"What does it mean?"</div><div class="lc-s">Jungian synthesis · Archetypal mapping</div></div>
+    <div class="lc"><div class="lc-n">Layer V</div><div class="lc-t">Risk Awareness</div><div class="lc-q">"What to anticipate."</div><div class="lc-s">Senior engagements only</div></div>
+  </div>
+  <div class="rule"></div>
+  <div class="label">Engagement Tiers</div>
+  <div class="tiers">
+    <div class="tier">
+      <div class="tier-eye">Tier I · The Election</div>
+      <div class="tier-name">Single Decision</div>
+      <div class="tier-desc">One specific high-stakes decision with a material timing dimension.</div>
+      <ul class="tier-list">
+        <li>Full five-layer written brief</li>
+        <li>Ranked timing windows</li>
+        <li>One private session</li>
+        <li>No ongoing commitment</li>
+      </ul>
+    </div>
+    <div class="tier">
+      <div class="tier-eye">Tier II · Retainer</div>
+      <div class="tier-name">Ongoing Advisory</div>
+      <div class="tier-desc">Timing intelligence as a persistent strategic variable across decisions.</div>
+      <ul class="tier-list">
+        <li>Monthly intelligence briefings</li>
+        <li>Quarterly strategic sessions</li>
+        <li>Electional guidance on demand</li>
+        <li>Direct written access</li>
+      </ul>
+    </div>
+    <div class="tier">
+      <div class="tier-eye">Tier III · Senior</div>
+      <div class="tier-name">Bespoke Engagement</div>
+      <div class="tier-desc">Full framework depth including Risk Awareness layer. By introduction only.</div>
+      <ul class="tier-list">
+        <li>All five layers</li>
+        <li>Generational lifecycle analysis</li>
+        <li>Bespoke scope &amp; terms</li>
+        <li>By invitation only</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

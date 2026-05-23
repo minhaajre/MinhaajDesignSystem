@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#F7F3EC;padding:28px 36px;display:flex;flex-direction:column;gap:0}
+  .label{font-family:'DM Sans',sans-serif;font-size:8px;letter-spacing:0.24em;text-transform:uppercase;color:#9A9383;margin-bottom:4px}
+  .rule{height:1px;background:#D6CFC3;margin:16px 0}
+  .specimen{font-family:'Cormorant Garamond',Georgia,serif;color:#1E1C18;line-height:0.95;letter-spacing:-0.015em}
+  .specimen em{color:#8C7355;font-style:italic}
+</style>
+</head>
+<body>
+  <div class="label">Display — Cormorant Garamond · weight 300 · italic accent</div>
+  <div class="rule"></div>
+  <div class="specimen" style="font-size:clamp(3.4rem,8.5vw,5.5rem);font-weight:300">Bringing <em>Analytics</em> to Life.</div>
+  <div class="rule"></div>
+  <div class="specimen" style="font-size:clamp(2.2rem,4.2vw,3.2rem);font-weight:300;line-height:1.1">Harnessing the <em>power of data</em> — from raw signal to considered decision.</div>
+  <div class="rule"></div>
+  <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:baseline">
+    <div class="specimen" style="font-size:2.8rem;font-weight:300">Weight 300</div>
+    <div class="specimen" style="font-size:2.8rem;font-weight:400">Weight 400</div>
+    <div class="specimen" style="font-size:2.8rem;font-weight:300;font-style:italic">Italic 300</div>
+    <div class="specimen" style="font-size:2.8rem;font-weight:400;font-style:italic">Italic 400</div>
+  </div>
+  <div class="rule"></div>
+  <div class="specimen" style="font-size:1.25rem;font-style:italic;font-weight:300;line-height:1.55;color:#6B6457;max-width:520px">A discipline of cleaning, listening, classifying and modelling, in that order. Mining, collection, analysis, publication — a full research stack.</div>
+</body>
+</html>
