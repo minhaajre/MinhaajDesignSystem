@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moodboard — Minhaaj Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Inter:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F7F3EC; --bg-alt: #EDE8DE; --text: #1E1C18; --text-sec: #6B6457; --text-muted: #9A9383;
+  --accent: #8C7355; --accent-light: #B89A78; --border: #D6CFC3;
+  --gold: #8B6510; --gold-light: #D4AE60;
+  --font-disp: 'Cormorant Garamond', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-ui: 'DM Sans', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);background:var(--bg);color:var(--text);
+  -webkit-font-smoothing:antialiased;line-height:1.6;
+}
+h1,h2,h3,h4{font-family:var(--font-disp);font-weight:300;color:var(--text)}
+h1{font-size:3rem;line-height:1.05;letter-spacing:-.01em}
+h2{font-size:2rem;line-height:1.1;margin-bottom:1.5rem}
+h3{font-size:1.3rem;font-weight:400;margin-bottom:1rem}
+p{color:var(--text-sec);max-width:60ch;margin-bottom:1rem}
+.mood{max-width:1300px;margin:0 auto;padding:3rem clamp(1.5rem,5vw,3.5rem)}
+.sec{padding:3rem 0;border-top:1px solid var(--border)}
+.sec:first-child{border-top:none}
+.sec-header{margin-bottom:2.5rem}
+.sec-header .eye{
+  font-family:var(--font-disp);font-size:.72rem;font-weight:300;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--text-muted);
+  margin-bottom:.5rem
+}
+.sec-header h2{font-size:clamp(1.6rem,3vw,2.4rem)}
+.grid-4{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:1.5rem}
+.card{border:1px solid var(--border);padding:1.5rem;background:var(--bg-alt);border-radius:0}
+.card h4{font-family:var(--font-ui);font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.75rem}
+.card p{font-size:.9rem}
+.swatch{display:flex;align-items:center;gap:1rem;margin-bottom:.6rem}
+.swatch-c{width:2.5rem;height:2.5rem;border:1px solid rgba(0,0,0,.08);flex-shrink:0}
+.swatch-info{flex:1}
+.swatch-info .hex{font-family:var(--font-ui);font-size:.72rem;letter-spacing:.04em;color:var(--text-muted)}
+.swatch-info .name{font-size:.85rem;color:var(--text)}
+
+/* Brand tabs */
+.brand-tabs{display:flex;gap:0;margin-bottom:2rem;border-bottom:1px solid var(--border)}
+.brand-tab{
+  padding:.7rem 1.5rem;font-family:var(--font-disp);font-size:.85rem;
+  cursor:pointer;border:none;background:none;color:var(--text-muted);
+  border-bottom:2px solid transparent;transition:color .2s,border-color .2s
+}
+.brand-tab:hover{color:var(--text)}
+.brand-tab.active{color:var(--text);border-bottom-color:var(--accent)}
+.brand-panel{display:none}
+.brand-panel.active{display:block}
+
+/* Type samples */
+.type-sample{margin-bottom:1.8rem}
+.type-sample .label{font-family:var(--font-ui);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.3rem}
+.type-sample .preview{color:var(--text);line-height:1.2;margin-bottom:.15rem}
+.type-sample .meta{font-size:.75rem;color:var(--text-sec);font-family:var(--font-body)}
+
+/* Theme toggle */
+.theme-toggle{
+  position:fixed;top:1rem;right:1.5rem;z-index:100;
+  width:46px;height:26px;border-radius:13px;
+  background:#DDD8CE;border:1px solid var(--border);
+  cursor:pointer;position:fixed;-webkit-appearance:none
+}
+.theme-toggle::after{
+  content:'';position:absolute;top:3px;left:3px;
+  width:18px;height:18px;border-radius:50%;
+  background:#8B6510;transition:transform .3s
+}
+[data-theme="dark"] .theme-toggle::after{transform:translateX(20px)}
+
+/* Dark overrides */
+[data-theme="dark"]{
+  --bg:#131008;--bg-alt:#1B170D;--text:#F0EAD8;--text-sec:#C0B89E;--text-muted:#7A7260;
+  --accent:#C8A03A;--accent-light:#E0BC70;--border:#2E2918;
+  --gold:#C8A03A;--gold-light:#E0BC70;
+}
+[data-theme="dark"] .theme-toggle{background:#2E2918;border-color:#2E2918}
+[data-theme="dark"] .theme-toggle::after{background:#C8A03A}
+[data-theme="dark"] .swatch-c{border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .brand-tab{color:var(--text-muted)}
+[data-theme="dark"] .brand-tab.active{color:var(--text);border-bottom-color:var(--gold)}
+[data-theme="dark"] .brand-tab.active{color:var(--text);border-bottom-color:var(--gold)}
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='light'?'dark':'light'" aria-label="Toggle theme"></button>
+
+<div class="mood">
+
+  <!-- HEADER -->
+  <div class="sec" style="padding-top:0">
+    <div class="sec-header">
+      <div class="eye">Minhaaj Design System</div>
+      <h1>Moodboard</h1>
+      <p style="font-size:1.1rem;max-width:600px">Color palettes, typography, spacing, and component styles across all four brands in the ecosystem — Psyda, Minhaaj.com, CCIAF, and IbnArbi.</p>
+    </div>
+  </div>
+
+  <!-- BRAND TABS -->
+  <div class="brand-tabs">
+    <button class="brand-tab active" data-brand="psyda">Psyda / Minhaaj.com</button>
+    <button class="brand-tab" data-brand="cciaf">CCIAF</button>
+    <button class="brand-tab" data-brand="ibnarbi">IbnArbi</button>
+  </div>
+
+  <!-- =================== PSYDA =================== -->
+  <div class="brand-panel active" id="panel-psyda">
+
+    <div class="sec">
+      <div class="sec-header"><div class="eye">Psyda / Minhaaj.com</div><h2>Color Palette</h2><p>Warm parchment background, copper accent, dark editorial panels. Zero-radius aesthetic.</p></div>
+      <div class="grid-4">
+        <div class="card"><h4>Backgrounds</h4>
+          <div class="swatch"><div class="swatch-c" style="background:#F7F3EC"></div><div class="swatch-info"><div class="name">Warm Parchment</div><div class="hex">#F7F3EC — --bg</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#EDE8DE"></div><div class="swatch-info"><div class="name">Linen</div><div class="hex">#EDE8DE — --bg-alt</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#E3DCCE"></div><div class="swatch-info"><div class="name">Ecru</div><div class="hex">#E3DCCE — --bg-deep</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#14120F"></div><div class="swatch-info"><div class="name" style="color:#FAFAF7">Editorial Dark</div><div class="hex" style="color:#9A9383">#14120F — --bg-dark</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#2A2620"></div><div class="swatch-info"><div class="name" style="color:#FAFAF7">Dark Parchment</div><div class="hex" style="color:#9A9383">#2A2620 — --bg-dark-alt</div></div></div>
+        </div>
+        <div class="card"><h4>Text</h4>
+          <div class="swatch"><div class="swatch-c" style="background:#1E1C18"></div><div class="swatch-info"><div class="name">Near Black</div><div class="hex">#1E1C18 — --text-primary</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#6B6457"></div><div class="swatch-info"><div class="name">Warm Grey</div><div class="hex">#6B6457 — --text-secondary</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#9A9383"></div><div class="swatch-info"><div class="name">Dusty</div><div class="hex">#9A9383 — --text-muted</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#FAFAF7;border-color:#D6CFC3"></div><div class="swatch-info"><div class="name">Off-White</div><div class="hex">#FAFAF7 — --text-on-dark</div></div></div>
+        </div>
+        <div class="card"><h4>Accent / Brand</h4>
+          <div class="swatch"><div class="swatch-c" style="background:#8C7355"></div><div class="swatch-info"><div class="name">Copper</div><div class="hex">#8C7355 — --accent</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#B89A78"></div><div class="swatch-info"><div class="name">Warm Sand</div><div class="hex">#B89A78 — --accent-soft</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#6B5538"></div><div class="swatch-info"><div class="name">Sienna</div><div class="hex">#6B5538 — --accent-deep</div></div></div>
+        </div>
+        <div class="card"><h4>Semantic / Borders</h4>
+          <div class="swatch"><div class="swatch-c" style="background:#D6CFC3"></div><div class="swatch-info"><div class="name">Stone</div><div class="hex">#D6CFC3 — --border</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#3A5A40"></div><div class="swatch-info"><div class="name">Forest</div><div class="hex">#3A5A40 — success</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#8B2E2E"></div><div class="swatch-info"><div class="name">Crimson</div><div class="hex">#8B2E2E — error</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#4A6B8A"></div><div class="swatch-info"><div class="name">Slate Blue</div><div class="hex">#4A6B8A — info</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-header"><div class="eye">Psyda / Minhaaj.com</div><h2>Typography</h2><p>Three-font system: Cormorant Garamond (display) + DM Sans (UI) + Inter (body)</p></div>
+      <div class="grid-3">
+        <div class="card"><h4>Cormorant Garamond — Display</h4>
+          <div class="type-sample"><div class="label">Weight 300 · Hero</div><div class="preview" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,4vw,3.4rem);line-height:.95;letter-spacing:-.01em">Where Data Meets Narrative</div></div>
+          <div class="type-sample"><div class="label">Weight 400</div><div class="preview" style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.6rem">The Architecture of Insight</div></div>
+          <div class="type-sample"><div class="label">Weight 500</div><div class="preview" style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:1.4rem">Chapter One: Foundations</div></div>
+          <div class="type-sample"><div class="label">Weight 300 Italic</div><div class="preview" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:1.2rem">"Data is a language. We translate it into something you can feel."</div></div>
+        </div>
+        <div class="card"><h4>DM Sans — UI</h4>
+          <div class="type-sample"><div class="label">Weight 300 · Uppercase 0.22em</div><div class="preview" style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase">Data · Insights · Impact</div></div>
+          <div class="type-sample"><div class="label">Weight 400 · Nav links</div><div class="preview" style="font-family:'DM Sans',sans-serif;font-weight:400;font-size:.85rem">Research Publications About Contact</div></div>
+          <div class="type-sample"><div class="label">Weight 500 · Labels</div><div class="preview" style="font-family:'DM Sans',sans-serif;font-weight:500;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase">Issue N°03 · Spread</div></div>
+        </div>
+        <div class="card"><h4>Inter — Body</h4>
+          <div class="type-sample"><div class="label">Weight 300 · Body text</div><div class="preview" style="font-family:'Inter',sans-serif;font-weight:300;font-size:1rem;line-height:1.7">At Psyda, we design and deploy AI-enabled psychographic profiling systems that bridge the gap between academic research and industrial application. Our work sits at the intersection of machine learning, behavioral science, and human development.</div></div>
+          <div class="type-sample"><div class="label">Weight 400</div><div class="preview" style="font-family:'Inter',sans-serif;font-weight:400;font-size:.95rem">Secondary text and supporting copy sits at weight 400 for readability in smaller sizes.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-header"><div class="eye">Psyda / Minhaaj.com</div><h2>Typography Scale</h2><p>All type sizes use clamp() for fluid scaling</p></div>
+      <div class="grid-2">
+        <div class="card"><h4>Type Scale</h4>
+          <div class="type-sample"><div class="label">--text-hero</div><div class="preview" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(3.4rem,8.5vw,7.5rem);line-height:.95">clamp(3.4rem, 8.5vw, 7.5rem)</div><div class="meta">Weight 300 · lh 0.95 · ls -0.01em</div></div>
+          <div class="type-sample"><div class="label">--text-h1 · Chapter title</div><div class="preview" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,4.2vw,3.6rem)">clamp(2.2rem, 4.2vw, 3.6rem)</div></div>
+          <div class="type-sample"><div class="label">--text-h2 · Section title</div><div class="preview" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem,3vw,2.4rem)">clamp(1.8rem, 3vw, 2.4rem)</div></div>
+        </div>
+        <div class="card"><h4>Scale (continued)</h4>
+          <div class="type-sample"><div class="label">--text-lede</div><div class="preview" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:1.25rem">1.25rem · Weight 300 italic · lh 1.55</div></div>
+          <div class="type-sample"><div class="label">--text-body</div><div class="preview" style="font-family:'Inter',sans-serif;font-weight:300;font-size:1rem;line-height:1.7">1rem · Inter Weight 300 · lh 1.7</div></div>
+          <div class="type-sample"><div class="label">--text-label</div><div class="preview" style="font-family:'DM Sans',sans-serif;font-weight:500;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:#6B6457">0.68rem · DM Sans 500 · ls 0.22em · Uppercase</div></div>
+          <div class="type-sample"><div class="label">--text-chapter-num</div><div class="preview" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(5rem,10vw,8rem);color:#8C7355">V</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-header"><div class="eye">Psyda / Minhaaj.com</div><h2>Component Styles</h2></div>
+      <div class="grid-4">
+        <div class="card"><h4>Fill-Sweep Button</h4>
+          <div style="display:inline-flex;align-items:center;gap:.9rem;padding:1rem 1.8rem;font-family:'DM Sans',sans-serif;font-size:.68rem;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:#1E1C18;border:1px solid #1E1C18;background:transparent;position:relative;overflow:hidden;cursor:pointer">Explore Research →</div>
+          <p style="margin-top:.8rem;font-size:.8rem;color:var(--text-sec)">Square edges. Fill sweeps up from bottom on hover. Arrow shifts 4px right.</p>
+        </div>
+        <div class="card"><h4>Nav Style</h4>
+          <p style="font-size:.85rem"><strong>Height:</strong> 76px (desktop) / 64px (mobile)<br><strong>Scroll state:</strong> Transparent → frosted glass at 40px<br><strong>Backdrop:</strong> blur(18px)<br><strong>Nav links:</strong> 0.68rem · DM Sans · uppercase · 0.22em spacing</p>
+        </div>
+        <div class="card"><h4>Hover Underline</h4>
+          <p style="font-size:.85rem">Links use a growing underline — right: 100% → right: 0 on hover. 0.5s ease-out. Accent color.</p>
+        </div>
+        <div class="card"><h4>Radii & Shadows</h4>
+          <p style="font-size:.85rem"><strong>Radius:</strong> None (0) on major sections. 0.25rem on inline elements.<br><strong>Shadows:</strong> None on surfaces. Depth from background tone changes.<br><strong>Progress bar glow:</strong> 0 0 8px rgba(140,115,85,0.25)</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- =================== CCIAF =================== -->
+  <div class="brand-panel" id="panel-cciaf">
+
+    <div class="sec">
+      <div class="sec-header"><div class="eye">CCIAF</div><h2>Color Palette</h2><p>Warm earth + gold. Three-tier gold system. Contrast sections invert on dark mode.</p></div>
+      <div class="grid-4">
+        <div class="card"><h4>Backgrounds</h4>
+          <div class="swatch"><div class="swatch-c" style="background:#F9F6F0"></div><div class="swatch-info"><div class="name">Warm Off-White</div><div class="hex">#F9F6F0 — --bg</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#F2EDE3"></div><div class="swatch-info"><div class="name">Warm Cream</div><div class="hex">#F2EDE3 — --bg-alt</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#1A1510"></div><div class="swatch-info"><div class="name" style="color:#FAFAF7">Near Black</div><div class="hex" style="color:#9A9383">#1A1510 — --bg-contrast</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#FFFFFF;border-color:#D6CFC3"></div><div class="swatch-info"><div class="name">White</div><div class="hex">#FFFFFF — --surface</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:rgba(255,255,255,.58);border-color:#D6CFC3"></div><div class="swatch-info"><div class="name">Translucent White</div><div class="hex">rgba(255,255,255,.58) — --surface-soft</div></div></div>
+        </div>
+        <div class="card"><h4>Ink (Text)</h4>
+          <div class="swatch"><div class="swatch-c" style="background:#1A1510"></div><div class="swatch-info"><div class="name">Ink-1</div><div class="hex">#1A1510 — headings</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#3D3830"></div><div class="swatch-info"><div class="name">Ink-2</div><div class="hex">#3D3830 — body</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#6B6358"></div><div class="swatch-info"><div class="name">Ink-3</div><div class="hex">#6B6358 — secondary</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#A09890"></div><div class="swatch-info"><div class="name">Ink-4</div><div class="hex">#A09890 — muted</div></div></div>
+        </div>
+        <div class="card"><h4>Gold Accent Trio</h4>
+          <div class="swatch"><div class="swatch-c" style="background:#8B6510"></div><div class="swatch-info"><div class="name">Deep Gold</div><div class="hex">#8B6510 — --gold</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#B8922A"></div><div class="swatch-info"><div class="name">Mid Gold</div><div class="hex">#B8922A — --gold-mid</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#D4AE60"></div><div class="swatch-info"><div class="name">Light Gold</div><div class="hex">#D4AE60 — --gold-light</div></div></div>
+        </div>
+        <div class="card"><h4>Dark Mode Values</h4>
+          <div class="swatch"><div class="swatch-c" style="background:#131008"></div><div class="swatch-info"><div class="name" style="color:#FAFAF7">Dark BG</div><div class="hex" style="color:#9A9383">#131008</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#F0EAD8"></div><div class="swatch-info"><div class="name">Dark Ink-1</div><div class="hex">#F0EAD8</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#C8A03A"></div><div class="swatch-info"><div class="name">Dark Gold</div><div class="hex">#C8A03A</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:#2E2918"></div><div class="swatch-info"><div class="name" style="color:#FAFAF7">Dark Border</div><div class="hex" style="color:#9A9383">#2E2918</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-header"><div class="eye">CCIAF</div><h2>Typography</h2><p>Two-font serif system: Cormorant Garamond (display) + EB Garamond (body)</p></div>
+      <div class="grid-3">
+        <div class="card"><h4>Cormorant Garamond — Display</h4>
+          <div class="type-sample"><div class="label">Weight 300 · Hero title</div><div class="preview" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.6rem,6vw,5rem);line-height:1.08;letter-spacing:-.01em">Cross-Civilization Intelligence</div></div>
+          <div class="type-sample"><div class="label">Weight 300 · Section H2</div><div class="preview" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.7rem,3vw,2.6rem);line-height:1.15">Books & Publications</div></div>
+          <div class="type-sample"><div class="label">Weight 300 · Eyebrow · 0.22em uppercase</div><div class="preview" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#8B6510">Layer · Question · Method</div></div>
+        </div>
+        <div class="card"><h4>EB Garamond — Body</h4>
+          <div class="type-sample"><div class="label">Weight 400 · Prose (18px base)</div><div class="preview" style="font-family:'EB Garamond',serif;font-weight:400;font-size:1rem;line-height:1.82">The Cross-Civilization Intelligence and Action Framework (CCIAF) is a structured methodology for analyzing and synthesizing knowledge across cultural, temporal, and disciplinary boundaries. It operates through five interconnected layers.</div></div>
+          <div class="type-sample"><div class="label">Weight 400 · Blockquote</div><div class="preview" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(1.2rem,2.4vw,1.65rem);line-height:1.42;border-left:2px solid #D4AE60;padding-left:28px">"Wisdom is not bound by time. It moves through civilizations, gathering form."</div></div>
+        </div>
+        <div class="card"><h4>Component Typography</h4>
+          <div class="type-sample"><div class="label">Nav brand (uppercase 0.20em)</div><div class="preview" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:15px;letter-spacing:.20em;text-transform:uppercase">Minhaaj <em style="font-style:normal;color:#8B6510">Rehman</em></div></div>
+          <div class="type-sample"><div class="label">Nav links</div><div class="preview" style="font-family:'EB Garamond',serif;font-weight:400;font-size:15px;color:#6B6358">Biography Books Podcast Media Philanthropy</div></div>
+          <div class="type-sample"><div class="label">Buttons (uppercase 0.14em)</div><div class="preview" style="display:inline-block;padding:10px 26px;border:1px solid #D4AE60;border-radius:999px;font-family:'Cormorant Garamond',serif;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#8B6510;margin-top:.3rem">Buy on Amazon</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-header"><div class="eye">CCIAF</div><h2>Component Styles</h2></div>
+      <div class="grid-4">
+        <div class="card"><h4>Buttons</h4>
+          <div style="display:inline-flex;gap:.5rem;flex-wrap:wrap">
+            <span style="display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 26px;border:1px solid #D4AE60;border-radius:999px;font-family:'Cormorant Garamond',serif;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#8B6510;background:transparent">.btn-outline</span>
+            <span style="display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 26px;border-radius:999px;font-family:'Cormorant Garamond',serif;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#F9F6F0;background:#1A1510;border:1px solid #1A1510">.btn-solid</span>
+          </div>
+          <p style="margin-top:.8rem;font-size:.8rem">Pill shape (999px). Both lift 1px on hover. Outline fills to ink-1; solid fills to gold.</p>
+        </div>
+        <div class="card"><h4>Nav Bar</h4>
+          <p style="font-size:.85rem"><strong>Height:</strong> 58px (fixed)<br><strong>Backdrop:</strong> blur(12px) glassmorphism<br><strong>Border-bottom:</strong> 1px solid var(--border)<br><strong>Theme toggle:</strong> 46×26px switch, gold knob slides 20px on dark</p>
+        </div>
+        <div class="card"><h4>Hero Photo Frame</h4>
+          <p style="font-size:.85rem">Offset border frame:<br><strong>translate(16px, 16px)</strong><br>1px solid var(--gold-light)<br>z-index: -1 behind photo<br>Photo: 4/5 aspect, 400px max, 2px radius, --shadow-strong</p>
+        </div>
+        <div class="card"><h4>Shadows & Radii</h4>
+          <p style="font-size:.85rem"><strong>--shadow:</strong> 0 1px 3px + 0 4px 16px (subtle)<br><strong>--shadow-strong:</strong> 0 24px 70px (hero photo, book covers)<br><strong>Radius:</strong> 2px surfaces, 999px pills<br><strong>Theme toggle:</strong> 13px track</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- =================== IBNARBI =================== -->
+  <div class="brand-panel" id="panel-ibnarbi">
+
+    <div class="sec">
+      <div class="sec-header"><div class="eye">IbnArbi</div><h2>Color Palette</h2><p>HSL-based tokens. Warm parchment light / deep navy dark. Lavender accent.</p></div>
+      <div class="grid-4">
+        <div class="card"><h4>Light Mode</h4>
+          <div class="swatch"><div class="swatch-c" style="background:hsl(40,30%,96%)"></div><div class="swatch-info"><div class="name">Warm Parchment</div><div class="hex">hsl(40, 30%, 96%) — --ib-bg</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:hsl(240,25%,12%)"></div><div class="swatch-info"><div class="name" style="color:#FAFAF7">Near Black</div><div class="hex" style="color:#9A9383">hsl(240, 25%, 12%) — --ib-fg</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:hsl(35,85%,35%)"></div><div class="swatch-info"><div class="name">Gold-Brown</div><div class="hex">hsl(35, 85%, 35%) — --ib-primary</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:hsl(260,25%,82%)"></div><div class="swatch-info"><div class="name">Lavender</div><div class="hex">hsl(260, 25%, 82%) — --ib-accent</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:hsl(40,20%,80%)"></div><div class="swatch-info"><div class="name">Border</div><div class="hex">hsl(40, 20%, 80%) — --ib-border</div></div></div>
+        </div>
+        <div class="card"><h4>Dark Mode</h4>
+          <div class="swatch"><div class="swatch-c" style="background:hsl(240,30%,4%)"></div><div class="swatch-info"><div class="name" style="color:#FAFAF7">Deep Navy</div><div class="hex" style="color:#9A9383">hsl(240, 30%, 4%) — --ib-dark-bg</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:hsl(210,20%,90%)"></div><div class="swatch-info"><div class="name">Light Text</div><div class="hex">hsl(210, 20%, 90%) — --ib-dark-fg</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:hsl(45,90%,60%)"></div><div class="swatch-info"><div class="name">Bright Gold</div><div class="hex">hsl(45, 90%, 60%) — --ib-dark-primary</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:hsl(260,50%,30%)"></div><div class="swatch-info"><div class="name">Deep Purple</div><div class="hex">hsl(260, 50%, 30%) — --ib-dark-accent</div></div></div>
+          <div class="swatch"><div class="swatch-c" style="background:hsl(240,20%,15%)"></div><div class="swatch-info"><div class="name" style="color:#FAFAF7">Dark Border</div><div class="hex" style="color:#9A9383">hsl(240, 20%, 15%) — --ib-dark-border</div></div></div>
+        </div>
+        <div class="card"><h4>Typography</h4>
+          <div class="type-sample"><div class="label">Lora — Serif (headings)</div><div class="preview" style="font-family:'Lora',serif;font-weight:500;font-size:1.5rem">The 28 Lunar Mansions</div></div>
+          <div class="type-sample"><div class="label">Source Sans 3 — Sans (body/UI)</div><div class="preview" style="font-family:'Source Sans 3',sans-serif;font-weight:400;font-size:1rem">Each mansion corresponds to a specific phase of the moon's daily journey across the celestial sphere.</div></div>
+          <div class="type-sample"><div class="label">Amiri — Arabic (RTL)</div><div class="preview" style="font-family:'Amiri',serif;direction:rtl;font-size:1.15rem">المنازل القمرية الثمانية والعشرون</div></div>
+        </div>
+        <div class="card"><h4>Glass Card</h4>
+          <div style="padding:1.2rem;background:hsl(40,25%,92%);backdrop-filter:blur(20px);border:1px solid hsl(40,20%,80%);border-radius:.75rem;box-shadow:0 1px 3px rgba(0,0,0,.08)">
+            <div style="font-family:'Lora',serif;font-weight:500;margin-bottom:.3rem">Al-Nath</div>
+            <div style="font-family:'Source Sans 3',sans-serif;font-size:.85rem;color:hsl(240,15%,35%)">The Butt · 1°–13° Aries</div>
+            <div style="margin-top:.5rem;display:flex;gap:.4rem">
+              <span style="padding:.2rem .6rem;border:1px solid hsl(40,20%,80%);border-radius:999px;font-family:'Source Sans 3',sans-serif;font-size:.7rem">Blessed</span>
+              <span style="padding:.2rem .6rem;border:1px solid hsl(40,20%,80%);border-radius:999px;font-family:'Source Sans 3',sans-serif;font-size:.7rem">♂ Mars</span>
+            </div>
+          </div>
+          <p style="margin-top:.8rem;font-size:.8rem">backdrop-blur(20px) · bg hsl(40,25%,92%) · border hsl(40,20%,80%) · radius 0.75rem</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- GLOBAL SHARED -->
+  <div class="sec">
+    <div class="sec-header"><div class="eye">All Brands</div><h2>Spacing Scale</h2></div>
+    <div class="grid-4">
+      <div class="card"><h4>Space Tokens</h4>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem;font-size:.82rem">
+          <span>--space-1</span><span>0.25rem (4px)</span>
+          <span>--space-2</span><span>0.5rem (8px)</span>
+          <span>--space-3</span><span>0.75rem (12px)</span>
+          <span>--space-4</span><span>1rem (16px)</span>
+          <span>--space-5</span><span>1.25rem (20px)</span>
+          <span>--space-6</span><span>1.5rem (24px)</span>
+          <span>--space-8</span><span>2rem (32px)</span>
+          <span>--space-10</span><span>2.5rem (40px)</span>
+          <span>--space-12</span><span>3rem (48px)</span>
+          <span>--space-16</span><span>4rem (64px)</span>
+          <span>--space-20</span><span>5rem (80px)</span>
+          <span>--space-24</span><span>6rem (96px)</span>
+        </div>
+      </div>
+      <div class="card"><h4>Spacing Visualized</h4>
+        <div style="display:flex;flex-direction:column;gap:.5rem">
+          <div style="display:flex;align-items:center;gap:.5rem"><span style="font-size:.7rem;width:4rem">space-2</span><div style="height:8px;background:var(--accent);width:8px;border-radius:50%"></div><span style="font-size:.7rem">8px</span></div>
+          <div style="display:flex;align-items:center;gap:.5rem"><span style="font-size:.7rem;width:4rem">space-4</span><div style="height:16px;background:var(--accent);width:16px;border-radius:50%"></div><span style="font-size:.7rem">16px</span></div>
+          <div style="display:flex;align-items:center;gap:.5rem"><span style="font-size:.7rem;width:4rem">space-6</span><div style="height:24px;background:var(--accent);width:24px;border-radius:50%"></div><span style="font-size:.7rem">24px</span></div>
+          <div style="display:flex;align-items:center;gap:.5rem"><span style="font-size:.7rem;width:4rem">space-8</span><div style="height:32px;background:var(--accent);width:32px;border-radius:50%"></div><span style="font-size:.7rem">32px</span></div>
+          <div style="display:flex;align-items:center;gap:.5rem"><span style="font-size:.7rem;width:4rem">space-12</span><div style="height:48px;background:var(--accent);width:48px;border-radius:50%"></div><span style="font-size:.7rem">48px</span></div>
+        </div>
+      </div>
+      <div class="card"><h4>Easing Curves</h4>
+        <div style="font-size:.85rem">
+          <strong>--ease-out:</strong> cubic-bezier(0.22, 1, 0.36, 1)<br>
+          <strong>--ease-in-out:</strong> cubic-bezier(0.65, 0.05, 0.36, 1)<br>
+          <strong>--ease-spring:</strong> cubic-bezier(0.34, 1.56, 0.64, 1)
+        </div>
+      </div>
+      <div class="card"><h4>Global Rules</h4>
+        <p style="font-size:.85rem">▪ No emoji in UI<br>▪ No aggressive gradients<br>▪ Sentence case for body<br>▪ ALL CAPS + spaced tracking for labels<br>▪ Oxford comma required<br>▪ prefers-reduced-motion respected<br>▪ Single accent color per brand (copper or gold)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="sec">
+    <div style="text-align:center;padding:2rem 0">
+      <div class="swatch" style="justify-content:center">
+        <div class="swatch-c" style="background:#8C7355;border-radius:50%;width:1.5rem;height:1.5rem"></div>
+        <div class="swatch-c" style="background:#8B6510;border-radius:50%;width:1.5rem;height:1.5rem"></div>
+        <div class="swatch-c" style="background:hsl(35,85%,35%);border-radius:50%;width:1.5rem;height:1.5rem"></div>
+      </div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--text-muted);margin-top:1rem">Four brands. One design philosophy.<br>Editorial. Scholarly. Calm confidence.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('.brand-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.brand-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.brand-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + tab.dataset.brand).classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>
