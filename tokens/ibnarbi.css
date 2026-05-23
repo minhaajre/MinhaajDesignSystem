@@ -1,0 +1,102 @@
+/* ============================================================
+   MINHAAJ DESIGN SYSTEM — ibnarbi.css
+   Brand: IbnArbi (ibnarbi.minhaaj.com)
+   Palette: Warm Parchment Light / Deep Navy Dark (HSL)
+   Aesthetic: Glass cards, backdrop-blur, rounded corners,
+   Arabic RTL support, shadcn/ui patterns
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+  /* ── Fonts ────────────────────────────────────────────────── */
+  --ib-font-serif:   'Lora', Georgia, serif;
+  --ib-font-sans:    'Source Sans 3', system-ui, sans-serif;
+  --ib-font-arabic:  'Amiri', Georgia, serif;
+
+  /* ── Light mode tokens ───────────────────────────────────── */
+  --ib-bg:           hsl(40, 30%, 96%);      /* warm parchment */
+  --ib-bg-card:      hsl(40, 25%, 92%);      /* card surface */
+  --ib-fg:           hsl(240, 25%, 12%);     /* text — near black */
+  --ib-fg-muted:     hsl(240, 15%, 35%);     /* muted text */
+  --ib-primary:      hsl(35, 85%, 35%);      /* warm gold-brown */
+  --ib-primary-fg:   hsl(0, 0%, 100%);
+  --ib-secondary:    hsl(260, 15%, 88%);     /* lavender-grey bg */
+  --ib-secondary-fg: hsl(260, 40%, 20%);     /* lavender-grey text */
+  --ib-accent:       hsl(260, 25%, 82%);     /* lavender accent */
+  --ib-border:       hsl(40, 20%, 80%);
+  --ib-muted:        hsl(40, 20%, 88%);
+
+  /* ── Dark mode tokens ────────────────────────────────────── */
+  --ib-dark-bg:      hsl(240, 30%, 4%);      /* deep navy */
+  --ib-dark-card:    hsl(240, 25%, 6%);      /* dark card surface */
+  --ib-dark-fg:      hsl(210, 20%, 90%);     /* light text */
+  --ib-dark-fg-muted:hsl(215, 20%, 65%);     /* muted text */
+  --ib-dark-primary: hsl(45, 90%, 60%);      /* bright gold */
+  --ib-dark-primary-fg: hsl(240, 30%, 4%);
+  --ib-dark-secondary:  hsl(260, 30%, 15%);  /* dark lavender bg */
+  --ib-dark-accent:  hsl(260, 50%, 30%);     /* deep purple */
+  --ib-dark-border:  hsl(240, 20%, 15%);
+  --ib-dark-muted:   hsl(240, 20%, 12%);
+
+  /* ── Radii ────────────────────────────────────────────────── */
+  --ib-radius:       0.5rem;    /* 8px — base radius */
+  --ib-radius-lg:    0.75rem;   /* 12px — cards */
+  --ib-radius-xl:    1rem;      /* 16px — large cards */
+  --ib-radius-full:  9999px;    /* pills */
+
+  /* ── Shadows ──────────────────────────────────────────────── */
+  --ib-shadow-sm:    0 1px 3px rgba(0, 0, 0, 0.08);
+  --ib-shadow-md:    0 4px 16px rgba(0, 0, 0, 0.10);
+  --ib-shadow-lg:    0 10px 40px rgba(0, 0, 0, 0.12);
+
+  /* ── Layout ───────────────────────────────────────────────── */
+  --ib-nav-h:        64px;
+  --ib-max-w:        1200px;
+  --ib-pad-x:        clamp(1rem, 4vw, 2.5rem);
+}
+
+/* ── Glass card pattern ──────────────────────────────────── */
+.ib-glass-card {
+  background: var(--ib-bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--ib-border);
+  border-radius: var(--ib-radius-lg);
+  box-shadow: var(--ib-shadow-sm);
+}
+
+[data-theme="dark"] .ib-glass-card {
+  background: var(--ib-dark-card);
+  border-color: var(--ib-dark-border);
+}
+
+/* ── Base light/dark body ─────────────────────────────────── */
+[data-theme="ib-light"] body,
+body.ib-light {
+  background: var(--ib-bg);
+  color: var(--ib-fg);
+  font-family: var(--ib-font-sans);
+}
+
+[data-theme="ib-dark"] body,
+body.ib-dark {
+  background: var(--ib-dark-bg);
+  color: var(--ib-dark-fg);
+  font-family: var(--ib-font-sans);
+}
+
+/* ── Arabic RTL support ────────────────────────────────────── */
+.ib-arabic {
+  font-family: var(--ib-font-arabic);
+  direction: rtl;
+  text-align: right;
+  font-size: 1.15rem;
+  line-height: 1.8;
+}
+
+/* ── Utility classes ───────────────────────────────────────── */
+.ib-heading { font-family: var(--ib-font-serif); font-weight: 500; }
+.ib-body    { font-family: var(--ib-font-sans); font-weight: 400; }
+.ib-muted   { color: var(--ib-fg-muted); }
+[data-theme="dark"] .ib-muted { color: var(--ib-dark-fg-muted); }

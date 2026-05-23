@@ -1,0 +1,182 @@
+/* ============================================================
+   MINHAAJ DESIGN SYSTEM — cciaf.css
+   Brand: CCIAF / Matrix (Cross-Civilization Intelligence
+   and Action Framework)
+   Palette: Warm Earth + Gold
+   Aesthetic: 2px radius, gold accent, contrast section
+   inversion, glassmorphism nav, subtle shadows
+   ============================================================ */
+
+/* Fonts loaded via Google Fonts (no self-hosted files):
+   EB Garamond 400, 500, 600 + italic — body/prose
+   Cormorant Garamond 300, 400, 500 + italic — display/headings/eyebrows */
+
+/* ── Light Mode ───────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg:           #F9F6F0;   /* warm off-white page bg */
+  --bg-alt:       #F2EDE3;   /* alternate section bg */
+  --bg-contrast:  #1A1510;   /* dark contrast section bg */
+  --surface:      #FFFFFF;   /* card, dropdown surfaces */
+  --surface-soft: rgba(255,255,255,.58); /* glass cards */
+  --border:       #DDD8CE;   /* dividers, card borders */
+
+  --ink-1:        #1A1510;   /* headings — near black warm */
+  --ink-2:        #3D3830;   /* body text */
+  --ink-3:        #6B6358;   /* secondary, subdued */
+  --ink-4:        #A09890;   /* muted, captions */
+
+  --gold:         #8B6510;   /* primary accent — deep gold/ochre */
+  --gold-mid:     #B8922A;   /* mid gold */
+  --gold-light:   #D4AE60;   /* light gold — underlines, borders */
+
+  /* Contrast section (dark bg in light mode) */
+  --cs-bg:        #1A1510;
+  --cs-h:         #F5F0E8;
+  --cs-body:      rgba(245,240,232,.70);
+  --cs-border:    rgba(245,240,232,.15);
+  --cs-gold:      #D4AE60;
+
+  --nav-bg:       rgba(249,246,240,.95);
+  --tog-bg:       #DDD8CE;
+  --tog-knob:     #8B6510;
+  --shadow:       0 1px 3px rgba(26,21,16,.08), 0 4px 16px rgba(26,21,16,.05);
+  --shadow-strong:0 24px 70px rgba(26,21,16,.16);
+}
+
+/* ── Dark Mode ────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --bg:           #131008;   /* very dark warm black */
+  --bg-alt:       #1B170D;
+  --bg-contrast:  #0D0B06;
+  --surface:      #1E1A10;
+  --surface-soft: rgba(30,26,16,.72);
+  --border:       #2E2918;
+
+  --ink-1:        #F0EAD8;   /* warm cream — headings */
+  --ink-2:        #C0B89E;   /* body */
+  --ink-3:        #7A7260;   /* secondary */
+  --ink-4:        #4A4438;   /* muted */
+
+  --gold:         #C8A03A;   /* brighter gold on dark */
+  --gold-mid:     #A07818;
+  --gold-light:   #E0BC70;
+
+  /* Contrast section (light bg in dark mode — inverted) */
+  --cs-bg:        #F5F0E8;
+  --cs-h:         #1A1510;
+  --cs-body:      rgba(26,21,16,.68);
+  --cs-border:    rgba(26,21,16,.14);
+  --cs-gold:      #7A5810;
+
+  --nav-bg:       rgba(19,16,8,.95);
+  --tog-bg:       #2E2918;
+  --tog-knob:     #C8A03A;
+  --shadow:       0 1px 3px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.2);
+  --shadow-strong:0 24px 70px rgba(0,0,0,.35);
+}
+
+/* ── Shared tokens (both themes) ──────────────────────────── */
+:root {
+  --nav-h:        58px;
+  --content-wide: 1180px;
+  --content-prose:760px;
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --font-serif:   'EB Garamond', Georgia, 'Times New Roman', serif;
+
+  /* Type scale */
+  --text-hero:    clamp(2.6rem, 6vw, 5rem);     /* h1 hero */
+  --text-h2:      clamp(1.7rem, 3vw, 2.6rem);   /* section h2 */
+  --text-h3:      clamp(1.2rem, 2vw, 1.5rem);   /* subtitle h3 */
+  --text-body:    1.1rem;                         /* ≈20px prose */
+  --text-small:   0.85rem;                        /* labels, captions */
+  --text-eyebrow: 0.72rem;                        /* section eyebrow */
+  --text-nav:     15px;                           /* nav links */
+  --text-label:   12px;                           /* layer labels */
+
+  /* Line heights */
+  --lh-display:   1.08;
+  --lh-h2:        1.15;
+  --lh-body:      1.82;
+  --lh-quote:     1.42;
+
+  /* Letter spacing */
+  --ls-eyebrow:   0.22em;
+  --ls-brand:     0.20em;
+  --ls-label:     0.18em;
+  --ls-nav:       0.04em;
+
+  /* Radii */
+  --radius-sm:    2px;    /* surface cards, detail boxes */
+  --radius-md:    4px;    /* tooltip labels */
+  --radius-full:  999px;  /* pills, buttons */
+  --radius-pill:  13px;   /* theme toggle */
+
+  /* Durations */
+  --dur-fast:     0.2s;
+  --dur-base:     0.35s;
+  --dur-slow:     0.4s;
+  --dur-reveal:   0.7s;
+}
+
+/* ── Utility classes ───────────────────────────────────────── */
+.eye {
+  font-family: var(--font-heading);
+  font-size: var(--text-eyebrow); font-weight: 300;
+  letter-spacing: var(--ls-eyebrow); text-transform: uppercase;
+  color: var(--gold);
+}
+
+.h1 {
+  font-family: var(--font-heading);
+  font-size: var(--text-hero); font-weight: 300;
+  line-height: var(--lh-display); letter-spacing: -0.01em;
+  color: var(--ink-1);
+}
+
+.h2 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2); font-weight: 300;
+  line-height: var(--lh-h2);
+  color: var(--ink-1);
+}
+
+.prose {
+  font-family: var(--font-serif);
+  font-size: var(--text-body);
+  color: var(--ink-2);
+  line-height: var(--lh-body);
+}
+
+.blockquote {
+  border-left: 2px solid var(--cs-gold);
+  padding-left: 28px;
+  font-family: var(--font-heading);
+  font-size: clamp(1.2rem, 2.4vw, 1.65rem);
+  font-style: italic; font-weight: 300;
+  line-height: var(--lh-quote);
+  color: var(--cs-h);
+}
+
+.rule {
+  width: 50px; height: 1.5px;
+  background: var(--gold);
+}
+
+/* ── Layer card grid (CCIAF framework) ────────────────────── */
+.layers { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--border); }
+
+.layer-card { padding: 26px 20px; border-right: 1px solid var(--border); transition: background var(--dur-fast); }
+.layer-card:last-child { border-right: none; }
+.layer-card:hover { background: var(--bg-alt); }
+
+.layer-num { font-family: var(--font-heading); font-size: 12px; font-weight: 300; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+.layer-title { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 400; color: var(--ink-1); margin-bottom: 6px; }
+.layer-question { font-style: italic; font-size: 14px; color: var(--ink-3); margin-bottom: 10px; line-height: 1.4; }
+.layer-sub { font-size: 13px; color: var(--ink-4); line-height: 1.65; }
+
+/* ── Engagement tier card (CCIAF) ─────────────────────────── */
+.tier { padding: 30px 26px; border-right: 1px solid var(--border); transition: background var(--dur-fast); }
+.tier:last-child { border-right: none; }
+.tier:hover { background: var(--bg-alt); }
+.tier-eye { font-family: var(--font-heading); font-size: 12px; font-weight: 300; letter-spacing: 0.20em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+.tier-name { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 400; color: var(--ink-1); margin-bottom: 8px; }
