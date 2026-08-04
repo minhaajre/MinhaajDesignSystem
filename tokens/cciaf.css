@@ -1,33 +1,51 @@
 /* ============================================================
    MINHAAJ DESIGN SYSTEM — cciaf.css
-   Brand: CCIAF / Matrix (Cross-Civilization Intelligence
-   and Action Framework)
+   Brand: CCIAF / Matrix
+   (Cross-Civilization Intelligence and Action Framework)
+   Source of truth: cciaf.minhaaj.com + cciaf-report-engine
+   ────────────────────────────────────────────────────────────
    Palette: Warm Earth + Gold
-   Aesthetic: 2px radius, gold accent, contrast section
-   inversion, glassmorphism nav, subtle shadows
+   Aesthetic: 2px radius, gold accent, contrast-section
+   inversion, glassmorphism nav, subtle dual-layer shadows
+   Fonts: Cormorant Garamond (display) + EB Garamond (body)
+   ────────────────────────────────────────────────────────────
+   Single accent rule: ONE gold accent per surface. Emphasis
+   comes from weight, spacing, and tone — never a second hue.
    ============================================================ */
 
-/* Fonts loaded via Google Fonts (no self-hosted files):
-   EB Garamond 400, 500, 600 + italic — body/prose
-   Cormorant Garamond 300, 400, 500 + italic — display/headings/eyebrows */
+/* Fonts loaded via Google Fonts (no self-hosted files required):
+   Cormorant Garamond 300, 400, 500 + italic — display / headings / eyebrows
+   EB Garamond 400, 500, 600 + italic      — body / prose / nav links      */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap');
 
-/* ── Light Mode ───────────────────────────────────────────── */
+/* ──────────────────────────────────────────────────────────────
+   DESIGN TOKENS — exact parity with cciaf.minhaaj.com/index.html
+   ────────────────────────────────────────────────────────────── */
+:root,
 [data-theme="light"] {
-  --bg:           #F9F6F0;   /* warm off-white page bg */
-  --bg-alt:       #F2EDE3;   /* alternate section bg */
-  --bg-contrast:  #1A1510;   /* dark contrast section bg */
-  --surface:      #FFFFFF;   /* card, dropdown surfaces */
-  --surface-soft: rgba(255,255,255,.58); /* glass cards */
-  --border:       #DDD8CE;   /* dividers, card borders */
+  /* Backgrounds */
+  --bg:           #F9F6F0;   /* warm off-white — page bg */
+  --bg-alt:       #F2EDE3;   /* warm cream — alternate section bg */
+  --bg-contrast:  #1A1510;   /* dark contrast section bg (light mode) */
+  --surface:      #FFFFFF;   /* card / dropdown surface */
+  --surface-soft: rgba(255,255,255,.58); /* glass cards, nav */
 
-  --ink-1:        #1A1510;   /* headings — near black warm */
+  /* Borders */
+  --border:       #DDD8CE;   /* dividers, card borders */
+  --border-soft:  rgba(26,21,16,.08);
+
+  /* Ink / text */
+  --ink-1:        #1A1510;   /* headings — near-black warm */
   --ink-2:        #3D3830;   /* body text */
   --ink-3:        #6B6358;   /* secondary, subdued */
   --ink-4:        #A09890;   /* muted, captions */
+  --ink-5:        #C0BAB0;   /* finest print */
 
-  --gold:         #8B6510;   /* primary accent — deep gold/ochre */
-  --gold-mid:     #B8922A;   /* mid gold */
+  /* Gold accent — the single accent per surface */
+  --gold:         #8B6510;   /* primary accent — deep gold / ochre */
+  --gold-mid:     #B8922A;   /* mid gold — hover / fills */
   --gold-light:   #D4AE60;   /* light gold — underlines, borders */
+  --gold-pale:    #F5F0E5;   /* palest gold tint — callout fills */
 
   /* Contrast section (dark bg in light mode) */
   --cs-bg:        #1A1510;
@@ -36,50 +54,16 @@
   --cs-border:    rgba(245,240,232,.15);
   --cs-gold:      #D4AE60;
 
+  /* Navigation */
   --nav-bg:       rgba(249,246,240,.95);
   --tog-bg:       #DDD8CE;
   --tog-knob:     #8B6510;
-  --shadow:       0 1px 3px rgba(26,21,16,.08), 0 4px 16px rgba(26,21,16,.05);
-  --shadow-strong:0 24px 70px rgba(26,21,16,.16);
-}
 
-/* ── Dark Mode ────────────────────────────────────────────── */
-[data-theme="dark"] {
-  --bg:           #131008;   /* very dark warm black */
-  --bg-alt:       #1B170D;
-  --bg-contrast:  #0D0B06;
-  --surface:      #1E1A10;
-  --surface-soft: rgba(30,26,16,.72);
-  --border:       #2E2918;
+  /* Dual-layer subtle shadow */
+  --shadow:         0 1px 3px rgba(26,21,16,.08), 0 4px 16px rgba(26,21,16,.05);
+  --shadow-strong:  0 24px 70px rgba(26,21,16,.16);
 
-  --ink-1:        #F0EAD8;   /* warm cream — headings */
-  --ink-2:        #C0B89E;   /* body */
-  --ink-3:        #7A7260;   /* secondary */
-  --ink-4:        #4A4438;   /* muted */
-
-  --gold:         #C8A03A;   /* brighter gold on dark */
-  --gold-mid:     #A07818;
-  --gold-light:   #E0BC70;
-
-  /* Contrast section (light bg in dark mode — inverted) */
-  --cs-bg:        #F5F0E8;
-  --cs-h:         #1A1510;
-  --cs-body:      rgba(26,21,16,.68);
-  --cs-border:    rgba(26,21,16,.14);
-  --cs-gold:      #7A5810;
-
-  --nav-bg:       rgba(19,16,8,.95);
-  --tog-bg:       #2E2918;
-  --tog-knob:     #C8A03A;
-  --shadow:       0 1px 3px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.2);
-  --shadow-strong:0 24px 70px rgba(0,0,0,.35);
-}
-
-/* ── Shared tokens (both themes) ──────────────────────────── */
-:root {
-  --nav-h:        58px;
-  --content-wide: 1180px;
-  --content-prose:760px;
+  /* ── Typography ── */
   --font-heading: 'Cormorant Garamond', Georgia, serif;
   --font-serif:   'EB Garamond', Georgia, 'Times New Roman', serif;
 
@@ -105,20 +89,201 @@
   --ls-label:     0.18em;
   --ls-nav:       0.04em;
 
-  /* Radii */
+  /* ── Spacing scale ── */
+  --space-1:  0.25rem;   /* 4px */
+  --space-2:  0.5rem;    /* 8px */
+  --space-3:  0.75rem;   /* 12px */
+  --space-4:  1rem;      /* 16px */
+  --space-5:  1.25rem;   /* 20px */
+  --space-6:  1.5rem;    /* 24px */
+  --space-8:  2rem;      /* 32px */
+  --space-10: 2.5rem;    /* 40px */
+  --space-12: 3rem;      /* 48px */
+  --space-16: 4rem;      /* 64px */
+  --space-20: 5rem;      /* 80px */
+  --space-24: 6rem;      /* 96px */
+
+  /* ── Layout ── */
+  --nav-h:        58px;
+  --content-wide: 1180px;
+  --content-prose:760px;
+  --pad-x:        clamp(20px, 8vw, 120px);
+  --sec-py:       clamp(70px, 9vw, 120px);
+
+  /* ── Radii (near-zero by design) ── */
   --radius-sm:    2px;    /* surface cards, detail boxes */
   --radius-md:    4px;    /* tooltip labels */
   --radius-full:  999px;  /* pills, buttons */
   --radius-pill:  13px;   /* theme toggle */
 
-  /* Durations */
+  /* ── Duration / easing ── */
   --dur-fast:     0.2s;
   --dur-base:     0.35s;
   --dur-slow:     0.4s;
   --dur-reveal:   0.7s;
+  --ease-out:     cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ── Semantic (report) aliases — keep so report fragments resolve ── */
+  --ink:           #1A1510;
+  --cover-bg:      #1A1510;
+  --gold-border:   #D4AE60;
+  --muted:         #6B6358;
+  --muted-light:   rgba(245,240,232,.75);
+  --rule:          #DDD8CE;
+  --table-head-bg: #F2EDE3;
+  --table-head-fg: #6B6358;
+  --table-alt:     rgba(0,0,0,0.025);
+  --table-hover:   rgba(0,0,0,0.04);
+  --table-current: #FFF8E7;
+  --callout-bg:    #F5F0E5;
+  --note-bg:       #F9F6F0;
+  --note-border:   #DDD8CE;
+  --note-fg:       #3D3830;
+  --north-star-bg: #F5EDD8;
+  --north-star-fg: #1A1510;
+  --crc-bg:        #FFFDF5;
+  --crc-border:    #8B6510;
+  --gated-bg:      #FAF6EE;
+  --gated-fg:      #6B6358;
+  --gated-border:  #DDD8CE;
+  --code-bg:       #1A1510;
+  --code-fg:       #F5F0E5;
+
+  /* Layer badge palette — quiet, paper-friendly */
+  --l1-bg: #F5F3FF; --l1-fg: #4C1D95; --l1-bdr: #DDD6FE;
+  --l2-bg: #EFF6FF; --l2-fg: #1E3A5F; --l2-bdr: #BFDBFE;
+  --l3-bg: #FDF0EB; --l3-fg: #7A3B1E; --l3-bdr: #F0C4B0;
+  --l4-bg: #F0FDFA; --l4-fg: #134E4A; --l4-bdr: #99F6E4;
+  --l5-bg: #FEF2F2; --l5-fg: #991B1B; --l5-bdr: #FECACA;
+  --crc-badge-bg: #FFFBEB; --crc-badge-fg: #78350F; --crc-badge-bdr: #D97706;
+  --meta-bg: #F3F4F6; --meta-fg: #374151; --meta-bdr: #D1D5DB;
+
+  /* Confidence grade palette */
+  --cg-high-bg: #D1FAE5; --cg-high-fg: #065F46; --cg-high-bdr: #6EE7B7;
+  --cg-mod-bg:  #FEF3C7; --cg-mod-fg:  #78350F; --cg-mod-bdr:  #FCD34D;
+  --cg-low-bg:  #FEE2E2; --cg-low-fg:  #991B1B; --cg-low-bdr:  #FCA5A5;
+  --cg-none-bg: #F3F4F6; --cg-none-fg: #374151; --cg-none-bdr: #D1D5DB;
 }
 
-/* ── Utility classes ───────────────────────────────────────── */
+/* ──────────────────────────────────────────────────────────────
+   DARK MODE — gold brightens, contrast section inverts to light
+   ────────────────────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --bg:           #131008;   /* very dark warm black */
+  --bg-alt:       #1B170D;
+  --bg-contrast:  #0D0B06;
+  --surface:      #1E1A10;
+  --surface-soft: rgba(30,26,16,.72);
+  --border:       #2E2918;
+
+  --ink-1:        #F0EAD8;   /* warm cream — headings */
+  --ink-2:        #C0B89E;   /* body */
+  --ink-3:        #7A7260;   /* secondary */
+  --ink-4:        #4A4438;   /* muted */
+  --ink-5:        #2E2918;
+
+  --gold:         #C8A03A;   /* brighter gold on dark */
+  --gold-mid:     #A07818;
+  --gold-light:   #E0BC70;
+  --gold-pale:    #2A2410;
+
+  /* Contrast section — inverted: light bg in dark mode */
+  --cs-bg:        #F5F0E8;
+  --cs-h:         #1A1510;
+  --cs-body:      rgba(26,21,16,.68);
+  --cs-border:    rgba(26,21,16,.14);
+  --cs-gold:      #7A5810;
+
+  --nav-bg:       rgba(19,16,8,.95);
+  --tog-bg:       #2E2918;
+  --tog-knob:     #C8A03A;
+  --shadow:         0 1px 3px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.2);
+  --shadow-strong:  0 24px 70px rgba(0,0,0,.35);
+
+  --table-head-bg: #1E1A10;
+  --table-head-fg: #7A7260;
+  --table-alt:     rgba(255,255,255,0.025);
+  --table-hover:   rgba(255,255,255,0.04);
+  --table-current: #2A2410;
+  --callout-bg:    #211C10;
+  --note-bg:       #16130B;
+  --note-border:   #2E2918;
+  --note-fg:       #C0B89E;
+  --north-star-bg: #2A2410;
+  --north-star-fg: #F0EAD8;
+  --crc-bg:        #2A2410;
+  --crc-border:    #C8A03A;
+  --gated-bg:      #1E1A10;
+  --gated-fg:      #7A7260;
+  --gated-border:  #2E2918;
+  --code-bg:       #0D0B06;
+  --code-fg:       #F0EAD8;
+
+  --l1-bg: #1B1733; --l1-fg: #C4B5FD; --l1-bdr: #4C1D95;
+  --l2-bg: #10203A; --l2-fg: #BFDBFE; --l2-bdr: #1E3A5F;
+  --l3-bg: #2E1A12; --l3-fg: #F0C4B0; --l3-bdr: #7A3B1E;
+  --l4-bg: #0E2A28; --l4-fg: #99F6E4; --l4-bdr: #134E4A;
+  --l5-bg: #2E1414; --l5-fg: #FCA5A5; --l5-bdr: #991B1B;
+  --crc-badge-bg: #2A2410; --crc-badge-fg: #E0BC70; --crc-badge-bdr: #C8A03A;
+  --meta-bg: #1E1A10; --meta-fg: #C0B89E; --meta-bdr: #2E2918;
+
+  --cg-high-bg: #0E2A20; --cg-high-fg: #6EE7B7; --cg-high-bdr: #065F46;
+  --cg-mod-bg:  #2A2410; --cg-mod-fg:  #E0BC70; --cg-mod-bdr:  #78350F;
+  --cg-low-bg:  #2E1414; --cg-low-fg:  #FCA5A5; --cg-low-bdr:  #991B1B;
+  --cg-none-bg: #1E1A10; --cg-none-fg: #C0B89E; --cg-none-bdr: #2E2918;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   RESET + BASE
+   ────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 18px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-serif);
+  background: var(--bg);
+  color: var(--ink-2);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background .4s, color .4s;
+  orphans: 3; widows: 3;
+}
+
+img { max-width: 100%; display: block; }
+a { color: var(--gold); text-decoration: none; transition: color .2s; }
+a:hover { color: var(--ink-1); }
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   TYPOGRAPHY LADDER — display serif headings, body serif prose
+   ────────────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  color: var(--ink-1);
+  letter-spacing: -.005em;
+  line-height: 1.18;
+}
+h1 { font-size: var(--text-hero); margin: var(--space-16) 0 var(--space-6); }
+h2 { font-size: var(--text-h2); margin: 44px 0 22px; font-weight: 300; }
+h3 { font-size: var(--text-h3); font-weight: 400; margin: 32px 0 12px; color: var(--ink-1); }
+h4 { font-size: 1.05rem; font-weight: 400; margin: 24px 0 8px; }
+p  { font-size: var(--text-body); line-height: var(--lh-body); color: var(--ink-2); }
+em { font-style: italic; }
+
+/* ──────────────────────────────────────────────────────────────
+   UTILITY CLASSES
+   ────────────────────────────────────────────────────────────── */
 .eye {
   font-family: var(--font-heading);
   font-size: var(--text-eyebrow); font-weight: 300;
@@ -145,7 +310,9 @@
   font-size: var(--text-body);
   color: var(--ink-2);
   line-height: var(--lh-body);
+  max-width: 60ch;
 }
+.prose p + p { margin-top: 1.4em; }
 
 .blockquote {
   border-left: 2px solid var(--cs-gold);
@@ -157,12 +324,11 @@
   color: var(--cs-h);
 }
 
-.rule {
-  width: 50px; height: 1.5px;
-  background: var(--gold);
-}
+.rule { width: 50px; height: 1.5px; background: var(--gold); }
 
-/* ── Layer card grid (CCIAF framework) ────────────────────── */
+/* ──────────────────────────────────────────────────────────────
+   FIVE-LAYER FRAMEWORK GRID
+   ────────────────────────────────────────────────────────────── */
 .layers { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--border); }
 
 .layer-card { padding: 26px 20px; border-right: 1px solid var(--border); transition: background var(--dur-fast); }
@@ -174,9 +340,53 @@
 .layer-question { font-style: italic; font-size: 14px; color: var(--ink-3); margin-bottom: 10px; line-height: 1.4; }
 .layer-sub { font-size: 13px; color: var(--ink-4); line-height: 1.65; }
 
-/* ── Engagement tier card (CCIAF) ─────────────────────────── */
+/* ──────────────────────────────────────────────────────────────
+   ENGAGEMENT TIER CARDS
+   ────────────────────────────────────────────────────────────── */
 .tier { padding: 30px 26px; border-right: 1px solid var(--border); transition: background var(--dur-fast); }
 .tier:last-child { border-right: none; }
 .tier:hover { background: var(--bg-alt); }
 .tier-eye { font-family: var(--font-heading); font-size: 12px; font-weight: 300; letter-spacing: 0.20em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
 .tier-name { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 400; color: var(--ink-1); margin-bottom: 8px; }
+
+/* ──────────────────────────────────────────────────────────────
+   PILL BUTTONS — the only button shape in the system
+   ────────────────────────────────────────────────────────────── */
+.btn-outline,
+.btn-solid {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 42px; padding: 10px 26px;
+  border: 1px solid var(--gold-light);
+  border-radius: 999px;
+  font-family: var(--font-heading);
+  font-size: .78rem; letter-spacing: .14em;
+  line-height: 1.2; text-transform: uppercase;
+  text-align: center; cursor: pointer;
+  transition: color .2s, background .2s, border-color .2s, transform .2s;
+}
+.btn-outline { background: transparent; color: var(--gold); }
+.btn-outline:hover { background: var(--ink-1); color: var(--bg); border-color: var(--ink-1); transform: translateY(-1px); }
+.btn-solid { background: var(--ink-1); color: var(--bg); border-color: var(--ink-1); }
+.btn-solid:hover { background: var(--gold); border-color: var(--gold); transform: translateY(-1px); }
+
+/* ──────────────────────────────────────────────────────────────
+   CONTRAST SECTION — inverts on theme switch
+   ────────────────────────────────────────────────────────────── */
+.section-contrast { background: var(--cs-bg); transition: background .4s; }
+.section-contrast .eye { color: var(--cs-gold); }
+.section-contrast .h2 { color: var(--cs-h); }
+.section-contrast .prose { color: var(--cs-body); }
+.section-contrast .blockquote { border-left-color: var(--cs-gold); }
+.section-contrast .blockquote,
+.section-contrast .blockquote p { color: var(--cs-h); }
+
+/* ──────────────────────────────────────────────────────────────
+   FADE-UP REVEAL (respects reduced motion)
+   ────────────────────────────────────────────────────────────── */
+.fade-up { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+.fade-up.visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  .fade-up { opacity: 1; transform: none; }
+}

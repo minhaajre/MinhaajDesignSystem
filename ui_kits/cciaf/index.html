@@ -134,6 +134,9 @@
     .st svg{stroke:var(--ink-3);transition:stroke .2s;}
     .st:hover svg{stroke:var(--gold);}
 
+    /* ─── SCROLL SENTINEL ─── */
+    .pt{position:absolute;top:500px;left:0;width:1px;height:1px;pointer-events:none;}
+
     /* ─── REVEAL ─── */
     .r{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;}
     .r.on{opacity:1;transform:none;}
@@ -290,6 +293,9 @@
   </style>
 </head>
 <body>
+
+<!-- SCROLL SENTINEL — drives scroll-to-top visibility -->
+<div class="pt" id="pt" aria-hidden="true"></div>
 
 <!-- HEADER -->
 <header>
@@ -477,7 +483,7 @@
   <div class="prose r">
     <p>Minhaaj Rehman is a data scientist and systems thinker whose consulting practice has spanned technology strategy, organizational decision-making, and applied research across multiple industries and cultural contexts. That work raised a question no existing advisory methodology adequately addressed: how to treat timing as a structured variable in consequential decisions.</p>
     <p>The answer required working across five intellectual traditions simultaneously — not as a scholar of any single one, but as a practitioner using each under pressure. What was missing was not another tradition; it was a calibrated decision logic for reconciling their disagreements case by case. That logic is the Conflict Resolution Codex, and it is CCIAF's primary intellectual contribution.</p>
-    <p>He is the founder of Psyda Solutions and the originator of CCIAF. Books, prior research, podcast, and applied work — <a href="https://www.minhaaj.com" target="_blank" rel="noopener">minhaaj.com</a>.</p>
+    <p>He is the originator of CCIAF — the Cross-Civilization Intelligence and Action Framework. Books, prior research, podcast, and applied work — <a href="https://www.minhaaj.com" target="_blank" rel="noopener">minhaaj.com</a>.</p>
   </div>
 </section>
 
@@ -541,7 +547,7 @@
     No standard intake form. No discovery call. A brief description of
     your context — who you are, what you are navigating — is enough.
   </p>
-  <a class="ct-a r" href="mailto:contact@psyda.org">contact@psyda.org</a>
+  <a class="ct-a r" href="mailto:contact@minhaaj.com">contact@minhaaj.com</a>
   <p class="ct-note r">
     To request Volume I — The Argument, include a short note on your
     background and what brought you to this work.
@@ -572,7 +578,7 @@
         <li><a href="#">Disclaimer</a></li>
         <li><a href="#">Privacy Policy</a></li>
         <li><a href="#">Terms of Engagement</a></li>
-        <li><a href="mailto:contact@psyda.org">contact@psyda.org</a></li>
+        <li><a href="mailto:contact@minhaaj.com">contact@minhaaj.com</a></li>
       </ul>
     </div>
   </div>
@@ -605,25 +611,25 @@
   hbg.addEventListener('click', e => { e.stopPropagation(); mob.classList.toggle('open'); });
   document.addEventListener('click', e => { if(!mob.contains(e.target) && e.target !== hbg) cm(); });
 
-  // Scroll top
+  // Scroll top — sentinel observer (no scroll listeners)
   const st = document.getElementById('st');
-  window.addEventListener('scroll', () => st.classList.toggle('on', window.scrollY > 500), {passive:true});
+  new IntersectionObserver(([e]) => st.classList.toggle('on', !e.isIntersecting), {threshold:0})
+    .observe(document.getElementById('pt'));
   st.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
 
-  // Scroll dots
+  // Scroll dots — active = last section crossing the 38% viewport line
   const secs = ['hero','gap','framework','trad','engage','about','contact'];
   const dots = document.querySelectorAll('.sn-d');
   dots.forEach(d => {
     d.addEventListener('click', () => document.getElementById(d.dataset.t)?.scrollIntoView({behavior:'smooth'}));
   });
-  function updateDots(){
-    const mid = window.innerHeight * .38;
-    let cur = secs[0];
-    secs.forEach(id => { const el = document.getElementById(id); if(el && el.getBoundingClientRect().top <= mid) cur = id; });
+  const active = new Set();
+  const dotObs = new IntersectionObserver(entries => {
+    entries.forEach(e => e.isIntersecting ? active.add(e.target.id) : active.delete(e.target.id));
+    const cur = secs.filter(id => active.has(id)).pop() ?? secs[0];
     dots.forEach(d => d.classList.toggle('on', d.dataset.t === cur));
-  }
-  window.addEventListener('scroll', updateDots, {passive:true});
-  updateDots();
+  }, {rootMargin:'0px 0px -62% 0px', threshold:0});
+  secs.forEach(id => { const el = document.getElementById(id); if (el) dotObs.observe(el); });
 
   // Reveal
   const revs = document.querySelectorAll('.r');

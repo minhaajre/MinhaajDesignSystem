@@ -1,92 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8"/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"/>
 <style>
+  [data-theme="light"]{--bg:#F9F6F0;--bg-alt:#F2EDE3;--surface:#fff;--border:#DDD8CE;--ink-1:#1A1510;--ink-2:#3D3830;--ink-3:#6B6358;--ink-4:#A09890;--gold:#8B6510;--gold-light:#D4AE60;}
+  [data-theme="dark"]{--bg:#131008;--bg-alt:#1B170D;--surface:#1E1A10;--border:#2E2918;--ink-1:#F0EAD8;--ink-2:#C0B89E;--ink-3:#7A7260;--ink-4:#4A4438;--gold:#C8A03A;--gold-light:#E0BC70;}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:#F7F3EC;padding:28px 36px;display:flex;flex-direction:column;gap:20px}
-  .label{font-family:'DM Sans',sans-serif;font-size:8px;letter-spacing:0.24em;text-transform:uppercase;color:#9A9383;margin-bottom:6px}
-  .rule{height:1px;background:#D6CFC3}
-  .row{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+  body{font-family:'EB Garamond',Georgia,serif;background:var(--bg);color:var(--ink-2);padding:40px 48px;transition:background .4s,color .4s}
+  .label{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}
+  .rule{height:1px;background:var(--border);margin:14px 0 28px}
+  .sec-label{font-family:'Cormorant Garamond',serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-4);margin:28px 0 12px}
 
-  /* Editorial list item (Psyda) */
-  .e-item{
-    display:grid;grid-template-columns:60px 1fr;gap:20px;
-    padding:20px 0;border-bottom:1px solid #D6CFC3;
-    max-width:480px;transition:padding-left 0.5s;cursor:pointer;
-  }
-  .e-item:hover{padding-left:12px}
-  .e-num{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-style:italic;color:#8C7355;padding-top:4px}
-  .e-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:400;line-height:1.2;color:#1E1C18;margin-bottom:4px}
-  .e-desc{font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:300;line-height:1.65;color:#6B6457}
+  /* Five-layer grid */
+  .layers{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--border);margin-bottom:36px}
+  .lc{padding:22px 16px;border-right:1px solid var(--border);transition:background .2s}
+  .lc:last-child{border-right:none}.lc:hover{background:var(--bg-alt)}
+  .lc-n{font-family:'Cormorant Garamond',serif;font-size:11px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+  .lc-t{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;color:var(--ink-1);margin-bottom:6px}
+  .lc-q{font-style:italic;font-size:13px;color:var(--ink-3);margin-bottom:10px;line-height:1.4}
+  .lc-s{font-size:12px;color:var(--ink-4);line-height:1.55}
 
-  /* Glass card (IbnArbi) */
-  .glass-card{
-    background:rgba(245,241,235,0.6);
-    backdrop-filter:blur(16px);
-    border:1px solid rgba(214,207,195,0.5);
-    border-radius:12px;
-    padding:16px 20px;
-    box-shadow:0 4px 30px rgba(0,0,0,0.06);
-    position:relative;overflow:hidden;
-    min-width:220px;flex:1;max-width:260px;
-  }
-  .glass-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(140,115,85,0.3),transparent)}
-  .card-title{font-family:'Lora',serif;font-size:0.95rem;font-weight:500;color:hsl(240,25%,12%);margin-bottom:4px}
-  .card-sub{font-family:'DM Sans',sans-serif;font-size:0.75rem;color:hsl(240,15%,35%);margin-bottom:12px}
-  .card-value{font-family:'Lora',serif;font-size:1.6rem;font-weight:400;color:hsl(35,85%,35%)}
-  .card-label{font-family:'DM Sans',sans-serif;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:hsl(240,15%,35%);margin-top:4px}
-
-  /* Dark card (IbnArbi) */
-  .dark-card{
-    background:rgba(12,11,20,0.7);
-    backdrop-filter:blur(24px);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:16px;
-    padding:20px 24px;
-    box-shadow:0 4px 30px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.05);
-    min-width:220px;flex:1;max-width:260px;
-  }
-  .dark-card .card-title{color:hsl(210,20%,90%)}
-  .dark-card .card-sub{color:hsl(215,20%,65%)}
-  .dark-card .card-value{color:hsl(45,90%,60%)}
-  .dark-card .card-label{color:hsl(215,20%,55%)}
+  /* Engagement tiers */
+  .eg{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border)}
+  .tier{padding:26px 22px;border-right:1px solid var(--border);transition:background .2s}
+  .tier:last-child{border-right:none}.tier:hover{background:var(--bg-alt)}
+  .tier-eye{font-family:'Cormorant Garamond',serif;font-size:11px;font-weight:300;letter-spacing:.20em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+  .tier-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:var(--ink-1);margin-bottom:8px}
+  .tier-desc{font-size:13px;color:var(--ink-3);font-style:italic;line-height:1.5;margin-bottom:14px}
+  .tier-list{list-style:none;border-top:1px solid var(--border);padding-top:12px}
+  .tier-list li{font-size:13px;color:var(--ink-2);padding:4px 0;border-bottom:1px dashed rgba(0,0,0,.07);line-height:1.4}
+  .tier-list li:last-child{border-bottom:none}
 </style>
 </head>
 <body>
-  <div class="label">Psyda — Editorial List (chapter sections)</div>
-  <div>
-    <div class="e-item">
-      <div class="e-num">i.</div>
-      <div><div class="e-title">Data Preparation</div><div class="e-desc">Clean your data from NaNs, outliers, skewness and collinearity.</div></div>
-    </div>
-    <div class="e-item" style="border-top:1px solid #D6CFC3">
-      <div class="e-num">ii.</div>
-      <div><div class="e-title">Human Insights</div><div class="e-desc">Generate human insights with in-house machine-learning algorithms, using NLP on text corpora.</div></div>
-    </div>
-  </div>
+  <div class="label">CCIAF — Cards</div>
   <div class="rule"></div>
-  <div class="label">IbnArbi — Glass Cards (light + dark)</div>
-  <div class="row">
-    <div class="glass-card">
-      <div class="card-title">Current Mansion</div>
-      <div class="card-sub">المنزل القمري</div>
-      <div class="card-value">Al-Sharatain</div>
-      <div class="card-label">Mansion 1 of 28</div>
-    </div>
-    <div class="glass-card">
-      <div class="card-title">Planetary Hour</div>
-      <div class="card-sub">الساعة الكوكبية</div>
-      <div class="card-value">♄ Saturn</div>
-      <div class="card-label">Duration: 52 min</div>
-    </div>
-    <div class="dark-card">
-      <div class="card-title">Abjad Count</div>
-      <div class="card-sub" style="color:hsl(215,20%,55%)">حساب الجُمَّل</div>
-      <div class="card-value">786</div>
-      <div class="card-label">بسم الله</div>
-    </div>
+
+  <div class="sec-label">Five-layer framework grid</div>
+  <div class="layers">
+    <div class="lc"><div class="lc-n">Layer I</div><div class="lc-t">Identity</div><div class="lc-q">"What are you made of?"</div><div class="lc-s">BaZi · Numerology</div></div>
+    <div class="lc"><div class="lc-n">Layer II</div><div class="lc-t">Timing</div><div class="lc-q">"What time is it for you?"</div><div class="lc-s">Vedic dashas · Firdaria</div></div>
+    <div class="lc"><div class="lc-n">Layer III</div><div class="lc-t">Action</div><div class="lc-q">"What to do today?"</div><div class="lc-s">28 Lunar Mansions</div></div>
+    <div class="lc"><div class="lc-n">Layer IV</div><div class="lc-t">Interpretation</div><div class="lc-q">"What does it mean?"</div><div class="lc-s">Jungian synthesis</div></div>
+    <div class="lc"><div class="lc-n">Layer V</div><div class="lc-t">Risk Awareness</div><div class="lc-q">"What to anticipate."</div><div class="lc-s">Senior engagements only</div></div>
+  </div>
+
+  <div class="sec-label">Engagement tiers</div>
+  <div class="eg">
+    <div class="tier"><div class="tier-eye">Tier I · The Election</div><div class="tier-name">Single Decision</div><div class="tier-desc">One specific high-stakes decision with a material timing dimension.</div><ul class="tier-list"><li>Full five-layer brief</li><li>Ranked timing windows</li><li>One private session</li></ul></div>
+    <div class="tier"><div class="tier-eye">Tier II · Retainer</div><div class="tier-name">Ongoing Advisory</div><div class="tier-desc">Timing intelligence as a persistent strategic variable.</div><ul class="tier-list"><li>Monthly briefings</li><li>Quarterly sessions</li><li>Electional on demand</li></ul></div>
+    <div class="tier"><div class="tier-eye">Tier III · Senior</div><div class="tier-name">Bespoke Engagement</div><div class="tier-desc">Full framework depth including Risk Awareness. By introduction.</div><ul class="tier-list"><li>All five layers</li><li>Lifecycle analysis</li><li>By invitation only</li></ul></div>
   </div>
 </body>
 </html>

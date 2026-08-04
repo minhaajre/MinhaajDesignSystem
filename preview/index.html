@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CCIAF Design System — Token Previews</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+  [data-theme="light"]{--bg:#F9F6F0;--bg-alt:#F2EDE3;--surface:#fff;--border:#DDD8CE;--ink-1:#1A1510;--ink-2:#3D3830;--ink-3:#6B6358;--ink-4:#A09890;--gold:#8B6510;--gold-light:#D4AE60;}
+  [data-theme="dark"]{--bg:#131008;--bg-alt:#1B170D;--surface:#1E1A10;--border:#2E2918;--ink-1:#F0EAD8;--ink-2:#C0B89E;--ink-3:#7A7260;--ink-4:#4A4438;--gold:#C8A03A;--gold-light:#E0BC70;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'EB Garamond',Georgia,serif;background:var(--bg);color:var(--ink-2);line-height:1.7;transition:background .4s,color .4s;padding:clamp(40px,8vw,90px)}
+  .wrap{max-width:900px;margin:0 auto}
+  .eye{font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:300;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+  h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,5vw,3.4rem);line-height:1.08;letter-spacing:-.01em;color:var(--ink-1);margin-bottom:14px}
+  p.lede{font-size:1.1rem;color:var(--ink-3);max-width:60ch;margin-bottom:48px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+  a.card{display:block;border:1px solid var(--border);background:var(--surface);padding:24px;text-decoration:none;transition:background .2s,border-color .2s,transform .2s}
+  a.card:hover{background:var(--bg-alt);border-color:var(--gold-light);transform:translateY(-2px)}
+  a.card .k{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:var(--ink-1);margin-bottom:6px}
+  a.card .d{font-size:14px;color:var(--ink-3);line-height:1.5}
+  .rule{height:1.5px;width:50px;background:var(--gold);margin:0 0 32px}
+  footer{margin-top:56px;font-size:13px;color:var(--ink-4);font-style:italic}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eye">Token Previews</div>
+    <h1>CCIAF Design System</h1>
+    <div class="rule"></div>
+    <p class="lede">A unified design system for the Cross-Civilization Intelligence and Action Framework. Warm earth palette, single gold accent, all-serif typography, light &amp; dark modes.</p>
+
+    <div class="grid">
+      <a class="card" href="colors-cciaf.html"><div class="k">Colors</div><div class="d">Light &amp; dark palettes, gold accents, contrast-section inversion.</div></a>
+      <a class="card" href="type-cciaf.html"><div class="k">Typography</div><div class="d">Cormorant Garamond display + EB Garamond body, full scale.</div></a>
+      <a class="card" href="spacing-tokens.html"><div class="k">Spacing &amp; Layout</div><div class="d">Spacing scale, section padding, content widths.</div></a>
+      <a class="card" href="shadows-radii.html"><div class="k">Radii &amp; Shadows</div><div class="d">Near-zero radii, dual-layer subtle shadows.</div></a>
+      <a class="card" href="components-cciaf.html"><div class="k">Framework Grids</div><div class="d">Five-layer framework + engagement tiers.</div></a>
+      <a class="card" href="components-buttons.html"><div class="k">Buttons</div><div class="d">Pill buttons — outline, solid, contact submit.</div></a>
+      <a class="card" href="components-cards.html"><div class="k">Cards</div><div class="d">Layer grid, engagement tiers, grid-bordered surfaces.</div></a>
+      <a class="card" href="components-forms.html"><div class="k">Forms</div><div class="d">Square inputs, gold focus ring, validation.</div></a>
+      <a class="card" href="components-nav.html"><div class="k">Navigation</div><div class="d">Glassmorphic fixed nav, theme toggle, hamburger.</div></a>
+      <a class="card" href="components-scroll.html"><div class="k">Scroll Aids</div><div class="d">Side-nav dots with tooltips + floating scroll-to-top button.</div></a>
+    </div>
+
+    <footer>CCIAF Design System — tokens/cciaf.css is the single source of truth.</footer>
+  </div>
+</body>
+</html>

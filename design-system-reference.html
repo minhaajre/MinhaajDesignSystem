@@ -3,1249 +3,189 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Minhaaj Design System — Complete Reference</title>
+<title>CCIAF Design System — Complete Reference</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Inter:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
 <style>
-/* ───────────── RESET & BASE ───────────── */
+/* ───────────── TOKENS (single source of truth: tokens/cciaf.css) ───────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{font-size:16px;scroll-behavior:smooth;scroll-padding-top:80px}
-:root{--bg:#F9F6F0;--bg-alt:#F2EDE3;--surface:#FFF;--border:#DDD8CE;--ink-1:#1A1510;--ink-2:#3D3830;--ink-3:#6B6358;--ink-4:#A09890;--gold:#8B6510;--gold-light:#D4AE60;--gold-mid:#B8922A;--accent:#8C7355;--font-display:'Cormorant Garamond',Georgia,serif;--font-serif:'EB Garamond',Georgia,'Times New Roman',serif;--font-ui:'DM Sans',sans-serif;--font-body:'Inter',sans-serif;--lh-body:1.75;--shadow:0 1px 3px rgba(26,21,16,.08),0 4px 16px rgba(26,21,16,.05)}
-[data-theme="dark"]{--bg:#131008;--bg-alt:#1B170D;--surface:#1E1A10;--border:#2E2918;--ink-1:#F0EAD8;--ink-2:#C0B89E;--ink-3:#7A7260;--ink-4:#4A4438;--gold:#C8A03A;--gold-light:#E0BC70;--gold-mid:#A07818}
+html{font-size:18px;scroll-behavior:smooth;scroll-padding-top:80px}
+:root{
+  --bg:#F9F6F0;--bg-alt:#F2EDE3;--surface:#FFF;--border:#DDD8CE;
+  --ink-1:#1A1510;--ink-2:#3D3830;--ink-3:#6B6358;--ink-4:#A09890;--ink-5:#C0BAB0;
+  --gold:#8B6510;--gold-mid:#B8922A;--gold-light:#D4AE60;--gold-pale:#F5F0E5;
+  --cs-bg:#1A1510;--cs-h:#F5F0E8;--cs-body:rgba(245,240,232,.70);--cs-border:rgba(245,240,232,.15);--cs-gold:#D4AE60;
+  --nav-bg:rgba(249,246,240,.95);--tog-bg:#DDD8CE;--tog-knob:#8B6510;
+  --shadow:0 1px 3px rgba(26,21,16,.08),0 4px 16px rgba(26,21,16,.05);--shadow-strong:0 24px 70px rgba(26,21,16,.16);
+  --font-heading:'Cormorant Garamond',Georgia,serif;
+  --font-serif:'EB Garamond',Georgia,'Times New Roman',serif;
+  --lh-body:1.82;
+  --pad-x:clamp(20px,8vw,120px);
+  --sec-py:clamp(70px,9vw,120px);
+  --nav-h:58px;
+}
+[data-theme="dark"]{
+  --bg:#131008;--bg-alt:#1B170D;--surface:#1E1A10;--border:#2E2918;
+  --ink-1:#F0EAD8;--ink-2:#C0B89E;--ink-3:#7A7260;--ink-4:#4A4438;--ink-5:#2E2918;
+  --gold:#C8A03A;--gold-mid:#A07818;--gold-light:#E0BC70;--gold-pale:#2A2410;
+  --cs-bg:#F5F0E8;--cs-h:#1A1510;--cs-body:rgba(26,21,16,.68);--cs-border:rgba(26,21,16,.14);--cs-gold:#7A5810;
+  --nav-bg:rgba(19,16,8,.95);--tog-bg:#2E2918;--tog-knob:#C8A03A;
+  --shadow:0 1px 3px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.2);--shadow-strong:0 24px 70px rgba(0,0,0,.35);
+}
 body{font-family:var(--font-serif);background:var(--bg);color:var(--ink-2);line-height:var(--lh-body);-webkit-font-smoothing:antialiased;transition:background .4s,color .4s}
-h1,h2,h3,h4,h5{font-family:var(--font-display);font-weight:300;color:var(--ink-1);transition:color .4s}
-h1{font-size:clamp(2rem,4vw,3.2rem);line-height:1.08;letter-spacing:-.01em;margin-bottom:.5rem}
-h2{font-size:clamp(1.5rem,3vw,2.2rem);line-height:1.15;margin:3rem 0 1.5rem;padding-bottom:.75rem;border-bottom:1.5px solid var(--gold);max-width:700px}
+h1,h2,h3,h4,h5{font-family:var(--font-heading);font-weight:300;color:var(--ink-1);transition:color .4s}
+h1{font-size:clamp(2.6rem,6vw,5rem);line-height:1.08;letter-spacing:-.01em;margin-bottom:.5rem}
+h2{font-size:clamp(1.7rem,3vw,2.6rem);line-height:1.15;margin:3rem 0 1.5rem;padding-bottom:.75rem;border-bottom:1.5px solid var(--gold);max-width:760px}
 h3{font-size:1.3rem;font-weight:400;margin:2rem 0 1rem;color:var(--gold)}
 h4{font-size:1rem;font-weight:500;margin:1.2rem 0 .5rem;color:var(--ink-1)}
-h5{font-size:.85rem;font-weight:500;text-transform:uppercase;letter-spacing:.12em;margin:1rem 0 .4rem;color:var(--ink-3)}
-p{max-width:65ch;margin-bottom:1rem;font-size:1rem;color:var(--ink-2)}
+p{max-width:65ch;margin-bottom:1rem;font-size:1.05rem;color:var(--ink-2)}
 a{color:var(--gold);text-decoration:none;transition:color .2s}
 a:hover{color:var(--ink-1)}
-img{max-width:100%;display:block}
-code{font-family:'DM Sans',monospace;font-size:.82rem;background:var(--bg-alt);padding:.15em .4em;border-radius:2px;color:var(--ink-1)}
+code{font-family:'Courier New',monospace;font-size:.82rem;background:var(--bg-alt);padding:.15em .4em;border-radius:2px;color:var(--ink-1)}
 pre{background:var(--bg-alt);padding:1rem;overflow-x:auto;border:1px solid var(--border);margin:1rem 0;font-size:.82rem;line-height:1.6}
 pre code{background:none;padding:0}
-ul,ol{margin-bottom:1rem;padding-left:1.3rem;color:var(--ink-2)}
-li{margin-bottom:.3rem}
 table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.88rem}
-th,td{padding:.6rem .8rem;text-align:left;border-bottom:1px solid var(--border)}
-th{font-family:var(--font-ui);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-3);font-weight:500;background:var(--bg-alt)}
+th,td{padding:.6rem .8rem;text-align:left;border-bottom:1px solid var(--border);transition:border-color .4s}
+th{font-family:var(--font-heading);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-3);font-weight:400;background:var(--bg-alt)}
 td{color:var(--ink-2)}
 tr:hover td{background:var(--bg-alt)}
-blockquote{border-left:2px solid var(--gold-light);padding-left:1.2rem;margin:1.2rem 0;font-family:var(--font-display);font-style:italic;color:var(--ink-3)}
+blockquote{border-left:2px solid var(--cs-gold);padding-left:1.2rem;margin:1.2rem 0;font-family:var(--font-heading);font-size:clamp(1.2rem,2.4vw,1.65rem);font-style:italic;font-weight:300;line-height:1.42;color:var(--cs-h);background:var(--cs-bg);padding:1rem 1.2rem}
 hr{border:none;height:1px;background:var(--border);margin:2rem 0}
 small{font-size:.82rem;color:var(--ink-3)}
+.eye{font-family:var(--font-heading);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:1rem}
+.wrap{max-width:1100px;margin:0 auto;padding:calc(var(--nav-h) + 40px) var(--pad-x) 80px}
+.swatch-row{display:flex;gap:10px;flex-wrap:wrap;margin:1rem 0}
+.swatch{flex:1;min-height:70px;min-width:90px;display:flex;flex-direction:column;justify-content:flex-end;padding:10px 12px;border:1px solid var(--border)}
+.sl{font-family:var(--font-heading);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;opacity:.7;margin-bottom:2px}
+.sh{font-size:.8rem;font-weight:500}
+.sn{font-size:.68rem;opacity:.6;margin-top:1px}
+.grid2{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--border);margin:1.5rem 0}
+.gc{padding:22px 16px;border-right:1px solid var(--border);transition:background .2s}
+.gc:last-child{border-right:none}.gc:hover{background:var(--bg-alt)}
+.gc-n{font-family:var(--font-heading);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.gc-t{font-family:var(--font-heading);font-size:1.1rem;color:var(--ink-1);margin-bottom:6px}
+.gc-q{font-style:italic;font-size:.85rem;color:var(--ink-3);margin-bottom:8px;line-height:1.4}
+.gc-s{font-size:.78rem;color:var(--ink-4)}
+.btn-outline,.btn-solid{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 26px;border:1px solid var(--gold-light);border-radius:999px;font-family:var(--font-heading);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:color .2s,background .2s,border-color .2s,transform .2s;margin:6px 8px 6px 0}
+.btn-outline{background:transparent;color:var(--gold)}
+.btn-outline:hover{background:var(--ink-1);color:var(--bg);border-color:var(--ink-1);transform:translateY(-1px)}
+.btn-solid{background:var(--ink-1);color:var(--bg);border-color:var(--ink-1)}
+.btn-solid:hover{background:var(--gold);border-color:var(--gold);transform:translateY(-1px)}
+.contrast{background:var(--cs-bg);padding:2rem var(--pad-x);margin:2rem 0;transition:background .4s}
+.contrast .eye{color:var(--cs-gold)}
+.contrast h2{border-color:var(--cs-gold);color:var(--cs-h)}
+.contrast p{color:var(--cs-body);max-width:none}
 
-/* ───────────── LAYOUT ───────────── */
-.wrap{max-width:1200px;margin:0 auto;padding:0 clamp(1.2rem,4vw,2.5rem)}
-
-/* ───────────── TOP NAV ───────────── */
-.top-nav{position:fixed;top:0;left:0;right:0;z-index:500;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.2rem,4vw,2.5rem);background:rgba(249,246,240,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transition:background .4s,border-color .4s}
-[data-theme="dark"] .top-nav{background:rgba(19,16,8,.92)}
-.top-nav-brand{font-family:var(--font-display);font-size:.82rem;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-1)}
-.top-nav-brand em{font-style:normal;color:var(--gold)}
-.top-nav-actions{display:flex;align-items:center;gap:.8rem}
-.theme-icon{background:none;border:1px solid var(--border);border-radius:50%;width:32px;height:32px;cursor:pointer;display:grid;place-items:center;font-size:.85rem;color:var(--ink-3);transition:color .2s,background .2s}
-.theme-icon:hover{color:var(--ink-1);background:var(--bg-alt)}
-.toc-toggle{background:none;border:1px solid var(--border);border-radius:4px;padding:6px 10px;cursor:pointer;font-family:var(--font-ui);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);display:none}
-.toc-toggle:hover{color:var(--ink-1)}
-
-/* ───────────── SIDEBAR TOC ───────────── */
-.toc{position:fixed;top:56px;left:0;bottom:0;width:260px;overflow-y:auto;padding:1.8rem 1.2rem 2rem;background:var(--bg);border-right:1px solid var(--border);z-index:400;transition:background .4s,border-color .4s}
-[data-theme="dark"] .toc{background:var(--bg)}
-.toc-label{font-family:var(--font-ui);font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3);margin-bottom:1.2rem;padding-bottom:.6rem;border-bottom:1px solid var(--border)}
-.toc a{display:block;font-family:var(--font-serif);font-size:.82rem;color:var(--ink-3);padding:.25rem 0;transition:color .15s;border:none}
-.toc a:hover{color:var(--gold)}
-.toc a.toc-h2{padding-left:.6rem;font-size:.78rem}
-.toc a.toc-h3{padding-left:1.2rem;font-size:.75rem;color:var(--ink-4)}
-.toc a.toc-h4{padding-left:1.8rem;font-size:.72rem;color:var(--ink-4)}
-
-/* ───────────── MAIN CONTENT ───────────── */
-.main{margin-left:260px;padding:80px clamp(2rem,6vw,4rem) 4rem;min-height:100vh}
-.section{padding-top:.5rem}
-.section-header{margin-bottom:1.5rem}
-.section-header .eye{font-family:var(--font-display);font-size:.72rem;font-weight:300;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
-
-/* ───────────── COMPONENT DISPLAY ───────────── */
-.swatch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin:1.2rem 0}
-.swatch-card{border:1px solid var(--border);background:var(--surface);overflow:hidden;transition:border-color .4s,background .4s}
-.swatch-swatch{height:48px;display:flex;align-items:flex-end;justify-content:flex-end;padding:4px 8px;font-family:var(--font-ui);font-size:.65rem;letter-spacing:.04em}
-.swatch-body{padding:.7rem .8rem}
-.swatch-body .name{font-size:.85rem;color:var(--ink-1);margin-bottom:.15rem}
-.swatch-body .meta{font-size:.72rem;color:var(--ink-3);font-family:var(--font-ui)}
-.swatch-body .use{font-size:.72rem;color:var(--ink-4);margin-top:.25rem;font-style:italic}
-
-.badge{display:inline-block;padding:.15rem .6rem;font-family:var(--font-ui);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;border-radius:3px;margin-right:.3rem}
-.badge-brand{background:var(--gold);color:var(--bg)}
-.badge-psyda{background:#8C7355;color:#FAFAF7}
-.badge-cciaf{background:var(--gold);color:var(--bg)}
-.badge-ibnarbi{background:hsl(260,25%,82%);color:hsl(240,25%,12%)}
-.badge-dark{background:var(--ink-1);color:var(--bg)}
-.badge-light{background:var(--bg);color:var(--ink-1);border:1px solid var(--border)}
-
-.type-sample{margin-bottom:1.2rem}
-.type-sample .label{font-family:var(--font-ui);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:.2rem}
-.type-sample .preview{color:var(--ink-1);line-height:1.2;margin-bottom:.1rem}
-.type-sample .meta{font-size:.72rem;color:var(--ink-4);font-family:var(--font-ui)}
-
-.token-table td:first-child{font-family:var(--font-ui);font-size:.78rem;white-space:nowrap}
-.token-table td:nth-child(2){font-family:var(--font-ui);font-size:.78rem;white-space:nowrap;color:var(--ink-3)}
-
-.component-preview{padding:1.5rem;border:1px solid var(--border);background:var(--surface);margin:1rem 0;display:flex;gap:1rem;flex-wrap:wrap;align-items:center;transition:border-color .4s,background .4s}
-.component-preview.column{flex-direction:column;align-items:flex-start}
-.doc-callout{padding:1rem 1.2rem;border-left:2px solid var(--gold);background:var(--bg-alt);margin:1.2rem 0;font-size:.9rem;color:var(--ink-2)}
-.doc-callout strong{color:var(--ink-1);font-family:var(--font-ui);text-transform:uppercase;font-size:.72rem;letter-spacing:.1em}
-.doc-warn{border-left-color:#8B2E2E}
-.doc-warn strong{color:#8B2E2E}
-.doc-tip{border-left-color:var(--gold)}
-
-/* Brand tabs */
-.brand-tabs{display:flex;gap:0;margin:1rem 0 1.5rem;border-bottom:1px solid var(--border);flex-wrap:wrap}
-.brand-tab{padding:.55rem 1.2rem;font-family:var(--font-display);font-size:.82rem;cursor:pointer;border:none;background:none;color:var(--ink-3);border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
-.brand-tab:hover{color:var(--ink-1)}
-.brand-tab.active{color:var(--ink-1);border-bottom-color:var(--gold)}
-.brand-panel{display:none}
-.brand-panel.active{display:block}
-
-/* Back to top */
-.btt{position:fixed;bottom:1.5rem;right:1.5rem;z-index:300;width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--surface);cursor:pointer;display:grid;place-items:center;color:var(--ink-3);font-size:1rem;opacity:0;transition:opacity .3s,color .2s,background .2s;pointer-events:none}
-.btt.show{opacity:1;pointer-events:auto}
-.btt:hover{color:var(--ink-1);background:var(--bg-alt)}
-
-/* ───────────── RESPONSIVE ───────────── */
-@media(max-width:900px){
-  .toc{display:none}
-  .toc.open{display:block;width:100%;z-index:500}
-  .main{margin-left:0;padding:80px 1.2rem 3rem}
-  .toc-toggle{display:block}
-}
-@media(max-width:600px){
-  .swatch-grid{grid-template-columns:1fr 1fr}
-  .top-nav{padding:0 1rem}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
-}
-
-/* Print */
-@media print{
-  .toc,.top-nav,.btt{display:none}
-  .main{margin-left:0;padding:1rem}
-  .section{page-break-inside:avoid}
-}
+/* ── Nav ── */
+header{position:fixed;top:0;left:0;right:0;z-index:500;background:var(--nav-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:var(--nav-h);padding:0 var(--pad-x);display:flex;align-items:center;justify-content:space-between;gap:16px;transition:background .4s,border-color .4s}
+.brand{font-family:var(--font-heading);font-size:15px;font-weight:300;letter-spacing:.20em;text-transform:uppercase;color:var(--ink-1)}
+.brand em{color:var(--gold);font-style:normal}
+.tog{width:46px;height:26px;border-radius:13px;background:var(--tog-bg);border:1px solid var(--border);cursor:pointer;position:relative;-webkit-appearance:none;appearance:none}
+.tog::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--tog-knob);transition:transform .3s ease}
+[data-theme="dark"] .tog::after{transform:translateX(20px)}
 </style>
 </head>
 <body>
 
-<!-- ─── TOP NAV ─── -->
-<nav class="top-nav">
-  <div class="top-nav-brand">Minhaaj <em>Design System</em></div>
-  <div class="top-nav-actions">
-    <button class="theme-icon" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='light'?'dark':'light'" aria-label="Toggle light/dark mode">&#9681;</button>
-    <button class="toc-toggle" onclick="document.querySelector('.toc').classList.toggle('open')">Menu</button>
+<header>
+  <a class="brand" href="#top"><em>CCIAF</em></a>
+  <button class="tog" id="tog" role="switch" aria-checked="false" aria-label="Toggle dark mode"></button>
+</header>
+
+<div class="wrap" id="top">
+  <div class="eye">Cross-Civilization Intelligence and Action Framework</div>
+  <h1>CCIAF Design System</h1>
+  <p>A focused design system for CCIAF and its sister product <strong>Matrix</strong>. Warm earth palette, a single gold accent, and an all-serif editorial voice — a beautifully typeset academic journal crossed with a luxury magazine.</p>
+  <p><small>This reference is generated from <code>tokens/cciaf.css</code>, the single source of truth. Toggle dark mode with the switch in the nav.</small></p>
+
+  <h2>Color — Light Mode</h2>
+  <div class="swatch-row">
+    <div class="swatch" style="background:#F9F6F0;color:#1A1510"><div class="sl">bg</div><div class="sh">#F9F6F0</div><div class="sn">Warm off-white</div></div>
+    <div class="swatch" style="background:#F2EDE3;color:#1A1510"><div class="sl">bg-alt</div><div class="sh">#F2EDE3</div><div class="sn">Section alternate</div></div>
+    <div class="swatch" style="background:#FFFFFF;color:#1A1510;border:1px solid #DDD8CE"><div class="sl">surface</div><div class="sh">#FFFFFF</div><div class="sn">Card surface</div></div>
+    <div class="swatch" style="background:#DDD8CE;color:#1A1510"><div class="sl">border</div><div class="sh">#DDD8CE</div><div class="sn">Dividers</div></div>
   </div>
-</nav>
-
-<!-- ─── SIDEBAR TOC ─── -->
-<aside class="toc" id="toc">
-  <div class="toc-label">Table of Contents</div>
-  <a href="#about">1. About This System</a>
-  <a href="#ecosystem" class="toc-h2">1.1 Brand Ecosystem</a>
-  <a href="#philosophy" class="toc-h2">1.2 Design Philosophy</a>
-  <a href="#voice" class="toc-h2">1.3 Voice &amp; Tone</a>
-  <a href="#color">2. Color</a>
-  <a href="#color-psyda" class="toc-h2">2.1 Psyda / Minhaaj.com</a>
-  <a href="#color-cciaf" class="toc-h2">2.2 CCIAF</a>
-  <a href="#color-ibnarbi" class="toc-h2">2.3 IbnArbi</a>
-  <a href="#color-semantic" class="toc-h2">2.4 Semantic Colors</a>
-  <a href="#color-contrast" class="toc-h2">2.5 Contrast Inversion</a>
-  <a href="#color-a11y" class="toc-h2">2.6 Accessibility</a>
-  <a href="#typography">3. Typography</a>
-  <a href="#type-psyda" class="toc-h2">3.1 Psyda / Minhaaj.com</a>
-  <a href="#type-cciaf" class="toc-h2">3.2 CCIAF</a>
-  <a href="#type-ibnarbi" class="toc-h2">3.3 IbnArbi</a>
-  <a href="#type-scale" class="toc-h2">3.4 Type Scale Reference</a>
-  <a href="#type-guidelines" class="toc-h2">3.5 Usage Guidelines</a>
-  <a href="#spacing">4. Spacing &amp; Layout</a>
-  <a href="#space-scale" class="toc-h2">4.1 Spacing Scale</a>
-  <a href="#space-layout" class="toc-h2">4.2 Layout Grid</a>
-  <a href="#space-responsive" class="toc-h2">4.3 Responsive</a>
-  <a href="#motion">5. Motion &amp; Animation</a>
-  <a href="#motion-easing" class="toc-h2">5.1 Easing &amp; Duration</a>
-  <a href="#motion-reveal" class="toc-h2">5.2 Scroll Reveal</a>
-  <a href="#motion-hover" class="toc-h2">5.3 Hover States</a>
-  <a href="#motion-reduced" class="toc-h2">5.4 Reduced Motion</a>
-  <a href="#components">6. Components</a>
-  <a href="#comp-nav" class="toc-h2">6.1 Navigation</a>
-  <a href="#comp-buttons" class="toc-h2">6.2 Buttons</a>
-  <a href="#comp-hero" class="toc-h2">6.3 Hero</a>
-  <a href="#comp-cards" class="toc-h2">6.4 Cards</a>
-  <a href="#comp-forms" class="toc-h2">6.5 Forms &amp; Controls</a>
-  <a href="#comp-footer" class="toc-h2">6.6 Footer</a>
-  <a href="#imagery">7. Imagery &amp; Iconography</a>
-  <a href="#img-psyda" class="toc-h2">7.1 Psyda — SVG Editorial</a>
-  <a href="#img-cciaf" class="toc-h2">7.2 CCIAF — Photography</a>
-  <a href="#img-ibnarbi" class="toc-h2">7.3 IbnArbi — Icons</a>
-  <a href="#branding">8. Brand Assets</a>
-  <a href="#brand-logos" class="toc-h2">8.1 Logos</a>
-  <a href="#brand-voice" class="toc-h2">8.2 Copy Guidelines</a>
-  <a href="#accessibility">9. Accessibility Standards</a>
-  <a href="#a11y-contrast" class="toc-h2">9.1 Color &amp; Contrast</a>
-  <a href="#a11y-focus" class="toc-h2">9.2 Focus &amp; Keyboard</a>
-  <a href="#a11y-motion" class="toc-h2">9.3 Reduced Motion</a>
-  <a href="#quickref">10. Quick Reference</a>
-  <a href="#qr-psyda" class="toc-h2">10.1 Psyda</a>
-  <a href="#qr-cciaf" class="toc-h2">10.2 CCIAF</a>
-  <a href="#qr-ibnarbi" class="toc-h2">10.3 IbnArbi</a>
-  <a href="#changelog">11. Changelog</a>
-</aside>
-
-<!-- ─── MAIN CONTENT ─── -->
-<div class="main">
-
-  <!-- ── 1. ABOUT ── -->
-  <section class="section" id="about">
-    <div class="section-header">
-      <div class="eye">Section 1</div>
-      <h1>About This Design System</h1>
-    </div>
-    <p>This is the single source of truth for the <strong>Minhaaj brand ecosystem</strong> — four distinct visual identities united by a shared design philosophy: editorial warmth, scholarly precision, calm confidence.</p>
-    <p><strong>Who this is for:</strong> Designers, front-end developers, content creators, and agency partners building across Psyda, Minhaaj.com, CCIAF, and IbnArbi properties.</p>
-    <p><strong>How to use this document:</strong> Each section covers one design domain (color, typography, spacing, etc.) with brand-specific sub-sections. Use the sidebar to navigate. Brand tabs let you toggle between palettes within a domain.</p>
-    <div class="doc-callout doc-tip"><strong>Designer's Note</strong> This reference consolidates what was previously scattered across <code>tokens/</code>, <code>components/</code>, <code>patterns/</code>, and <code>preview/</code> files. The token CSS files remain the source of truth for implementation; this page explains <em>why</em> and <em>when</em> to use each token.</div>
-  </section>
-
-  <!-- ── 1.1 ECOSYSTEM ── -->
-  <section class="section" id="ecosystem">
-    <h2>Brand Ecosystem</h2>
-    <p>Four brands, one design DNA. Each brand has its own visual dialect — but they share the same underlying grammar.</p>
-    <table>
-      <tr><th>Brand</th><th>URL</th><th>What It Does</th><th>Visual Dialect</th></tr>
-      <tr><td><strong>Psyda</strong></td><td>psyda.org</td><td>AI analytics agency — editorial flagship</td><td>Zero radius, SVG art, word-reveal, dark editorial panels</td></tr>
-      <tr><td><strong>Minhaaj.com</strong></td><td>minhaaj.com</td><td>Personal brand — bio, books, coaching</td><td>Warm parchment, copper accent, 3-font system</td></tr>
-      <tr><td><strong>CCIAF</strong></td><td>cciaf.minhaaj.com</td><td>Cross-Civilization Intelligence Framework</td><td>Gold accent, 2px radius, contrast inversion, glass nav</td></tr>
-      <tr><td><strong>IbnArbi</strong></td><td>ibnarbi.minhaaj.com</td><td>Islamic lunar mansion cosmology app</td><td>HSL tokens, glass cards, Arabic RTL, shadcn/ui patterns</td></tr>
-      <tr><td><strong>Matrix</strong></td><td>matrix.minhaaj.com</td><td>CCIAF Identity Module (BaZi + Numerology)</td><td>Shares CCIAF tokens (stylistic subset)</td></tr>
-    </table>
-    <div class="doc-callout"><strong>Key Concept</strong> These are not separate systems — they're <em>dialects</em> of one system. The same spacing scale, easing curves, motion principles, and accessibility standards apply everywhere. Only colors and fonts change between brands.</div>
-  </section>
-
-  <!-- ── 1.2 PHILOSOPHY ── -->
-  <section class="section" id="philosophy">
-    <h2>Design Philosophy</h2>
-    <blockquote>A beautifully typeset academic journal, crossed with a luxury magazine layout. Nothing shouts. Everything is precise.</blockquote>
-    <h4>Core Principles</h4>
-    <ul>
-      <li><strong>Editorial first.</strong> Every design decision supports a reading experience. Generous line-height, tight tracking on small caps, max-width prose columns.</li>
-      <li><strong>Single accent color.</strong> Each brand has exactly <em>one</em> accent color (copper or gold). Emphasis comes from weight and spacing, not color variety.</li>
-      <li><strong>Warmth without sentimentality.</strong> All colors are earth-toned. Nothing is cool, blue-shifted, or cold. Archival warmth.</li>
-      <li><strong>Depth from tone, not shadows.</strong> Psyda uses background tone shifts instead of box shadows. CCIAF uses subtle dual-layer shadows. IbnArbi uses glass blur.</li>
-      <li><strong>Scholarly precision.</strong> Typography is intentional — every size has a semantic role, every weight has a purpose. Nothing is decorative.</li>
-    </ul>
-  </section>
-
-  <!-- ── 1.3 VOICE ── -->
-  <section class="section" id="voice">
-    <h2>Voice &amp; Tone</h2>
-    <table>
-      <tr><th>Rule</th><th>Guideline</th><th>Example</th></tr>
-      <tr><td>Casing</td><td>Sentence case for body. ALL CAPS for labels.</td><td>"Explore research →" not "Explore Research"</td></tr>
-      <tr><td>Person</td><td>First-person for Minhaaj.com, third for Psyda</td><td>"I wrote..." vs "Psyda delivers..."</td></tr>
-      <tr><td>Punctuation</td><td>Em dashes — use them. Oxford comma always.</td><td>"Data, insights, and impact—three pillars."</td></tr>
-      <tr><td>Emoji</td><td><strong>Never.</strong> In any brand. Zero exceptions.</td><td>Use SVG icons instead</td></tr>
-      <tr><td>Labels</td><td>Dot-separated triplets. ALL CAPS.</td><td><code>Data · Insights · Impact</code></td></tr>
-      <tr><td>Numbers</td><td>Roman numerals for indices. Arabic for data.</td><td>i. ii. iii. / n=412, σ=0.94</td></tr>
-    </table>
-  </section>
-
-  <!-- ── 2. COLOR ── -->
-  <section class="section" id="color">
-    <div class="section-header">
-      <div class="eye">Section 2</div>
-      <h1>Color</h1>
-    </div>
-    <p>Each brand uses a 10–15 token color system. The approach: warm earth backgrounds, dark warm inks, and a single accent color (copper or gold). No secondary accent colors — emphasis comes from typographic weight and spacing, not color variety.</p>
-
-    <!-- Color Brand Tabs -->
-    <div class="brand-tabs" data-group="color">
-      <button class="brand-tab active" data-brand="color-psyda">Psyda / Minhaaj.com</button>
-      <button class="brand-tab" data-brand="color-cciaf">CCIAF</button>
-      <button class="brand-tab" data-brand="color-ibnarbi">IbnArbi</button>
-    </div>
-
-    <!-- PSYDA COLORS -->
-    <div class="brand-panel active" data-panel="color-psyda" id="color-psyda">
-      <h3>Warm Parchment Palette</h3>
-      <p><span class="badge badge-psyda">Psyda</span> <span class="badge badge-light">Light mode only</span></p>
-      <p>The primary brand palette. Warm, archival, editorial. Used across Psyda Solutions and Minhaaj.com. No dark mode — relies on dark full-bleed panels for contrast instead.</p>
-      <div class="doc-callout"><strong>Designed for</strong> editorial reading experiences. The parchment background reduces eye strain at large text sizes (hero headlines at 7.5rem). The copper accent provides warmth without competing with content.</div>
-
-      <h4>Backgrounds</h4>
-      <div class="swatch-grid">
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#F7F3EC;color:#6B6457">#F7F3EC</div><div class="swatch-body"><div class="name">Warm Parchment</div><div class="meta"><code>--bg</code></div><div class="use">Page background. Use everywhere unless a section needs distinction.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#EDE8DE;color:#6B6457">#EDE8DE</div><div class="swatch-body"><div class="name">Linen</div><div class="meta"><code>--bg-alt</code></div><div class="use">Alternating section background. Use for testimonials, secondary blocks.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#E3DCCE;color:#6B6457">#E3DCCE</div><div class="swatch-body"><div class="name">Ecru</div><div class="meta"><code>--bg-deep</code></div><div class="use">Deepest background. Footer, contact sections, deep wells.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#14120F;color:#9A9383">#14120F</div><div class="swatch-body"><div class="name" style="color:#FAFAF7">Editorial Dark</div><div class="meta"><code>--bg-dark</code></div><div class="use">Full-bleed dark editorial panels. Used as chapter separators. Text on this uses <code>--text-on-dark</code>.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#2A2620;color:#9A9383">#2A2620</div><div class="swatch-body"><div class="name" style="color:#FAFAF7">Dark Parchment</div><div class="meta"><code>--bg-dark-alt</code></div><div class="use">Gradient end for dark panels. Subtle variation from editorial dark.</div></div></div>
-      </div>
-
-      <h4>Text</h4>
-      <div class="swatch-grid">
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#1E1C18;color:#9A9383">#1E1C18</div><div class="swatch-body"><div class="name">Near Black</div><div class="meta"><code>--text-primary</code></div><div class="use">Headings, primary body. Maximum contrast.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#6B6457;color:#D6CFC3">#6B6457</div><div class="swatch-body"><div class="name">Warm Grey</div><div class="meta"><code>--text-secondary</code></div><div class="use">Body text, subtitles. The main reading color.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#9A9383;color:#D6CFC3">#9A9383</div><div class="swatch-body"><div class="name">Dusty</div><div class="meta"><code>--text-muted</code></div><div class="use">Labels, captions, metadata, fine print.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#FAFAF7;color:#6B6457;border:1px solid #D6CFC3">#FAFAF7</div><div class="swatch-body"><div class="name">Off-White</div><div class="meta"><code>--text-on-dark / --white</code></div><div class="use">Text on dark panels. Button fill on dark backgrounds. Selection color.</div></div></div>
-      </div>
-
-      <h4>Accent</h4>
-      <div class="swatch-grid">
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#8C7355;color:#EDE8DE">#8C7355</div><div class="swatch-body"><div class="name">Copper</div><div class="meta"><code>--accent</code></div><div class="use">Primary accent. Links, underlines, highlights, SVG dot colors, selection background.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#B89A78;color:#EDE8DE">#B89A78</div><div class="swatch-body"><div class="name">Warm Sand</div><div class="meta"><code>--accent-soft</code></div><div class="use">Lighter accent. Hover states, soft highlights.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#6B5538;color:#C8BFAE">#6B5538</div><div class="swatch-body"><div class="name">Sienna</div><div class="meta"><code>--accent-deep</code></div><div class="use">Deeper accent. Pressed states, active indicators.</div></div></div>
-      </div>
-
-      <h4>Borders &amp; Surface</h4>
-      <div class="swatch-grid">
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#D6CFC3;color:#6B6457">#D6CFC3</div><div class="swatch-body"><div class="name">Stone</div><div class="meta"><code>--border</code></div><div class="use">Dividers, card borders, hr lines. Thin and unobtrusive.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:rgba(30,28,24,0.08);color:#6B6457;border:1px solid #D6CFC3">rgba(30,28,24,0.08)</div><div class="swatch-body"><div class="name">Transparent Stone</div><div class="meta"><code>--border-soft</code></div><div class="use">Even subtler borders. Use sparingly — for fine structural lines.</div></div></div>
-      </div>
-    </div>
-
-    <!-- CCIAF COLORS -->
-    <div class="brand-panel" data-panel="color-cciaf" id="color-cciaf">
-      <h3>Warm Earth + Gold</h3>
-      <p><span class="badge badge-cciaf">CCIAF</span> <span class="badge badge-dark">Dark mode</span> <span class="badge badge-light">Light mode</span></p>
-      <p>CCIAF is the only brand with full light/dark theme support. In dark mode, all tokens invert: backgrounds darken, text lightens, gold brightens. Contrast sections <em>invert completely</em> — light bg becomes dark and vice versa.</p>
-      <div class="doc-callout"><strong>Use light mode</strong> for reading-focused pages (biography, books). <strong>Use dark mode</strong> for immersive, framework-focused pages (CCIAF layers, dashboard). The theme toggle is persisted to localStorage.</div>
-
-      <h4>Backgrounds &amp; Surface</h4>
-      <div class="swatch-grid">
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#F9F6F0;color:#6B6358">#F9F6F0</div><div class="swatch-body"><div class="name">Warm Off-White <span style="font-size:.7rem;color:var(--ink-3)">(light)</span></div><div class="meta"><code>--bg</code></div><div class="use">Page background. Slightly warmer than pure white to reduce eye strain.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#131008;color:#7A7260">#131008</div><div class="swatch-body"><div class="name" style="color:#F0EAD8">Very Dark Warm <span style="font-size:.7rem;color:#7A7260">(dark)</span></div><div class="meta"><code>--bg</code></div><div class="use">Page background in dark mode. Warm black (not pure black) to match the brand.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#F2EDE3;color:#6B6358">#F2EDE3</div><div class="swatch-body"><div class="name">Warm Cream <span style="font-size:.7rem;color:var(--ink-3)">(light)</span></div><div class="meta"><code>--bg-alt</code></div><div class="use">Alternate section background. Use for sections that need visual separation.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#FFFFFF;color:#6B6358;border:1px solid #DDD8CE">#FFFFFF</div><div class="swatch-body"><div class="name">Surface <span style="font-size:.7rem;color:var(--ink-3)">(light)</span></div><div class="meta"><code>--surface</code></div><div class="use">Card backgrounds, dropdowns, raised elements.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#1E1A10;color:#7A7260">#1E1A10</div><div class="swatch-body"><div class="name" style="color:#F0EAD8">Dark Surface <span style="font-size:.7rem;color:#7A7260">(dark)</span></div><div class="meta"><code>--surface</code></div><div class="use">Card backgrounds in dark mode.</div></div></div>
-      </div>
-
-      <h4>Ink (Text) Scale</h4>
-      <div class="swatch-grid">
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#1A1510;color:#9A9383">#1A1510</div><div class="swatch-body"><div class="name">Ink-1 <span style="font-size:.7rem;color:var(--ink-3)">headings</span></div><div class="meta"><code>--ink-1</code></div><div class="use">Highest contrast. Hero titles, section headings, nav brand.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#F0EAD8;color:#7A7260">#F0EAD8</div><div class="swatch-body"><div class="name" style="color:#1A1510">Ink-1 Dark <span style="font-size:.7rem">headings</span></div><div class="meta"><code>--ink-1</code> dark</div><div class="use">Dark mode equivalent. Warm cream for headings.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#3D3830;color:#A09890">#3D3830</div><div class="swatch-body"><div class="name">Ink-2 <span style="font-size:.7rem;color:var(--ink-3)">body</span></div><div class="meta"><code>--ink-2</code></div><div class="use">Body text. The main reading color across all pages.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#C0B89E;color:#4A4438">#C0B89E</div><div class="swatch-body"><div class="name" style="color:#1A1510">Ink-2 Dark <span style="font-size:.7rem">body</span></div><div class="meta"><code>--ink-2</code> dark</div><div class="use">Dark mode body text.</div></div></div>
-      </div>
-
-      <h4>Gold Accent Trio</h4>
-      <div class="swatch-grid">
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#8B6510;color:#D4AE60">#8B6510</div><div class="swatch-body"><div class="name">Deep Gold <span style="font-size:.7rem;color:var(--ink-3)">— primary accent</span></div><div class="meta"><code>--gold</code></div><div class="use">Links, eyebrows, button text, active indicators, focus outlines. The single brand color.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#C8A03A;color:#0D0B06">#C8A03A</div><div class="swatch-body"><div class="name" style="color:#1A1510">Bright Gold <span style="font-size:.7rem">dark mode accent</span></div><div class="meta"><code>--gold</code> dark</div><div class="use">Dark mode equivalent. Brighter to maintain contrast on dark backgrounds.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#B8922A;color:#EDE8DE">#B8922A</div><div class="swatch-body"><div class="name">Mid Gold</div><div class="meta"><code>--gold-mid</code></div><div class="use">Hover states on gold elements. Mid point in the gold hierarchy.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#D4AE60;color:#6B5538">#D4AE60</div><div class="swatch-body"><div class="name">Light Gold</div><div class="meta"><code>--gold-light</code></div><div class="use">Borders, underlines, photo frame, decorative elements. Low contrast — use only for decorative lines.</div></div></div>
-      </div>
-
-      <h4>Border</h4>
-      <div class="swatch-grid">
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#DDD8CE;color:#6B6358">#DDD8CE</div><div class="swatch-body"><div class="name">Border <span style="font-size:.7rem;color:var(--ink-3)">(light)</span></div><div class="meta"><code>--border</code></div><div class="use">All dividers, card borders, hr lines, nav bottom border. Tone-on-tone with the background.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:#2E2918;color:#7A7260">#2E2918</div><div class="swatch-body"><div class="name" style="color:#F0EAD8">Border <span style="font-size:.7rem;color:#7A7260">(dark)</span></div><div class="meta"><code>--border</code> dark</div><div class="use">Dark mode equivalent.</div></div></div>
-      </div>
-    </div>
-
-    <!-- IBNARBI COLORS -->
-    <div class="brand-panel" data-panel="color-ibnarbi" id="color-ibnarbi">
-      <h3>Warm Parchment Light / Deep Navy Dark (HSL)</h3>
-      <p><span class="badge badge-ibnarbi">IbnArbi</span> <span class="badge badge-dark">Dark mode</span> <span class="badge badge-light">Light mode</span></p>
-      <p>IbnArbi uses HSL values (not hex) for programmatic color manipulation. The light mode is a warm parchment like Psyda, but the dark mode shifts to a <strong>deep navy</strong> (not warm dark) — a deliberate departure for the night-sky cosmology theme. The lavender accent is unique to IbnArbi.</p>
-      <div class="doc-callout"><strong>Design rationale:</strong> The dark mode uses cool navy tones (hsl(240, 30%, 4%)) instead of warm dark because the app deals with lunar mansions, night skies, and celestial bodies. The lavender accent (hsl(260, 25%, 82%)) provides a mystical counterpoint to the gold-brown primary.</div>
-
-      <h4>Light Mode</h4>
-      <div class="swatch-grid">
-        <div class="swatch-card"><div class="swatch-swatch" style="background:hsl(40,30%,96%);color:hsl(240,15%,35%)">hsl(40,30%,96%)</div><div class="swatch-body"><div class="name">Warm Parchment</div><div class="meta"><code>--ib-bg</code></div><div class="use">Page background. Matches Psyda's warmth.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:hsl(240,25%,12%);color:hsl(210,20%,90%)">hsl(240,25%,12%)</div><div class="swatch-body"><div class="name" style="color:#F0EAD8">Near Black Text</div><div class="meta"><code>--ib-fg</code></div><div class="use">Primary text, headings.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:hsl(35,85%,35%);color:hsl(40,30%,96%)">hsl(35,85%,35%)</div><div class="swatch-body"><div class="name">Gold-Brown</div><div class="meta"><code>--ib-primary</code></div><div class="use">Primary brand color. Links, active states, CTAs.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:hsl(260,25%,82%);color:hsl(240,25%,12%)">hsl(260,25%,82%)</div><div class="swatch-body"><div class="name">Lavender</div><div class="meta"><code>--ib-accent</code></div><div class="use">Secondary accent. Decorative elements, subtle backgrounds. Unique to IbnArbi.</div></div></div>
-      </div>
-
-      <h4>Dark Mode</h4>
-      <div class="swatch-grid">
-        <div class="swatch-card"><div class="swatch-swatch" style="background:hsl(240,30%,4%);color:hsl(215,20%,65%)">hsl(240,30%,4%)</div><div class="swatch-body"><div class="name" style="color:#F0EAD8">Deep Navy</div><div class="meta"><code>--ib-dark-bg</code></div><div class="use">Page background — night sky. Cool toned, deep, immersive.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:hsl(210,20%,90%);color:hsl(240,30%,4%)">hsl(210,20%,90%)</div><div class="swatch-body"><div class="name">Light Text</div><div class="meta"><code>--ib-dark-fg</code></div><div class="use">Primary text on dark.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:hsl(45,90%,60%);color:hsl(240,30%,4%)">hsl(45,90%,60%)</div><div class="swatch-body"><div class="name">Bright Gold</div><div class="meta"><code>--ib-dark-primary</code></div><div class="use">Primary color on dark — brighter gold for contrast.</div></div></div>
-        <div class="swatch-card"><div class="swatch-swatch" style="background:hsl(260,50%,30%);color:hsl(260,25%,82%)">hsl(260,50%,30%)</div><div class="swatch-body"><div class="name" style="color:#F0EAD8">Deep Purple</div><div class="meta"><code>--ib-dark-accent</code></div><div class="use">Accent on dark — deeper, more saturated lavender for night mode.</div></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── 2.4 SEMANTIC ── -->
-  <section class="section" id="color-semantic">
-    <h2>Semantic Colors</h2>
-    <p><span class="badge badge-psyda">Psyda only</span></p>
-    <p>Semantic colors exist only in the Psyda/Minhaaj.com palette. CCIAF and IbnArbi do not define semantic colors — use gold for success/positive contexts instead.</p>
-    <div class="swatch-grid">
-      <div class="swatch-card"><div class="swatch-swatch" style="background:#3A5A40;color:#9A9383">#3A5A40</div><div class="swatch-body"><div class="name">Forest</div><div class="meta"><code>--color-success</code></div><div class="use">Success states, positive indicators. Use sparingly — the brand is warm, not green.</div></div></div>
-      <div class="swatch-card"><div class="swatch-swatch" style="background:#8B2E2E;color:#D4AE60">#8B2E2E</div><div class="swatch-body"><div class="name">Crimson</div><div class="meta"><code>--color-error</code></div><div class="use">Error states, destructive actions. High contrast, unmistakable.</div></div></div>
-      <div class="swatch-card"><div class="swatch-swatch" style="background:#8C7355;color:#EDE8DE">#8C7355</div><div class="swatch-body"><div class="name">Copper (warning)</div><div class="meta"><code>--color-warning</code></div><div class="use">Warning states. Same as accent — no separate warning color.</div></div></div>
-      <div class="swatch-card"><div class="swatch-swatch" style="background:#4A6B8A;color:#C8BFAE">#4A6B8A</div><div class="swatch-body"><div class="name">Slate Blue</div><div class="meta"><code>--color-info</code></div><div class="use">Informational. The only cool-toned token — use intentionally.</div></div></div>
-    </div>
-  </section>
-
-  <!-- ── 2.5 CONTRAST ── -->
-  <section class="section" id="color-contrast">
-    <h2>Contrast Section Inversion</h2>
-    <p><span class="badge badge-cciaf">CCIAF only</span></p>
-    <p>CCIAF uses a <strong>contrast section</strong> pattern (`.section-contrast`) that inverts the palette on theme switch. This maintains visual hierarchy regardless of which theme the user is viewing.</p>
-    <div class="doc-callout"><strong>How it works:</strong> In light mode, the contrast section has a dark background with light text. In dark mode, it flips to a light background with dark text. The gold accent also shifts — light gold on dark backgrounds, deeper gold on light backgrounds.</div>
-    <table>
-      <tr><th>Token</th><th>Light Mode Value</th><th>Dark Mode Value</th><th>Purpose</th></tr>
-      <tr><td><code>--cs-bg</code></td><td>#1A1510 (dark)</td><td>#F5F0E8 (light)</td><td>Section background</td></tr>
-      <tr><td><code>--cs-h</code></td><td>#F5F0E8 (light)</td><td>#1A1510 (dark)</td><td>Section headings</td></tr>
-      <tr><td><code>--cs-body</code></td><td>rgba(245,240,232,.70)</td><td>rgba(26,21,16,.68)</td><td>Section body text</td></tr>
-      <tr><td><code>--cs-border</code></td><td>rgba(245,240,232,.15)</td><td>rgba(26,21,16,.14)</td><td>Section borders</td></tr>
-      <tr><td><code>--cs-gold</code></td><td>#D4AE60 (light gold)</td><td>#7A5810 (deep gold)</td><td>Section gold accent</td></tr>
-    </table>
-  </section>
-
-  <!-- ── 2.6 ACCESSIBILITY ── -->
-  <section class="section" id="color-a11y">
-    <h2>Color Accessibility</h2>
-    <p>All text/background combinations meet <strong>WCAG AA</strong> minimum contrast (4.5:1 for body text, 3:1 for large text).</p>
-    <div class="doc-callout"><strong>Critical rule:</strong> Gold is used for decorative/emphasis elements only — it must <em>never</em> be the sole conveyor of meaning. Always pair gold indicators with text labels or icons.</div>
-    <table>
-      <tr><th>Combination</th><th>Ratio</th><th>Passes AA?</th></tr>
-      <tr><td>Ink-1 (#1A1510) on bg (#F9F6F0)</td><td>14.7:1</td><td>✓ AAA</td></tr>
-      <tr><td>Ink-2 (#3D3830) on bg (#F9F6F0)</td><td>8.9:1</td><td>✓ AAA</td></tr>
-      <tr><td>Ink-3 (#6B6358) on bg (#F9F6F0)</td><td>4.8:1</td><td>✓ AA</td></tr>
-      <tr><td>Gold (#8B6510) on bg (#F9F6F0)</td><td>4.1:1</td><td>✓ AA (large text only)</td></tr>
-      <tr><td>Gold (#C8A03A) on dark bg (#131008)</td><td>7.2:1</td><td>✓ AAA</td></tr>
-    </table>
-  </section>
-
-  <!-- ── 3. TYPOGRAPHY ── -->
-  <section class="section" id="typography">
-    <div class="section-header">
-      <div class="eye">Section 3</div>
-      <h1>Typography</h1>
-    </div>
-    <p>Three distinct typography systems across the ecosystem, each optimized for its brand's content type. All fonts loaded from Google Fonts — no self-hosted files.</p>
-
-    <div class="brand-tabs" data-group="type">
-      <button class="brand-tab active" data-brand="type-psyda">Psyda / Minhaaj.com</button>
-      <button class="brand-tab" data-brand="type-cciaf">CCIAF</button>
-      <button class="brand-tab" data-brand="type-ibnarbi">IbnArbi</button>
-    </div>
-
-    <div class="brand-panel active" data-panel="type-psyda" id="type-psyda">
-      <h3>Three-Font System</h3>
-      <p>Psyda and Minhaaj.com use three distinct typefaces — one per role (display, UI, body). This provides maximum editorial control at the cost of an extra font load.</p>
-      <table>
-        <tr><th>Role</th><th>Font</th><th>Weights</th><th>Usage</th></tr>
-        <tr><td><strong>Display</strong></td><td>Cormorant Garamond</td><td>300, 400, 500, 600 + italic</td><td>Major headings, pull quotes, chapter numbers, editorial figures, nav brand</td></tr>
-        <tr><td><strong>UI</strong></td><td>DM Sans</td><td>300, 400, 500</td><td>Nav links, labels, eyebrows, metadata, buttons (all uppercase contexts)</td></tr>
-        <tr><td><strong>Body</strong></td><td>Inter</td><td>300, 400, 500</td><td>Paragraphs, prose, body copy, long-form reading</td></tr>
-      </table>
-      <div class="doc-callout"><strong>Design rationale:</strong> Using Inter for body text (instead of a serif) keeps long-form reading comfortable at smaller sizes. Cormorant Garamond provides editorial drama at large sizes. DM Sans keeps UI elements crisp and technical.</div>
-
-      <h4>Font Specimens</h4>
-      <div class="component-preview column">
-        <div class="type-sample"><div class="label">Cormorant Garamond · Weight 300 · Hero</div><div class="preview" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.4rem,4.5vw,3.8rem);line-height:.95;letter-spacing:-.015em">Where Data Meets Narrative</div><div class="meta">clamp(3.4rem, 8.5vw, 7.5rem) · lh 0.95 · ls -0.015em · weight 300</div></div>
-        <div class="type-sample"><div class="label">Cormorant Garamond · Weight 300 Italic · Blockquote</div><div class="preview" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:1.25rem;line-height:1.55">"Data is a language. We translate it into something you can feel."</div></div>
-        <div class="type-sample"><div class="label">DM Sans · Weight 400 · Uppercase 0.22em</div><div class="preview" style="font-family:'DM Sans',sans-serif;font-weight:400;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:#6B6457">Explore Research →</div></div>
-        <div class="type-sample"><div class="label">Inter · Weight 300 · Body</div><div class="preview" style="font-family:'Inter',sans-serif;font-weight:300;font-size:1rem;line-height:1.7;max-width:600px;color:#6B6457">At Psyda, we design and deploy AI-enabled psychographic profiling systems that bridge the gap between academic research and industrial application. Our work sits at the intersection of machine learning, behavioral science, and human development.</div></div>
-      </div>
-    </div>
-
-    <div class="brand-panel" data-panel="type-cciaf" id="type-cciaf">
-      <h3>Two-Font System (All Serif)</h3>
-      <p>CCIAF uses an all-serif system — two Garamond variants. This creates a scholarly, literary feel appropriate for the framework's philosophical depth.</p>
-      <table>
-        <tr><th>Role</th><th>Font</th><th>Weights</th><th>Usage</th></tr>
-        <tr><td><strong>Display / headings</strong></td><td>Cormorant Garamond</td><td>300, 400, 500 + italic</td><td>Hero titles, section headings, eyebrows, brand, blockquotes, buttons</td></tr>
-        <tr><td><strong>Body / prose</strong></td><td>EB Garamond</td><td>400, 500, 600 + italic</td><td>Paragraphs, body copy, nav links, testimonial text, book descriptions</td></tr>
-      </table>
-      <div class="doc-callout"><strong>Design rationale:</strong> Using two Garamond variants creates a cohesive serif-only reading experience. Cormorant (display) handles large, dramatic sizes where its lighter weight and tighter spacing shine. EB Garamond handles body sizes where its robust serifs aid readability. At 18px base, EB Garamond at 1.82 line-height creates the generous prose feel this brand demands.</div>
-
-      <h4>Font Specimens</h4>
-      <div class="component-preview column">
-        <div class="type-sample"><div class="label">Cormorant Garamond · Weight 300 · Hero</div><div class="preview" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.4rem,4.5vw,4rem);line-height:1.08;letter-spacing:-.01em">Cross-Civilization Intelligence</div><div class="meta">clamp(2.6rem, 6vw, 5rem) · lh 1.08 · weight 300 · ls -0.01em</div></div>
-        <div class="type-sample"><div class="label">Cormorant Garamond · Weight 300 · Section H2</div><div class="preview" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.5rem,2.8vw,2.3rem);line-height:1.15">Books & Publications</div></div>
-        <div class="type-sample"><div class="label">Cormorant Garamond · Weight 300 · Eyebrow · 0.22em</div><div class="preview" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#8B6510">Layer · Question · Method</div></div>
-        <div class="type-sample"><div class="label">EB Garamond · Weight 400 · Body (18px base)</div><div class="preview" style="font-family:'EB Garamond',serif;font-weight:400;font-size:1rem;line-height:1.82;max-width:600px;color:#3D3830">The Cross-Civilization Intelligence and Action Framework (CCIAF) is a structured methodology for analyzing and synthesizing knowledge across cultural, temporal, and disciplinary boundaries. It operates through five interconnected layers.</div><div class="meta">1.1rem at 18px base · lh 1.82 · max-width 60ch</div></div>
-        <div class="type-sample"><div class="label">Cormorant Garamond · Weight 300 Italic · Blockquote</div><div class="preview" style="border-left:2px solid #D4AE60;padding-left:28px;margin-top:.5rem;font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(1.1rem,2.2vw,1.5rem);line-height:1.42;color:#1A1510">"Wisdom is not bound by time. It moves through civilizations, gathering form."</div><div class="meta">Gold left border (2px) · 28px padding · font: Cormorant Garamond italic 1.42 lh</div></div>
-      </div>
-    </div>
-
-    <div class="brand-panel" data-panel="type-ibnarbi" id="type-ibnarbi">
-      <h3>Three-Font System (with Arabic RTL)</h3>
-      <p>IbnArbi needs serif (headings), sans-serif (body/UI), and Arabic (RTL text) support — three fonts for three scripts.</p>
-      <table>
-        <tr><th>Role</th><th>Font</th><th>Weights</th><th>Usage</th></tr>
-        <tr><td><strong>Serif (headings)</strong></td><td>Lora</td><td>400, 500, 600, 700</td><td>Section headers, mansion names, titles</td></tr>
-        <tr><td><strong>Sans (body/UI)</strong></td><td>Source Sans 3</td><td>300, 400, 500, 600</td><td>Body text, UI elements, navigation, labels</td></tr>
-        <tr><td><strong>Arabic (RTL)</strong></td><td>Amiri</td><td>400, 700</td><td>Arabic text, Quranic passages, RTL content</td></tr>
-      </table>
-
-      <h4>Font Specimens</h4>
-      <div class="component-preview column">
-        <div class="type-sample"><div class="label">Lora · Weight 500 · Section heading</div><div class="preview" style="font-family:'Lora',serif;font-weight:500;font-size:clamp(1.6rem,3.5vw,2.8rem)">The 28 Lunar Mansions</div></div>
-        <div class="type-sample"><div class="label">Source Sans 3 · Weight 400 · Body</div><div class="preview" style="font-family:'Source Sans 3',sans-serif;font-weight:400;font-size:1rem;line-height:1.65;max-width:550px;color:var(--ink-2)">Each mansion corresponds to a specific phase of the moon's daily journey across the celestial sphere. The system divides the sky into 28 segments, each with its own name, symbolism, and divinatory meaning.</div></div>
-        <div class="type-sample"><div class="label">Amiri · Weight 400 · Arabic RTL</div><div class="preview" style="font-family:'Amiri',serif;direction:rtl;text-align:right;font-size:1.3rem;line-height:1.8">المنازل القمرية الثمانية والعشرون هي تقسيمات للسماء تستخدم في علم الفلك والربع المجيب.</div><div class="meta">Direction: rtl · font-size: 1.15–1.3rem · line-height: 1.8</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── 3.4 TYPE SCALE ── -->
-  <section class="section" id="type-scale">
-    <h2>Type Scale Reference</h2>
-    <p>All brands use <code>clamp(MIN, PREFERRED, MAX)</code> for fluid type scaling. The preferred value uses <code>vw</code> units for viewport-driven sizing.</p>
-
-    <div class="brand-tabs" data-group="scale">
-      <button class="brand-tab active" data-brand="scale-psyda">Psyda</button>
-      <button class="brand-tab" data-brand="scale-cciaf">CCIAF</button>
-    </div>
-
-    <div class="brand-panel active" data-panel="scale-psyda">
-      <table class="token-table">
-        <tr><th>Token</th><th>Value</th><th>Weight</th><th>Line Height</th><th>Context</th></tr>
-        <tr><td><code>--text-hero</code></td><td>clamp(3.4rem, 8.5vw, 7.5rem)</td><td>300</td><td>0.95</td><td>Hero headline — use once per page</td></tr>
-        <tr><td><code>--text-display</code></td><td>clamp(3rem, 8vw, 6.5rem)</td><td>300</td><td>0.95</td><td>Section / media headline</td></tr>
-        <tr><td><code>--text-h1</code></td><td>clamp(2.2rem, 4.2vw, 3.6rem)</td><td>300</td><td>1.1</td><td>Chapter title</td></tr>
-        <tr><td><code>--text-chapter-num</code></td><td>clamp(5rem, 10vw, 8rem)</td><td>300 italic</td><td>—</td><td>Chapter numerals — accent color</td></tr>
-        <tr><td><code>--text-h2</code></td><td>clamp(1.8rem, 3vw, 2.4rem)</td><td>300</td><td>1.1</td><td>Section title</td></tr>
-        <tr><td><code>--text-h3</code></td><td>1.8rem</td><td>400</td><td>—</td><td>List item headings</td></tr>
-        <tr><td><code>--text-lede</code></td><td>1.25rem</td><td>300 italic</td><td>1.55</td><td>Lead paragraph</td></tr>
-        <tr><td><code>--text-body</code></td><td>1rem</td><td>300</td><td>1.7</td><td>Body text</td></tr>
-        <tr><td><code>--text-label</code></td><td>0.68rem</td><td>500</td><td>—</td><td>Eyebrows, labels — uppercase, 0.22em</td></tr>
-        <tr><td><code>--text-micro</code></td><td>0.62rem</td><td>—</td><td>—</td><td>Fine print — uppercase, 0.28em</td></tr>
-      </table>
-    </div>
-
-    <div class="brand-panel" data-panel="scale-cciaf">
-      <table class="token-table">
-        <tr><th>Token</th><th>Value</th><th>Weight</th><th>Line Height</th><th>Context</th></tr>
-        <tr><td><code>--text-hero</code></td><td>clamp(2.6rem, 6vw, 5rem)</td><td>300</td><td>1.08</td><td>Hero title — ls -0.01em</td></tr>
-        <tr><td><code>--text-h2</code></td><td>clamp(1.7rem, 3vw, 2.6rem)</td><td>300</td><td>1.15</td><td>Section H2</td></tr>
-        <tr><td><code>--text-body</code></td><td>1.1rem (~20px)</td><td>400</td><td>1.82</td><td>Prose body — EB Garamond</td></tr>
-        <tr><td><code>--text-eyebrow</code></td><td>0.72rem (~13px)</td><td>300</td><td>—</td><td>Section eyebrow — uppercase, 0.22em</td></tr>
-        <tr><td><code>--text-nav</code></td><td>15px</td><td>400</td><td>—</td><td>Nav links — EB Garamond</td></tr>
-        <tr><td><code>--text-label</code></td><td>12px</td><td>300</td><td>—</td><td>Layer labels — uppercase, 0.18em</td></tr>
-      </table>
-
-      <h4>Blockquote</h4>
-      <div class="component-preview">
-        <span style="display:inline-block;border-left:2px solid #D4AE60;padding-left:28px;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(1.1rem,2.2vw,1.5rem);line-height:1.42">"Wisdom is not bound by time."</span>
-      </div>
-      <table>
-        <tr><th>Property</th><th>Value</th></tr>
-        <tr><td>Font</td><td>Cormorant Garamond · italic · weight 300</td></tr>
-        <tr><td>Size</td><td>clamp(1.2rem, 2.4vw, 1.65rem)</td></tr>
-        <tr><td>Left border</td><td>2px solid var(--cs-gold)</td></tr>
-        <tr><td>Padding</td><td>28px</td></tr>
-        <tr><td>Line height</td><td>1.42</td></tr>
-      </table>
-    </div>
-  </section>
-
-  <!-- ── 3.5 TYPE GUIDELINES ── -->
-  <section class="section" id="type-guidelines">
-    <h2>Typography Usage Guidelines</h2>
-    <table>
-      <tr><th>Rule</th><th>Guideline</th><th>Exception</th></tr>
-      <tr><td>Max line length</td><td>60–65 characters per line</td><td>Hero titles can go wider (80–90ch)</td></tr>
-      <tr><td>Body line height</td><td>1.7–1.82 (generous)</td><td>UI labels at 1.2</td></tr>
-      <tr><td>Heading line height</td><td>0.95 (tight) to 1.15</td><td>Never below 0.9</td></tr>
-      <tr><td>Font smoothing</td><td><code>-webkit-font-smoothing: antialiased</code></td><td>Always — set on body</td></tr>
-      <tr><td>All caps context</td><td>Use DM Sans (Psyda) or Cormorant (CCIAF)</td><td>Never use a condensed font</td></tr>
-      <tr><td>Italic emphasis</td><td>Cormorant Garamond italic or EB Garamond italic</td><td>Within headings, not body copy</td></tr>
-      <tr><td>Base font size</td><td>16px (Psyda), 18px (CCIAF)</td><td>Never below 16px</td></tr>
-    </table>
-  </section>
-
-  <!-- ── 4. SPACING ── -->
-  <section class="section" id="spacing">
-    <div class="section-header">
-      <div class="eye">Section 4</div>
-      <h1>Spacing &amp; Layout</h1>
-    </div>
-
-    <h2 id="space-scale">Spacing Scale</h2>
-    <p>All brands share a 12-step spacing scale. Use these tokens consistently — avoid arbitrary pixel values.</p>
-    <table>
-      <tr><th>Token</th><th>Rem</th><th>Pixels</th><th>Typical Use</th></tr>
-      <tr><td><code>--space-1</code></td><td>0.25rem</td><td>4px</td><td>Icon gaps, micro spacing between tightly grouped elements</td></tr>
-      <tr><td><code>--space-2</code></td><td>0.5rem</td><td>8px</td><td>Button inner padding, tight gaps between inline elements</td></tr>
-      <tr><td><code>--space-3</code></td><td>0.75rem</td><td>12px</td><td>Button padding, small gaps between related elements</td></tr>
-      <tr><td><code>--space-4</code></td><td>1rem</td><td>16px</td><td>Base spacing unit. Label-to-field, icon-to-text gaps</td></tr>
-      <tr><td><code>--space-5</code></td><td>1.25rem</td><td>20px</td><td>Labels to content, card inner padding</td></tr>
-      <tr><td><code>--space-6</code></td><td>1.5rem</td><td>24px</td><td>Section gap, footer gap, nav link gaps</td></tr>
-      <tr><td><code>--space-8</code></td><td>2rem</td><td>32px</td><td>Headings to body text, CTA spacing</td></tr>
-      <tr><td><code>--space-10</code></td><td>2.5rem</td><td>40px</td><td>Hero title to subtitle, large heading margins</td></tr>
-      <tr><td><code>--space-12</code></td><td>3rem</td><td>48px</td><td>Section padding (tight), large gaps</td></tr>
-      <tr><td><code>--space-16</code></td><td>4rem</td><td>64px</td><td>Section padding (standard)</td></tr>
-      <tr><td><code>--space-20</code></td><td>5rem</td><td>80px</td><td>Large section padding</td></tr>
-      <tr><td><code>--space-24</code></td><td>6rem</td><td>96px</td><td>Very large gaps, section vertical spacing</td></tr>
-    </table>
-
-    <h2 id="space-layout">Layout Grid</h2>
-    <p>Key layout tokens by brand:</p>
-    <table>
-      <tr><th>Token</th><th>Psyda</th><th>CCIAF</th><th>IbnArbi</th></tr>
-      <tr><td>Nav height</td><td>76px / 64px mobile</td><td>58px</td><td>64px</td></tr>
-      <tr><td>Max content width</td><td>1280px</td><td>1180px</td><td>1200px</td></tr>
-      <tr><td>Prose width</td><td>—</td><td>760px</td><td>—</td></tr>
-      <tr><td>Horizontal padding</td><td>clamp(1.5rem, 5vw, 3.5rem)</td><td>clamp(20px, 8vw, 120px)</td><td>clamp(1rem, 4vw, 2.5rem)</td></tr>
-      <tr><td>Section vertical</td><td>clamp(6rem, 14vw, 12rem)</td><td>clamp(70px, 9vw, 120px)</td><td>—</td></tr>
-    </table>
-
-    <h4>Common Grid Patterns</h4>
-    <table>
-      <tr><th>Pattern</th><th>Grid Definition</th><th>Collapse Breakpoint</th></tr>
-      <tr><td>CCIAF Hero</td><td>1.03fr / .72fr</td><td>980px → single column</td></tr>
-      <tr><td>CCIAF Book Row</td><td>.72fr / 1fr (cover + text)</td><td>980px → single column</td></tr>
-      <tr><td>CCIAF Book Detail</td><td>minmax(220px,320px) / minmax(0,760px)</td><td>980px → single column</td></tr>
-      <tr><td>CCIAF Media Card</td><td>1fr / 1fr</td><td>980px → single column</td></tr>
-      <tr><td>CCIAF Testimonials</td><td>84px / 1fr (avatar + text)</td><td>760px → single column</td></tr>
-      <tr><td>CCIAF Footer</td><td>1fr / auto / 1fr</td><td>760px → single column</td></tr>
-      <tr><td>Psyda Chapter</td><td>280px sidebar / 1fr content</td><td>1100px → single column</td></tr>
-      <tr><td>CCIAF Layers</td><td>repeat(5, 1fr)</td><td>— (horizontal scroll at small screens)</td></tr>
-    </table>
-
-    <h2 id="space-responsive">Responsive Breakpoints</h2>
-    <table>
-      <tr><th>Breakpoint</th><th>What Changes</th><th>Applies To</th></tr>
-      <tr><td>1100px</td><td>Psyda sidebar collapses</td><td>Psyda</td></tr>
-      <tr><td>980px</td><td>All multi-column grids → single column</td><td>CCIAF</td></tr>
-      <tr><td>760px</td><td>Mobile nav (hamburger), footer collapses, padding reduces to 24px</td><td>CCIAF</td></tr>
-      <tr><td>720px</td><td>Hamburger menu active</td><td>Psyda</td></tr>
-    </table>
-  </section>
-
-  <!-- ── 5. MOTION ── -->
-  <section class="section" id="motion">
-    <div class="section-header">
-      <div class="eye">Section 5</div>
-      <h1>Motion &amp; Animation</h1>
-    </div>
-
-    <h2 id="motion-easing">Easing &amp; Duration Tokens</h2>
-    <div class="swatch-grid">
-      <div class="swatch-card"><div class="swatch-body"><div class="name">Ease Out (snap)</div><div class="meta"><code>--ease-out</code></div><div class="use">cubic-bezier(0.22, 1, 0.36, 1). Used for reveal animations and hover states. Fast start, graceful end.</div></div></div>
-      <div class="swatch-card"><div class="swatch-body"><div class="name">Ease In-Out</div><div class="meta"><code>--ease-in-out</code></div><div class="use">cubic-bezier(0.65, 0.05, 0.36, 1). Used for theme transitions and color changes.</div></div></div>
-      <div class="swatch-card"><div class="swatch-body"><div class="name">Spring</div><div class="meta"><code>--ease-spring</code></div><div class="use">cubic-bezier(0.34, 1.56, 0.64, 1). Used for micro-interactions that need a subtle bounce.</div></div></div>
-    </div>
-
-    <table>
-      <tr><th>Token</th><th>Value</th><th>Used For</th></tr>
-      <tr><td><code>--dur-fast</code></td><td>0.2s</td><td>Hover states, active states, color transitions</td></tr>
-      <tr><td><code>--dur-base</code></td><td>0.35s</td><td>Theme toggle, border changes</td></tr>
-      <tr><td><code>--dur-slow</code></td><td>0.4–0.5s</td><td>Background transitions, theme switching</td></tr>
-      <tr><td><code>--dur-reveal</code></td><td>0.7–0.9s</td><td>Scroll reveal animations, staggered entries</td></tr>
-    </table>
-
-    <h2 id="motion-reveal">Scroll Reveal Patterns</h2><div class="doc-callout"><strong>General rule:</strong> Reveal on scroll should feel natural, not aggressive. Use <em>fade-up</em> (translateY + opacity) at 0.7–0.9s. Avoid scale, rotate, or bounce reveals.</div>
-
-    <h4>CCIAF Fade-up (`.r`)</h4>
-    <pre><code>.r { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
-.r.on { opacity: 1; transform: none; }</code></pre>
-    <p>Triggered by IntersectionObserver at threshold 0.1. Used on all page content sections.</p>
-
-    <h4>CCIAF Hero Staggered Entry (`@keyframes fu`)</h4>
-    <table>
-      <tr><th>Element</th><th>Delay</th><th>Duration</th></tr>
-      <tr><td>`.hero-eye`</td><td>0.15s</td><td>0.8s</td></tr>
-      <tr><td>`.hero-title`</td><td>0.3s</td><td>0.9s</td></tr>
-      <tr><td>`.hero-photo`</td><td>0.35s</td><td>0.8s</td></tr>
-      <tr><td>`.hero-rule`</td><td>0.5s</td><td>0.8s</td></tr>
-      <tr><td>`.hero-body` (first)</td><td>0.6s</td><td>0.8s</td></tr>
-      <tr><td>`.hero-note`</td><td>0.9s</td><td>0.8s</td></tr>
-    </table>
-
-    <h4>Psyda Word-Split Reveal</h4>
-    <p>Words are split into <code>.word &gt; span</code> wrappers. Each span starts at <code>translateY(105%)</code> and transitions to <code>translateY(0)</code> with 50ms staggered delay. 0.9s ease-out.</p>
-
-    <h2 id="motion-hover">Hover States Reference</h2>
-    <table>
-      <tr><th>Element</th><th>Effect</th><th>Duration</th><th>Brand</th></tr>
-      <tr><td>Pill buttons</td><td>Fills to --ink-1 bg, --bg text, translateY(-1px)</td><td>0.2s</td><td>CCIAF</td></tr>
-      <tr><td>Solid buttons</td><td>Fills to --gold bg, translateY(-1px)</td><td>0.2s</td><td>CCIAF</td></tr>
-      <tr><td>Social icons</td><td>translateY(-2px), fills to --ink-1 bg</td><td>0.2s</td><td>CCIAF</td></tr>
-      <tr><td>Book covers</td><td>scale(1.025)</td><td>0.45s</td><td>CCIAF</td></tr>
-      <tr><td>Video thumbnails</td><td>scale(1.025), opacity 0.82→1</td><td>0.45s</td><td>CCIAF</td></tr>
-      <tr><td>Links</td><td>Color change to --ink-1</td><td>0.2s</td><td>CCIAF</td></tr>
-      <tr><td>Psyda links</td><td>Underline grows right: 100% → 0</td><td>0.5s</td><td>Psyda</td></tr>
-      <tr><td>Fill-sweep buttons</td><td>translateY(101%) → 0 sweep from bottom</td><td>0.45s</td><td>Psyda</td></tr>
-      <tr><td>Layer/tier cards</td><td>Background shifts to --bg-alt</td><td>0.2s</td><td>CCIAF</td></tr>
-    </table>
-
-    <h2 id="motion-reduced">Reduced Motion</h2>
-    <p>All brands respect <code>prefers-reduced-motion: reduce</code>. When active, every animation and transition is killed — durations set to 0.01ms, scroll-behavior set to auto.</p>
-    <div class="doc-callout doc-warn"><strong>Required.</strong> This is not optional. Every page <em>must</em> include the reduced motion media query. Test with your OS accessibility settings before shipping.</div>
-  </section>
-
-  <!-- ── 6. COMPONENTS ── -->
-  <section class="section" id="components">
-    <div class="section-header">
-      <div class="eye">Section 6</div>
-      <h1>Components</h1>
-    </div>
-    <p>Documentation for the six core component groups. Each includes anatomy, states, and brand-specific variations.</p>
-
-    <h2 id="comp-nav">Navigation</h2>
-    <div class="brand-tabs" data-group="nav">
-      <button class="brand-tab active" data-brand="nav-cciaf">CCIAF</button>
-      <button class="brand-tab" data-brand="nav-psyda">Psyda</button>
-    </div>
-
-    <div class="brand-panel active" data-panel="nav-cciaf">
-      <h3>CCIAF Nav (58px)</h3>
-      <p>Fixed navigation with glassmorphism effect. Three sections: brand (left), links (center), theme toggle + hamburger (right).</p>
-      <div class="component-preview column" style="position:relative;overflow:hidden;min-height:100px">
-        <div style="width:100%;height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 1.2rem;background:rgba(249,246,240,.95);backdrop-filter:blur(12px);border-bottom:1px solid #DDD8CE;font-size:.82rem">
-          <span style="font-family:'Cormorant Garamond',serif;letter-spacing:.2em;text-transform:uppercase;color:#1A1510">Minhaaj <em style="font-style:normal;color:#8B6510">Rehman</em></span>
-          <span style="display:flex;gap:1.2rem;font-family:'EB Garamond',serif;color:#6B6358;font-size:.78rem">Biography Books Podcast Media</span>
-          <span style="width:46px;height:22px;border-radius:11px;background:#DDD8CE;border:1px solid #DDD8CE;display:inline-block;position:relative"><span style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#8B6510;display:block"></span></span>
-        </div>
-      </div>
-      <table>
-        <tr><th>Property</th><th>Value</th></tr>
-        <tr><td>Height</td><td>58px (all breakpoints)</td></tr>
-        <tr><td>Background</td><td>var(--nav-bg) = rgba(249,246,240,.95) light / rgba(19,16,8,.95) dark</td></tr>
-        <tr><td>Backdrop filter</td><td>blur(12px) — glassmorphism</td></tr>
-        <tr><td>Bottom border</td><td>1px solid var(--border)</td></tr>
-        <tr><td>Brand font</td><td>Cormorant Garamond · 15px · 300 · 0.20em uppercase</td></tr>
-        <tr><td>Link font</td><td>EB Garamond · 15px · 400 · 0.04em</td></tr>
-        <tr><td>Link gap</td><td>28px</td></tr>
-        <tr><td>Mobile breakpoint</td><td>760px — hamburger shown</td></tr>
-      </table>
-      <h5>States</h5>
-      <table>
-        <tr><th>State</th><th>Link</th><th>Brand</th></tr>
-        <tr><td>Default</td><td>color: var(--ink-3)</td><td>color: var(--ink-1)</td></tr>
-        <tr><td>Hover</td><td>color: var(--ink-1)</td><td>—</td></tr>
-        <tr><td>Active page</td><td>color: var(--ink-1) (`.active` class)</td><td>—</td></tr>
-        <tr><td>Mobile hover</td><td>background: var(--bg-alt)</td><td>—</td></tr>
-      </table>
-    </div>
-
-    <div class="brand-panel" data-panel="nav-psyda">
-      <h3>Psyda Nav (76px)</h3>
-      <table>
-        <tr><th>Property</th><th>Value</th></tr>
-        <tr><td>Height</td><td>76px desktop / 64px mobile</td></tr>
-        <tr><td>Default background</td><td>Transparent</td></tr>
-        <tr><td>Scroll background (past 40px)</td><td>rgba(247,243,236,0.78) + backdrop-filter: blur(18px)</td></tr>
-        <tr><td>Nav links</td><td>0.68rem · DM Sans · uppercase · 0.22em spacing</td></tr>
-        <tr><td>Mobile breakpoint</td><td>720px — hamburger shown</td></tr>
-      </table>
-    </div>
-
-    <h3 id="comp-nav-mobile">Mobile Menu</h3>
-    <p>Both brands use a slide-down mobile menu fixed below the nav bar:</p>
-    <ul>
-      <li><strong>CCIAF:</strong> `.mob-menu` — same backdrop blur as nav, z-index 490, links stacked with bottom borders, `.open` class toggles display</li>
-      <li><strong>Dismissal:</strong> Click-outside via JavaScript listener</li>
-      <li><strong>ARIA:</strong> `aria-controls` on toggle, `aria-expanded` managed via `.open` class</li>
-    </ul>
-
-    <hr>
-
-    <h2 id="comp-buttons">Buttons</h2>
-    <div class="brand-tabs" data-group="btn">
-      <button class="brand-tab active" data-brand="btn-cciaf">CCIAF — Pill</button>
-      <button class="brand-tab" data-brand="btn-psyda">Psyda — Fill-Sweep</button>
-    </div>
-
-    <div class="brand-panel active" data-panel="btn-cciaf">
-      <h3>CCIAF Pill Buttons</h3>
-      <p>Two variants, both pill-shaped (border-radius: 999px), Cormorant Garamond font, uppercase 0.14em spacing.</p>
-      <div class="component-preview">
-        <span style="display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 26px;border:1px solid #D4AE60;border-radius:999px;font-family:'Cormorant Garamond',serif;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#8B6510;background:transparent">.btn-outline</span>
-        <span style="display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 26px;border:1px solid #1A1510;border-radius:999px;font-family:'Cormorant Garamond',serif;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#F9F6F0;background:#1A1510">.btn-solid</span>
-      </div>
-      <table>
-        <tr><th>Variant</th><th>Default BG</th><th>Default Text</th><th>Border</th><th>Hover BG</th><th>Hover Text</th></tr>
-        <tr><td><code>.btn-outline</code></td><td>Transparent</td><td>var(--gold)</td><td>var(--gold-light)</td><td>var(--ink-1)</td><td>var(--bg)</td></tr>
-        <tr><td><code>.btn-solid</code></td><td>var(--ink-1)</td><td>var(--bg)</td><td>var(--ink-1)</td><td>var(--gold)</td><td>var(--bg)</td></tr>
-      </table>
-      <div class="doc-callout doc-tip"><strong>When to use which:</strong> Outline for secondary actions (Back, Learn More). Solid for primary actions (Buy on Amazon, Get Started). On dark/contrast sections, use solid with gold background.</div>
-    </div>
-
-    <div class="brand-panel" data-panel="btn-psyda">
-      <h3>Psyda Fill-Sweep Buttons</h3>
-      <p>Zero border-radius. DM Sans font. A background layer sweeps up from the bottom on hover — a signature Psyda interaction.</p>
-      <div class="component-preview">
-        <span style="display:inline-flex;align-items:center;gap:.9rem;padding:1rem 1.8rem;font-family:'DM Sans',sans-serif;font-size:.68rem;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:#1E1C18;border:1px solid #1E1C18;background:transparent;position:relative;overflow:hidden;cursor:pointer">Explore Research →</span>
-      </div>
-      <table>
-        <tr><th>Property</th><th>Value</th></tr>
-        <tr><td>Radius</td><td>0 (square)</td></tr>
-        <tr><td>Font</td><td>DM Sans · 0.68rem (--text-label) · 400 · 0.22em uppercase</td></tr>
-        <tr><td>Hover animation</td><td>Fill sweeps up from bottom (translateY: 101% → 0)</td></tr>
-        <tr><td>Hover text color</td><td>White (--white)</td></tr>
-      </table>
-    </div>
-
-    <hr>
-
-    <h2 id="comp-hero">Hero</h2>
-    <div class="brand-tabs" data-group="hero">
-      <button class="brand-tab active" data-brand="hero-cciaf">CCIAF Hero</button>
-      <button class="brand-tab" data-brand="hero-psyda">Psyda Hero</button>
-    </div>
-
-    <div class="brand-panel active" data-panel="hero-cciaf">
-      <h3>CCIAF Full-Viewport Hero</h3>
-      <p>Two-column grid (text left, photo right) with atmospheric lighting overlay and staggered entry animations.</p>
-      <div class="component-preview column" style="position:relative;overflow:hidden;min-height:200px;background:var(--bg)">
-        <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 78% 35%,rgba(184,146,42,.07) 0%,transparent 65%),radial-gradient(ellipse 35% 60% at 15% 75%,rgba(139,101,16,.04) 0%,transparent 60%)"></div>
-        <div style="display:grid;grid-template-columns:1fr 180px;gap:2rem;position:relative;z-index:1;width:100%">
-          <div>
-            <div style="font-family:'Cormorant Garamond',serif;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:#8B6510;margin-bottom:.8rem">Author · Speaker · Researcher</div>
-            <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.6rem,3vw,2.2rem);line-height:1.08;letter-spacing:-.01em;color:#1A1510;margin-bottom:.8rem">Minhaaj Rehman</div>
-            <div style="width:40px;height:1.5px;background:#8B6510;margin-bottom:.8rem"></div>
-            <div style="font-family:'EB Garamond',serif;font-weight:400;font-size:.85rem;line-height:1.8;max-width:45ch;color:#3D3830">CEO & Chief Data Scientist at Psyda Solutions. Author, podcaster, and researcher at the intersection of AI, psychology, and human development.</div>
-          </div>
-          <div style="aspect-ratio:4/5;background:#EDE8DE;border:1px solid rgba(26,21,16,.12);border-radius:2px;display:grid;place-items:center;font-size:.7rem;color:#9A9383">Photo</div>
-        </div>
-      </div>
-      <table>
-        <tr><th>Element</th><th>Spec</th></tr>
-        <tr><td>Grid</td><td>1.03fr (text) / .72fr (photo), gap clamp(42px, 7vw, 92px)</td></tr>
-        <tr><td>Lighting</td><td>Two radial gradients (gold at 7% and 4% opacity) via ::before</td></tr>
-        <tr><td>Photo aspect</td><td>4/5, width min(400px, 100%), object-position: 50% 12%</td></tr>
-        <tr><td>Photo frame</td><td>::after pseudo at translate(16px,16px), 1px gold-light border</td></tr>
-        <tr><td>Photo shadow</td><td>--shadow-strong (0 24px 70px)</td></tr>
-        <tr><td>Staggered entry</td><td>6 elements, delays from 0.15s to 0.9s, 0.8s fade-up</td></tr>
-        <tr><td>Responsive</td><td>980px → single column, photo on top</td></tr>
-      </table>
-    </div>
-
-    <div class="brand-panel" data-panel="hero-psyda">
-      <h3>Psyda Three-Pillar Hero</h3>
-      <p>Scroll-linked hero with three pillars (Analytics / Research / Media). Side rail indicator dots. SVG art backgrounds. Word-reveal headline animation.</p>
-      <ul>
-        <li><strong>Pillar indicator:</strong> Fixed right column, 6px dots, border + filled states</li>
-        <li><strong>Headline size:</strong> clamp(3.4rem, 8.5vw, 7.5rem) — largest type in the system</li>
-        <li><strong>Side rail:</strong> hidden on mobile</li>
-        <li><strong>Background:</strong> SVG editorial art (not photos)</li>
-      </ul>
-    </div>
-
-    <hr>
-
-    <h2 id="comp-cards">Cards</h2>
-    <div class="brand-tabs" data-group="cards">
-      <button class="brand-tab active" data-brand="cards-cciaf">CCIAF</button>
-      <button class="brand-tab" data-brand="cards-ibnarbi">IbnArbi Glass</button>
-    </div>
-
-    <div class="brand-panel active" data-panel="cards-cciaf">
-      <h3>CCIAF Testimonial Cards</h3>
-      <p>Two-column grid with translucent glass surface. Avatar (84px circle) + italic quote text.</p>
-      <div class="component-preview" style="flex-direction:column;align-items:stretch">
-        <div style="display:grid;grid-template-columns:64px 1fr;gap:1rem;padding:1.2rem;border:1px solid var(--border);background:rgba(255,255,255,.42)">
-          <div style="width:64px;height:64px;border-radius:50%;border:1px solid #D4AE60;background:#EDE8DE;display:grid;place-items:center;font-size:.6rem;color:#9A9383">Avatar</div>
-          <div>
-            <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:.9rem;line-height:1.58;color:var(--ink-2);margin-bottom:.5rem">"Minhaaj brings a rare combination of technical depth and philosophical insight to every project."</div>
-            <div style="font-family:'Cormorant Garamond',serif;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#8B6510">Dr. Sarah Chen · Harvard University</div>
-          </div>
-        </div>
-      </div>
-      <table>
-        <tr><th>Property</th><th>Value</th></tr>
-        <tr><td>Grid</td><td>84px / 1fr, gap 26px</td></tr>
-        <tr><td>Background</td><td>rgba(255,255,255,.42) light / rgba(30,26,16,.72) dark</td></tr>
-        <tr><td>Avatar</td><td>84px, border-radius: 50%, 1px solid var(--gold-light)</td></tr>
-        <tr><td>Text</td><td>Cormorant Garamond italic, clamp(1.12rem, 1.7vw, 1.32rem), lh 1.58</td></tr>
-        <tr><td>Author</td><td>.78rem, uppercase, 0.14em, gold</td></tr>
-        <tr><td>Container</td><td>--bg-alt background, top/bottom borders, max-width 920px</td></tr>
-      </table>
-
-      <h3>CCIAF Book Cards</h3>
-      <h5>Book Row (list page)</h5>
-      <p>Minimal two-column layout. Cover has hover zoom (scale 1.025). Title includes "Published Work" eyebrow via ::before.</p>
-      <h5>Book Detail (single page)</h5>
-      <p>Cover sidebar + content. Cover uses --shadow-strong. Title at clamp(2.15rem, 4.6vw, 3.9rem).</p>
-    </div>
-
-    <div class="brand-panel" data-panel="cards-ibnarbi">
-      <h3>IbnArbi Glass Cards</h3>
-      <div class="component-preview">
-        <div style="padding:1rem;background:hsl(40,25%,92%);backdrop-filter:blur(20px);border:1px solid hsl(40,20%,80%);border-radius:.75rem;min-width:180px">
-          <div style="font-family:'Lora',serif;font-weight:500;margin-bottom:.2rem;font-size:1rem">Al-Nath</div>
-          <div style="font-family:'Source Sans 3',sans-serif;font-size:.75rem;color:hsl(240,15%,35%)">The Butt · 1°–13° Aries</div>
-          <div style="margin-top:.4rem;display:flex;gap:.3rem">
-            <span style="padding:.15rem .5rem;border:1px solid hsl(40,20%,80%);border-radius:999px;font-family:'Source Sans 3',sans-serif;font-size:.65rem">Blessed</span>
-            <span style="padding:.15rem .5rem;border:1px solid hsl(40,20%,80%);border-radius:999px;font-family:'Source Sans 3',sans-serif;font-size:.65rem">♂ Mars</span>
-          </div>
-        </div>
-      </div>
-      <table>
-        <tr><th>Property</th><th>Value</th></tr>
-        <tr><td>Background</td><td>--ib-bg-card (hsl(40,25%,92%)) light / --ib-dark-card (hsl(240,25%,6%)) dark</td></tr>
-        <tr><td>Border</td><td>--ib-border (hsl(40,20%,80%)) light / --ib-dark-border dark</td></tr>
-        <tr><td>Blur</td><td>backdrop-filter: blur(20px)</td></tr>
-        <tr><td>Radius</td><td>0.75rem (cards) / 0.5rem (base) / 1rem (large cards)</td></tr>
-        <tr><td>Shadow</td><td>--ib-shadow-sm</td></tr>
-      </table>
-    </div>
-
-    <hr>
-
-    <h2 id="comp-forms">Forms &amp; Controls</h2>
-    <h3>Theme Toggle (CCIAF)</h3>
-    <p>Custom <code>role="switch"</code> toggle. 46×26px track, 18px circular knob. Knob slides 20px right in dark mode.</p>
-    <div class="component-preview">
-      <div style="display:flex;align-items:center;gap:.5rem">
-        <span style="font-family:'Cormorant Garamond',serif;font-size:.8rem;color:var(--ink-3)">Light</span>
-        <span style="width:46px;height:26px;border-radius:13px;background:#DDD8CE;border:1px solid #DDD8CE;display:inline-block;position:relative;cursor:pointer"><span style="position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#8B6510;display:block"></span></span>
-        <span style="font-family:'Cormorant Garamond',serif;font-size:.8rem;color:var(--ink-3)">Dark</span>
-      </div>
-    </div>
-    <table>
-      <tr><th>Property</th><th>Light</th><th>Dark</th></tr>
-      <tr><td>Track bg (--tog-bg)</td><td>#DDD8CE</td><td>#2E2918</td></tr>
-      <tr><td>Knob bg (--tog-knob)</td><td>#8B6510</td><td>#C8A03A</td></tr>
-      <tr><td>Knob transform</td><td>translateX(0)</td><td>translateX(20px)</td></tr>
-    </table>
-    <p><strong>Persistence:</strong> localStorage key <code>minhaaj-theme</code>. Default: system preference via <code>prefers-color-scheme</code>.</p>
-
-    <h3>Focus States</h3>
-    <p>All interactive elements share a consistent gold focus-visible style:</p>
-    <pre><code>a:focus-visible, button:focus-visible,
-input:focus-visible, textarea:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 3px; border-radius: 2px;
-}</code></pre>
-
-    <hr>
-
-    <h2 id="comp-footer">Footer</h2>
-    <h3>CCIAF Footer</h3>
-    <p>Three-column grid: brand (left), social icons (center), contact (right). Same background as nav for visual continuity.</p>
-    <div class="component-preview column" style="background:rgba(249,246,240,.95);border-top:1px solid var(--border)">
-      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:1.2rem;align-items:center;width:100%;font-size:.8rem">
-        <span style="font-family:'Cormorant Garamond',serif;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)">Minhaaj Rehman</span>
-        <span style="display:flex;gap:6px"><span style="width:32px;height:32px;border-radius:50%;border:1px solid var(--border);display:inline-block"></span><span style="width:32px;height:32px;border-radius:50%;border:1px solid var(--border);display:inline-block"></span></span>
-        <span style="text-align:right;font-family:'Cormorant Garamond',serif;color:#8B6510">contact@minhaaj.com</span>
-      </div>
-    </div>
-    <table>
-      <tr><th>Property</th><th>Value</th></tr>
-      <tr><td>Grid</td><td>1fr / auto / 1fr, gap 28px</td></tr>
-      <tr><td>Background</td><td>var(--nav-bg) — same glass background as nav</td></tr>
-      <tr><td>Border</td><td>Top only: 1px solid var(--border)</td></tr>
-      <tr><td>Social icons</td><td>38px circles, 50% radius, border, fill on hover + translateY(-2px)</td></tr>
-      <tr><td>Contact</td><td>Gold color, underline-on-hover via border-bottom</td></tr>
-      <tr><td>Responsive</td><td>760px → single column, text-align center</td></tr>
-    </table>
-  </section>
-
-  <!-- ── 7. IMAGERY ── -->
-  <section class="section" id="imagery">
-    <div class="section-header">
-      <div class="eye">Section 7</div>
-      <h1>Imagery &amp; Iconography</h1>
-    </div>
-
-    <h2 id="img-psyda">Psyda — SVG Editorial Art</h2>
-    <p><span class="badge badge-psyda">Psyda</span></p>
-    <div class="doc-callout"><strong>No photographs in Psyda UI.</strong> Hero art, section backgrounds, and editorial panels use bespoke inline SVG — not photos, stock imagery, or icon sets.</div>
-    <h4>Art Styles</h4>
-    <ul>
-      <li><strong>Scatter plots</strong> — dot clusters on warm parchment representing data as visual texture</li>
-      <li><strong>Concentric circles</strong> — radar/ripple patterns for analytics metaphors</li>
-      <li><strong>Waveforms</strong> — undulating signal lines for AI/data-flow concepts</li>
-      <li><strong>Grid overlays</strong> — fine-line graphing paper grids with data points</li>
-    </ul>
-    <h4>Color Palette for Art</h4>
-    <table>
-      <tr><th>Panel Type</th><th>Colors</th></tr>
-      <tr><td>Light panels</td><td>#EDE8DE → #C8BFAE gradient</td></tr>
-      <tr><td>Dark bleed panels</td><td>#14120F → #2A2620 gradient</td></tr>
-      <tr><td>Line/stroke</td><td>#6B6457 (warm grey), #8C7355 (copper)</td></tr>
-      <tr><td>Dot/data</td><td>#8C7355 accent dots with varying opacity</td></tr>
-    </table>
-
-    <h2 id="img-cciaf">CCIAF — Photography</h2>
-    <p><span class="badge badge-cciaf">CCIAF</span></p>
-    <p>CCIAF uses photographs with warm archival treatment:</p>
-    <table>
-      <tr><th>Property</th><th>Value</th></tr>
-      <tr><td>Color grading</td><td>Warm, archival, sepia-adjacent</td></tr>
-      <tr><td>Border</td><td>1px solid rgba(26,21,16,.12) — subtle warm dark</td></tr>
-      <tr><td>Shadow</td><td>--shadow-strong (0 24px 70px)</td></tr>
-      <tr><td>Radius</td><td>2px — near-square</td></tr>
-      <tr><td>Object position</td><td>Hero: 50% 12%, Bio: 50% 30%, Philanthropy: 50% 34%</td></tr>
-      <tr><td>Aspect ratios</td><td>4/5 (hero portrait), 3/4 (book covers), 16/9 (video/thumbnails)</td></tr>
-    </table>
-
-    <h2 id="img-ibnarbi">IbnArbi — Iconography</h2>
-    <p><span class="badge badge-ibnarbi">IbnArbi</span></p>
-    <p>Custom Islamic SVG icons (24×24 viewBox, 1.5px stroke, round caps/joins, no fills):</p>
-    <ul>
-      <li><strong>25+ custom icons:</strong> Mosque, Crescent Moon, Star, Lantern, Prayer Beads, Quran, Kaaba, Prayer Rug, Eight-Pointed Star, Dua Hands, Sunrise, Islamic Pattern, Dome, Mihrab, Calligraphy, Zodiac Wheel, Element Icons (Fire, Water, Air, Earth), and more</li>
-      <li><strong>Lucide React</strong> for generic UI icons (Info, standard interactions)</li>
-    </ul>
-    <p><strong>Rules:</strong> No emoji or Unicode symbols. All icons are pure stroke (no fills). 1.5px stroke width.</p>
-  </section>
-
-  <!-- ── 8. BRANDING ── -->
-  <section class="section" id="branding">
-    <div class="section-header">
-      <div class="eye">Section 8</div>
-      <h1>Brand Assets</h1>
-    </div>
-
-    <h2 id="brand-logos">Logos</h2>
-    <p>All logo files are in <code>assets/logos/</code>:</p>
-    <table>
-      <tr><th>File</th><th>Description</th><th>Format</th></tr>
-      <tr><td>psyda-logo.jpg</td><td>Default P. logo (bold sans "P" with period dot)</td><td>JPG</td></tr>
-      <tr><td>psyda-logo-dark.jpg</td><td>Dark variant for light backgrounds</td><td>JPG</td></tr>
-      <tr><td>psyda-logo-mark.jpg</td><td>Logo mark only (no wordmark)</td><td>JPG</td></tr>
-      <tr><td>psyda-logo-wordmark.jpg</td><td>Wordmark only</td><td>JPG</td></tr>
-    </table>
-    <div class="doc-callout doc-tip"><strong>Logo usage:</strong> The P. logo mark (charcoal #3D3C38 on white) is used as favicon and primary mark. The nav logo is an SVG circle with P-interior path, rendered at 30px. No variant has a background box — logos sit directly on the page background.</div>
-
-    <h2 id="brand-voice">Copy Guidelines</h2>
-    <table>
-      <tr><th>Pattern</th><th>Format</th><th>Example</th></tr>
-      <tr><td>Eyebrows/labels</td><td>Dot-separated triplets</td><td><code>Data · Insights · Impact</code></td></tr>
-      <tr><td>Headlines</td><td>Short, punchy, italic emphasis</td><td><code>Bringing <em>Analytics</em> to Life.</code></td></tr>
-      <tr><td>CTAs</td><td>Minimal text + arrow</td><td><code>Explore research →</code></td></tr>
-      <tr><td>Pull quotes</td><td>Italic serif, quoted, narrative</td><td><code>"Data is a language."</code></td></tr>
-      <tr><td>Metadata</td><td>Archival style</td><td><code>ISSUE N°03 · SPREAD</code></td></tr>
-    </table>
-  </section>
-
-  <!-- ── 9. ACCESSIBILITY ── -->
-  <section class="section" id="accessibility">
-    <div class="section-header">
-      <div class="eye">Section 9</div>
-      <h1>Accessibility Standards</h1>
-    </div>
-
-    <h2 id="a11y-contrast">Color &amp; Contrast</h2>
-    <ul>
-      <li>All text/background combinations meet WCAG AA minimum (4.5:1 body, 3:1 large text)</li>
-      <li>Gold accent is decorative only — never the sole conveyor of meaning</li>
-      <li>Selection background: --accent (copper/gold) with --white text</li>
-      <li>Focus-visible outlines: 2px solid var(--gold), 3px offset, 2px radius</li>
-    </ul>
-
-    <h2 id="a11y-focus">Focus &amp; Keyboard</h2>
-    <ul>
-      <li>Skip link on every page: positioned off-screen, slides to top:0 on focus</li>
-      <li>Theme toggle: role="switch", aria-checked</li>
-      <li>Mobile menu toggle: aria-controls referencing menu id, aria-expanded managed via .open class</li>
-      <li>All interactive elements have visible focus-visible outlines</li>
-      <li>Tab order matches visual layout order</li>
-    </ul>
-
-    <h2 id="a11y-motion">Reduced Motion</h2>
-    <div class="doc-callout doc-warn"><strong>Required on every page.</strong> The full media query must be present:</div>
-    <pre><code>@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: .01ms !important;
-  }
-}</code></pre>
-    <p>This kills all animations, transitions, and smooth scrolling — including the toggle theme transitions. Elements must appear in their final visual state when reduced motion is active.</p>
-  </section>
-
-  <!-- ── 10. QUICK REFERENCE ── -->
-  <section class="section" id="quickref">
-    <div class="section-header">
-      <div class="eye">Section 10</div>
-      <h1>Quick Reference Cards</h1>
-    </div>
-    <p>Print-friendly one-page summaries for each brand. Copy these for your wall.</p>
-
-    <h2 id="qr-psyda">Psyda / Minhaaj.com</h2>
-    <div style="border:1px solid var(--border);padding:1.5rem;background:var(--surface);margin:1rem 0">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
-        <div>
-          <h5 style="margin:0 0 .5rem">Colors</h5>
-          <div style="font-size:.8rem">
-            <strong>BG:</strong> #F7F3EC / #EDE8DE / #E3DCCE<br>
-            <strong>Text:</strong> #1E1C18 / #6B6457 / #9A9383<br>
-            <strong>Accent:</strong> #8C7355 (copper)<br>
-            <strong>Dark:</strong> #14120F / #2A2620<br>
-            <strong>Border:</strong> #D6CFC3
-          </div>
-        </div>
-        <div>
-          <h5 style="margin:0 0 .5rem">Typography</h5>
-          <div style="font-size:.8rem">
-            <strong>Display:</strong> Cormorant Garamond (300–600)<br>
-            <strong>UI:</strong> DM Sans (300–500)<br>
-            <strong>Body:</strong> Inter (300–500)<br>
-            <strong>Hero:</strong> clamp(3.4rem, 8.5vw, 7.5rem)
-          </div>
-        </div>
-        <div>
-          <h5 style="margin:0 0 .5rem">Layout</h5>
-          <div style="font-size:.8rem">
-            <strong>Nav:</strong> 76px / 64px mobile<br>
-            <strong>Max width:</strong> 1280px<br>
-            <strong>Radius:</strong> 0 (major), 0.25rem (inline)<br>
-            <strong>Shadows:</strong> None on surfaces
-          </div>
-        </div>
-        <div>
-          <h5 style="margin:0 0 .5rem">Key Rules</h5>
-          <div style="font-size:.8rem">
-            Zero radius everywhere<br>
-            SVG editorial art only (no photos)<br>
-            Fill-sweep buttons<br>
-            Word-reveal animation<br>
-            Underline grow on hover
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <h2 id="qr-cciaf">CCIAF</h2>
-    <div style="border:1px solid var(--border);padding:1.5rem;background:var(--surface);margin:1rem 0">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
-        <div>
-          <h5 style="margin:0 0 .5rem">Colors</h5>
-          <div style="font-size:.8rem">
-            <strong>Light:</strong> #F9F6F0 / #F2EDE3 / #FFFFFF<br>
-            <strong>Dark:</strong> #131008 / #1B170D / #1E1A10<br>
-            <strong>Ink:</strong> #1A1510 / #3D3830 / #6B6358<br>
-            <strong>Gold:</strong> #8B6510 / #B8922A / #D4AE60<br>
-            <strong>Dark gold:</strong> #C8A03A / #A07818 / #E0BC70
-          </div>
-        </div>
-        <div>
-          <h5 style="margin:0 0 .5rem">Typography</h5>
-          <div style="font-size:.8rem">
-            <strong>Display:</strong> Cormorant Garamond (300–500)<br>
-            <strong>Body:</strong> EB Garamond (400–600)<br>
-            <strong>Base:</strong> 18px<br>
-            <strong>Hero:</strong> clamp(2.6rem, 6vw, 5rem)
-          </div>
-        </div>
-        <div>
-          <h5 style="margin:0 0 .5rem">Layout</h5>
-          <div style="font-size:.8rem">
-            <strong>Nav:</strong> 58px<br>
-            <strong>Max width:</strong> 1180px<br>
-            <strong>Radius:</strong> 2px surfaces, 999px pills<br>
-            <strong>Shadow:</strong> dual-layer subtle
-          </div>
-        </div>
-        <div>
-          <h5 style="margin:0 0 .5rem">Key Rules</h5>
-          <div style="font-size:.8rem">
-            Full light/dark theme support<br>
-            Contrast sections invert on theme<br>
-            Glassmorphism nav (blur 12px)<br>
-            Pill-shaped buttons (999px)<br>
-            Staggered fade-up hero entries
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <h2 id="qr-ibnarbi">IbnArbi</h2>
-    <div style="border:1px solid var(--border);padding:1.5rem;background:var(--surface);margin:1rem 0">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
-        <div>
-          <h5 style="margin:0 0 .5rem">Colors (HSL)</h5>
-          <div style="font-size:.8rem">
-            <strong>Light:</strong> hsl(40,30%,96%) / hsl(35,85%,35%)<br>
-            <strong>Light accent:</strong> hsl(260,25%,82%)<br>
-            <strong>Dark:</strong> hsl(240,30%,4%) / hsl(45,90%,60%)<br>
-            <strong>Dark accent:</strong> hsl(260,50%,30%)
-          </div>
-        </div>
-        <div>
-          <h5 style="margin:0 0 .5rem">Typography</h5>
-          <div style="font-size:.8rem">
-            <strong>Serif:</strong> Lora (400–700)<br>
-            <strong>Sans:</strong> Source Sans 3 (300–600)<br>
-            <strong>Arabic:</strong> Amiri (400, 700)
-          </div>
-        </div>
-        <div>
-          <h5 style="margin:0 0 .5rem">Layout</h5>
-          <div style="font-size:.8rem">
-            <strong>Nav:</strong> 64px<br>
-            <strong>Max width:</strong> 1200px<br>
-            <strong>Radius:</strong> 0.5rem base / 0.75rem cards<br>
-            <strong>Cards:</strong> glass with backdrop-blur(20px)
-          </div>
-        </div>
-        <div>
-          <h5 style="margin:0 0 .5rem">Key Rules</h5>
-          <div style="font-size:.8rem">
-            Light/dark via data-theme toggle<br>
-            Arabic RTL support (Amiri font)<br>
-            Lavender accent (unique to IbArbi)<br>
-            Custom Islamic SVG icons (24px stroke)<br>
-            shadcn/ui component patterns
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── 11. CHANGELOG ── -->
-  <section class="section" id="changelog">
-    <div class="section-header">
-      <div class="eye">Section 11</div>
-      <h1>Changelog</h1>
-    </div>
-    <table>
-      <tr><th>Version</th><th>Date</th><th>Summary</th></tr>
-      <tr><td>v1.0.0</td><td>2026-05-24</td><td>Comprehensive restructure — token/component/pattern hierarchy + this reference file</td></tr>
-      <tr><td>v0.1.0</td><td>2026-05-10</td><td>Original flat-file snapshot from live codebases (Psyda, Minhaaj.com, CCIAF, IbnArbi)</td></tr>
-    </table>
-    <p>Full changelog in <a href="CHANGELOG.md">CHANGELOG.md</a>.</p>
-  </section>
-
-  <div style="text-align:center;padding:3rem 0 1rem;border-top:1px solid var(--border);margin-top:3rem">
-    <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--ink-3);max-width:none">Minhaaj Design System v1.0.0</p>
+  <div class="swatch-row">
+    <div class="swatch" style="background:#1A1510;color:#F5F0E8"><div class="sl">ink-1</div><div class="sh">#1A1510</div><div class="sn">Headings</div></div>
+    <div class="swatch" style="background:#3D3830;color:#F5F0E8"><div class="sl">ink-2</div><div class="sh">#3D3830</div><div class="sn">Body</div></div>
+    <div class="swatch" style="background:#6B6358;color:#F5F0E8"><div class="sl">ink-3</div><div class="sh">#6B6358</div><div class="sn">Secondary</div></div>
+    <div class="swatch" style="background:#A09890;color:#1A1510"><div class="sl">ink-4</div><div class="sh">#A09890</div><div class="sn">Muted</div></div>
+  </div>
+  <div class="swatch-row">
+    <div class="swatch" style="background:#8B6510;color:#fff"><div class="sl">gold</div><div class="sh">#8B6510</div><div class="sn">Primary accent</div></div>
+    <div class="swatch" style="background:#B8922A;color:#fff"><div class="sl">gold-mid</div><div class="sh">#B8922A</div><div class="sn">Mid gold</div></div>
+    <div class="swatch" style="background:#D4AE60;color:#1A1510"><div class="sl">gold-light</div><div class="sh">#D4AE60</div><div class="sn">Underlines</div></div>
+    <div class="swatch" style="background:#F5F0E5;color:#1A1510"><div class="sl">gold-pale</div><div class="sh">#F5F0E5</div><div class="sn">Callout fill</div></div>
   </div>
 
-</div><!-- /main -->
+  <h2>Color — Dark Mode</h2>
+  <div class="swatch-row">
+    <div class="swatch" style="background:#131008;color:#F0EAD8"><div class="sl">bg</div><div class="sh">#131008</div><div class="sn">Near-black warm</div></div>
+    <div class="swatch" style="background:#1E1A10;color:#F0EAD8"><div class="sl">surface</div><div class="sh">#1E1A10</div><div class="sn">Dark surface</div></div>
+    <div class="swatch" style="background:#2E2918;color:#F0EAD8"><div class="sl">border</div><div class="sh">#2E2918</div><div class="sn">Dark stone</div></div>
+    <div class="swatch" style="background:#C8A03A;color:#131008"><div class="sl">gold</div><div class="sh">#C8A03A</div><div class="sn">Bright gold</div></div>
+  </div>
 
-<!-- ─── BACK TO TOP ─── -->
-<button class="btt" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">&#8593;</button>
+  <h2>Typography</h2>
+  <p>All-serif, two-font system: <strong>Cormorant Garamond</strong> (display) + <strong>EB Garamond</strong> (body). Root size 18px.</p>
+  <table>
+    <tr><th>Token</th><th>Size</th><th>Weight</th><th>Context</th></tr>
+    <tr><td><code>--text-hero</code></td><td><code>clamp(2.6rem, 6vw, 5rem)</code></td><td>300</td><td>Hero title</td></tr>
+    <tr><td><code>--text-h2</code></td><td><code>clamp(1.7rem, 3vw, 2.6rem)</code></td><td>300</td><td>Section H2</td></tr>
+    <tr><td><code>--text-h3</code></td><td><code>clamp(1.2rem, 2vw, 1.5rem)</code></td><td>400</td><td>Subsection</td></tr>
+    <tr><td><code>--text-body</code></td><td>1.1rem</td><td>400</td><td>Prose (lh 1.82)</td></tr>
+    <tr><td><code>--text-eyebrow</code></td><td>0.72rem</td><td>300</td><td>Eyebrow (0.22em)</td></tr>
+    <tr><td><code>--text-nav</code></td><td>15px</td><td>400</td><td>Nav links</td></tr>
+  </table>
+
+  <h2>Buttons</h2>
+  <p>Pill only — <code>border-radius: 999px</code>. Two variants, Cormorant Garamond, 0.14em uppercase.</p>
+  <button class="btn-outline">Explore research →</button>
+  <button class="btn-solid">Our LinkedIn →</button>
+
+  <h2>Five-Layer Framework Grid</h2>
+  <div class="grid2">
+    <div class="gc"><div class="gc-n">Layer I</div><div class="gc-t">Identity</div><div class="gc-q">"What are you made of?"</div><div class="gc-s">BaZi · Numerology</div></div>
+    <div class="gc"><div class="gc-n">Layer II</div><div class="gc-t">Timing</div><div class="gc-q">"What time is it for you?"</div><div class="gc-s">Vedic dashas · Firdaria</div></div>
+    <div class="gc"><div class="gc-n">Layer III</div><div class="gc-t">Action</div><div class="gc-q">"What to do today?"</div><div class="gc-s">28 Lunar Mansions</div></div>
+    <div class="gc"><div class="gc-n">Layer IV</div><div class="gc-t">Interpretation</div><div class="gc-q">"What does it mean?"</div><div class="gc-s">Jungian synthesis</div></div>
+    <div class="gc"><div class="gc-n">Layer V</div><div class="gc-t">Risk Awareness</div><div class="gc-q">"What to anticipate."</div><div class="gc-s">Senior only</div></div>
+  </div>
+
+  <h2>Contrast Section (inverts on theme switch)</h2>
+  <div class="contrast">
+    <div class="eye">The Gap</div>
+    <h2>Every serious decision has a <em>when</em>.</h2>
+    <p>Strategic consultancies map what to do and how to structure it. Risk intelligence firms map the external environment. Neither addresses the timing dimension of consequential decisions.</p>
+  </div>
+
+  <h2>Voice &amp; Conventions</h2>
+  <ul>
+    <li>Sentence case for body copy; ALL CAPS + tracking for labels/eyebrows.</li>
+    <li>Em dashes for emphasis; Oxford comma required.</li>
+    <li>No emoji in UI or copy.</li>
+    <li>Single gold accent per surface — emphasis via weight, spacing, tone.</li>
+    <li>No aggressive gradients; flat warm backgrounds only.</li>
+    <li><code>prefers-reduced-motion</code> respected; focus-visible outline <code>2px solid var(--gold)</code>.</li>
+  </ul>
+
+  <hr>
+  <p><small>CCIAF Design System — rebuilt from the production CCIAF source. See <code>README.md</code>, <code>SKILL.md</code>, <code>tokens/cciaf.css</code>, <code>components/</code>, <code>patterns/</code>, and <code>ui_kits/cciaf/</code>.</small></p>
+</div>
 
 <script>
-// Back to top visibility
-window.addEventListener('scroll', () => {
-  document.getElementById('btt').classList.toggle('show', window.scrollY > 300)
-})
-
-// Brand tabs
-document.querySelectorAll('.brand-tabs').forEach(group => {
-  group.querySelectorAll('.brand-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      const brand = tab.dataset.brand
-      group.querySelectorAll('.brand-tab').forEach(t => t.classList.remove('active'))
-      tab.classList.add('active')
-      const prefix = brand.replace(/-.*$/,'')
-      const panel = document.querySelector(`[data-panel="${brand}"]`)
-      if(panel) {
-        document.querySelectorAll(`[data-panel^="${prefix}"]`).forEach(p => p.classList.remove('active'))
-        panel.classList.add('active')
-      }
-    })
-  })
-})
-
-// Dark mode sync with theme toggle
-document.querySelector('.theme-icon')?.addEventListener('click', () => {
-  const isDark = document.documentElement.dataset.theme === 'dark'
-  document.documentElement.dataset.theme = isDark ? 'light' : 'dark'
-})
+  (function(){
+    var root=document.documentElement, tog=document.getElementById('tog');
+    var saved=localStorage.getItem('minhaaj-theme');
+    if(saved){root.setAttribute('data-theme',saved);tog.setAttribute('aria-checked',saved==='dark');}
+    tog.addEventListener('click',function(){
+      var dark=root.getAttribute('data-theme')==='dark';
+      root.setAttribute('data-theme',dark?'light':'dark');
+      tog.setAttribute('aria-checked',!dark);
+      localStorage.setItem('minhaaj-theme',dark?'light':'dark');
+    });
+  })();
 </script>
 </body>
 </html>

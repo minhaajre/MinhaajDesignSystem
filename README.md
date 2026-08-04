@@ -1,33 +1,71 @@
-# Minhaaj Design System
+# CCIAF Design System
 
-A unified design system for the Minhaaj brand ecosystem — covering **Psyda**, **Minhaaj.com**, **IbnArbi**, and **CCIAF / Matrix**.
+A focused design system for **CCIAF** — the Cross-Civilization Intelligence and Action Framework (cciaf.minhaaj.com) and its sister product **Matrix** (CCIAF Identity Module).
 
-Four brands, four visual dialects. One underlying design philosophy: editorial warmth, scholarly precision, calm confidence.
+One brand. One palette. One accent. Warm earth tones, a single gold accent, and an all-serif editorial voice — a beautifully typeset academic journal crossed with a luxury magazine.
 
----
-
-## Brand Ecosystem
-
-| Brand | URL | Role | Aesthetic |
-|---|---|---|---|
-| **Psyda** | psyda.org | AI analytics agency — editorial flagship | Zero radius, SVG art, word-reveal, dark editorial panels |
-| **Minhaaj.com** | minhaaj.com | Personal brand — bio, books, podcast, coaching | Warm parchment, copper accent, 3-font system |
-| **CCIAF** | cciaf.minhaaj.com | Cross-Civilization Intelligence and Action Framework | Gold accent, 2px radius, contrast section inversion |
-| **IbnArbi** | ibnarbi.minhaaj.com | Islamic lunar mansion cosmology app (React SPA) | HSL tokens, glass cards, Arabic RTL, shadcn/ui |
-| **Matrix** | matrix.minhaaj.com | CCIAF Identity Module (BaZi + Numerology) | Shares CCIAF tokens (minimal) |
+This repository was rebuilt from the production CCIAF source (`cciaf.minhaaj.com/index.html` and the `cciaf-report-engine` report stylesheet) so the tokens, components, and patterns match the live site exactly.
 
 ---
 
 ## Design Philosophy
 
 > **Editorial. Scholarly. Calm confidence.**
-> A beautifully typeset academic journal, crossed with a luxury magazine layout. Nothing shouts. Everything is precise.
 
-- **Voice:** Intellectual yet warm. Authoritative but not cold. Combines rigorous academic precision with spiritual/humanist depth.
-- **Person:** First-person ("I", "my") for Minhaaj.com. Third-person for Psyda. Second-person ("you") for coaching CTAs.
-- **Casing:** Sentence case for body copy. ALL CAPS (spaced tracking) for labels, eyebrows, metadata. Title Case only for proper nouns.
+- **Voice:** Third-person, institutional, authoritative but not cold.
+- **Casing:** Sentence case for body copy. ALL CAPS (spaced tracking) for labels, eyebrows, metadata.
 - **Punctuation:** Em dashes for emphasis. Ellipsis for contemplative pauses. Oxford comma required.
 - **Emoji:** Never used in UI or marketing copy.
+- **One accent rule:** A single gold accent per surface. Emphasis comes from weight, spacing, and tone — never a second hue.
+
+---
+
+## Brand Snapshot
+
+| Field | Value |
+|---|---|
+| Brand | CCIAF |
+| Full name | Cross-Civilization Intelligence and Action Framework |
+| Sister product | Matrix (BaZi + Numerology identity module) |
+| Domain | cciaf.minhaaj.com |
+| Discipline | Timing intelligence for high-stakes decisions |
+| Founder | Minhaaj Rehman |
+
+---
+
+## Palette — Warm Earth + Gold
+
+| Token | Light | Dark | Role |
+|---|---|---|---|
+| `--bg` | `#F9F6F0` | `#131008` | Page background |
+| `--bg-alt` | `#F2EDE3` | `#1B170D` | Alternate section bg |
+| `--surface` | `#FFFFFF` | `#1E1A10` | Cards, inputs |
+| `--border` | `#DDD8CE` | `#2E2918` | Dividers |
+| `--ink-1` | `#1A1510` | `#F0EAD8` | Headings |
+| `--ink-2` | `#3D3830` | `#C0B89E` | Body |
+| `--ink-3` | `#6B6358` | `#7A7260` | Secondary |
+| `--ink-4` | `#A09890` | `#4A4438` | Muted |
+| `--gold` | `#8B6510` | `#C8A03A` | Primary accent |
+| `--gold-mid` | `#B8922A` | `#A07818` | Hover / fills |
+| `--gold-light` | `#D4AE60` | `#E0BC70` | Underlines, borders |
+
+Contrast sections invert on theme switch (`--cs-bg` dark in light mode, light in dark mode).
+
+---
+
+## Typography — All-Serif, Two-Font
+
+| Role | Font | Weights |
+|---|---|---|
+| Display / headings | **Cormorant Garamond** | 300, 400, 500 + italic |
+| Body / prose | **EB Garamond** | 400, 500, 600 + italic |
+
+Root size `18px`. Type scale uses `clamp()` for fluid scaling:
+
+- Hero: `clamp(2.6rem, 6vw, 5rem)`
+- Section H2: `clamp(1.7rem, 3vw, 2.6rem)`
+- Body: `1.1rem`, line-height `1.82`
+- Eyebrow: `0.72rem`, 0.22em uppercase, gold
 
 ---
 
@@ -35,135 +73,134 @@ Four brands, four visual dialects. One underlying design philosophy: editorial w
 
 ```
 /
-├── CHANGELOG.md              # Full version history
-├── README.md                 # This file — ecosystem overview
-├── SKILL.md                  # Claude agent skill definition
+├── CLAUDE.md              # Agent orchestration — loads design-system/ council + CCIAF overrides
+├── README.md              # This file
+├── SKILL.md               # Agent skill definition
+├── CHANGELOG.md           # Version history
+├── design-system-reference.html  # Single-page full reference
+├── download-fonts.sh      # Fetch CCIAF fonts for self-hosting
 │
-├── tokens/                   # CSS custom properties per brand
-│   ├── psyda.css             # Psyda/Minhaaj.com — Warm Parchment palette
-│   ├── cciaf.css             # CCIAF — Warm earth + gold (light/dark)
-│   └── ibnarbi.css           # IbnArbi — HSL-based (light/dark)
+├── design-system/         # Anti-slop orchestration layer (agent council, bans, CI gate)
+│   ├── CLAUDE.md          #   Six-role agent council + non-negotiables
+│   ├── DESIGN.md          #   CCIAF brand identity tokens (mirrors tokens/cciaf.css)
+│   ├── PRODUCT.md         #   Audience, surface, voice
+│   ├── tokens/_base.css   #   Generic starting tokens (overridden per project)
+│   ├── skills/            #   Bundled agent skills (frontend-design, …)
+│   ├── scripts/setup.sh   #   Bootstrap installer for consuming projects
+│   └── .github/           #   Optional CI design-check workflow (not wired by default)
 │
-├── components/               # Component specifications
+├── tokens/
+│   └── cciaf.css          # ★ Single source of truth — all CSS custom properties
+│
+├── components/            # Component specifications
 │   ├── navigation.md
 │   ├── buttons.md
 │   ├── hero.md
 │   ├── cards.md
 │   ├── forms.md
-│   └── footer.md
+│   ├── footer.md
+│   ├── scroll-to-top.md
+│   └── side-navigation.md
 │
-├── patterns/                 # Design pattern documentation
-│   ├── typography.md         # Type scale, font roles, responsive
-│   ├── color.md              # Color philosophy, tokens, accessibility
-│   ├── spacing.md            # Space scale, layout grid, responsive
-│   ├── motion.md             # Animation tokens, reveals, reduced-motion
-│   ├── editorial.md          # SVG art, word-reveal, bleed figures
-│   └── branding.md           # Logos, voice, naming, usage rules
+├── patterns/              # Design pattern documentation
+│   ├── typography.md
+│   ├── color.md
+│   ├── spacing.md
+│   ├── motion.md
+│   ├── editorial.md
+│   └── branding.md
 │
-├── preview/                  # Token visualization HTMLs
+├── preview/               # Token visualization HTMLs (open in browser)
+│   ├── index.html         # Gallery linking all previews
+│   ├── colors-cciaf.html
+│   ├── type-cciaf.html
+│   ├── spacing-tokens.html
+│   ├── shadows-radii.html
+│   ├── components-cciaf.html
+│   ├── components-buttons.html
+│   ├── components-cards.html
+│   ├── components-forms.html
+│   ├── components-nav.html
+│   └── components-scroll.html
 │
-├── assets/                   # Logos, imagery, icons
-│   ├── logos/                # Psyda logo variants (JPG)
-│   └── imagery/              # Editorial photos (JPG)
+├── assets/
+│   └── imagery/           # founder.jpeg, timing-activation-windows.svg
 │
-└── ui_kits/                  # Full prototype implementations
-    ├── psyda/                # Psyda editorial site
-    ├── minhaaj/              # Minhaaj.com personal site
-    ├── ibnarbi/              # IbnArbi lunar mansion app
-    └── cciaf/                # CCIAF advisory site
+├── fonts/                 # Cormorant Garamond + EB Garamond (self-host)
+│   ├── cormorant-garamond/
+│   └── eb-garamond/
+│
+└── ui_kits/
+    └── cciaf/             # Standalone interactive prototype (index.html)
 ```
-
----
-
-## Quick Reference
-
-### Psyda / Minhaaj.com — Warm Parchment
-- **Background:** `#F7F3EC` (parchment), `#EDE8DE` (linen), `#E3DCCE` (ecru)
-- **Text:** `#1E1C18` (primary), `#6B6457` (secondary), `#9A9383` (muted)
-- **Accent:** `#8C7355` (copper), `#B89A78` (soft), `#6B5538` (deep)
-- **Dark panels:** `#14120F`
-- **Fonts:** Cormorant Garamond (display) + DM Sans (UI) + Inter (body)
-- **Radius:** 0 (square editorial) — inline elements `0.25rem`
-- **Shadow:** none on surfaces — depth from tone shifts
-
-### CCIAF — Warm Earth + Gold
-- **Light bg:** `#F9F6F0`, **ink-1:** `#1A1510`, **gold:** `#8B6510`
-- **Dark bg:** `#131008`, **gold:** `#C8A03A`, **ink-1:** `#F0EAD8`
-- **Fonts:** Cormorant Garamond (display) + EB Garamond (body)
-- **Radius:** 2px (surfaces), 999px (buttons/pills)
-- **Shadow:** dual-layer subtle shadow on surfaces
-
-### IbnArbi — Warm Parchment / Deep Navy (HSL)
-- **Light:** `hsl(40 30% 96%)` bg, `hsl(35 85% 35%)` primary (gold-brown)
-- **Dark:** `hsl(240 30% 4%)` bg, `hsl(45 90% 60%)` primary (bright gold)
-- **Fonts:** Lora (serif) + Source Sans 3 (sans) + Amiri (Arabic)
-- **Radius:** 0.5rem base, 0.75–1rem for cards
-- **Cards:** Glass with backdrop-blur, translucent bg
 
 ---
 
 ## Usage
 
 ### Web (CSS)
-```css
-@import url('tokens/psyda.css');
-/* or tokens/cciaf.css, tokens/ibnarbi.css */
-```
 
-All tokens are CSS custom properties — use directly in your styles:
+All tokens are CSS custom properties. Import and use directly:
+
 ```css
+@import url('tokens/cciaf.css');
+
 .my-component {
   background: var(--bg);
-  color: var(--text-primary);
-  font-family: var(--font-display);
+  color: var(--ink-1);
+  font-family: var(--font-heading);
 }
 ```
 
+Light/dark mode is driven by a `data-theme` attribute on `<html>`:
+
+```html
+<html data-theme="light">   <!-- or "dark" -->
+```
+
+The theme toggle persists to `localStorage` under `minhaaj-theme` and defaults to `prefers-color-scheme`.
+
+### Fonts
+
+Fonts load from Google Fonts by default (no self-hosted files required). To self-host, run:
+
+```bash
+./download-fonts.sh
+```
+
+This fetches Cormorant Garamond + EB Garamond into `fonts/`.
+
 ### Prototyping
-Use the UI kits in `ui_kits/` as starting points. Each is a standalone HTML file with embedded CSS/JS — open directly in a browser.
 
-### Design Reference
-See `patterns/` for design rationale and `components/` for component specs. The `preview/` HTMLs visualize every token category.
+Use `ui_kits/cciaf/index.html` as a starting point — a standalone, interactive prototype with working light/dark mode. Open it directly in a browser.
 
----
+### Token previews
 
-## Font Loading
-
-All fonts are loaded from Google Fonts (no self-hosted files):
-
-| Font | Brands | Weights |
-|---|---|---|
-| Cormorant Garamond | Psyda, Minhaaj, CCIAF | 300, 400, 500, 600 + italic |
-| EB Garamond | CCIAF | 400, 500, 600 + italic |
-| DM Sans | Psyda, Minhaaj | 300, 400, 500 |
-| Inter | Psyda, Minhaaj | 300, 400, 500 |
-| Lora | IbnArbi | 400, 500, 600, 700 |
-| Source Sans 3 | IbnArbi | 300, 400, 500, 600 |
-| Amiri | IbnArbi (Arabic) | 400, 700 |
+Open `preview/index.html` to browse every token category rendered live.
 
 ---
 
 ## Cross-Brand Conventions
 
-All brands share these rules:
-- **No emoji in UI**
-- **No aggressive gradients** — flat warm backgrounds only
+These rules apply to every CCIAF surface:
+
+- **No emoji** in UI or copy
+- **No aggressive gradients** — flat warm backgrounds only (decorative radial tints <8% opacity behind heroes are permitted)
 - **Sentence case** for body copy
-- **ALL CAPS** for labels, eyebrows, metadata (spaced tracking 0.14–0.28em)
-- **Em dashes** freely used; Oxford comma required
-- **Copper/gold** as single accent color per brand
-- **Dark mode** support where applicable (CCIAF, IbnArbi)
+- **ALL CAPS** for labels, eyebrows, metadata (tracking 0.14–0.28em)
+- **Em dashes** freely; Oxford comma required
+- **Single gold accent** per surface
+- **Dark mode** supported (contrast sections invert)
 - **`prefers-reduced-motion`** respected — all animations killable
-- **Focus-visible** outlines for accessibility on interactive elements
+- **Focus-visible** outlines: `2px solid var(--gold); outline-offset: 3px`
 - **Skip links** for keyboard users on all pages
 
 ---
 
 ## Versioning
 
-See [CHANGELOG.md](./CHANGELOG.md) for full history.
-
 | Version | Date | Summary |
 |---|---|---|
-| v1.0.0 | 2026-05-24 | Comprehensive restructure with token/component/pattern hierarchy |
-| v0.1.0 | 2026-05-10 | Original snapshot from live codebases |
+| v2.1.0 | 2026-08-05 | Integrated anti-slop orchestration (`design-system/`); scroll fixtures migrated to IntersectionObserver |
+| v2.0.0 | 2026-08-05 | Rebuilt as CCIAF-only design system from production CCIAF source |
+| v1.0.0 | 2026-05-24 | Original multi-brand snapshot (Psyda / Minhaaj / CCIAF / IbnArbi) |

@@ -1,126 +1,63 @@
-# Branding & Voice
+# Branding
 
-## Brand Ecosystem
+## Identity
 
-The Minhaaj ecosystem spans four distinct brands, each with a unique visual dialect but a shared underlying DNA:
+| Field | Value |
+|---|---|
+| Brand | CCIAF |
+| Full name | Cross-Civilization Intelligence and Action Framework |
+| Sister product | Matrix (CCIAF Identity Module — BaZi + Numerology) |
+| Domain | cciaf.minhaaj.com |
+| Discipline | Timing intelligence for high-stakes decisions |
+| Voice | Third-person, institutional, scholarly, calm confidence |
 
-| Brand | Tagline / Purpose | Person | Voice |
-|---|---|---|---|
-| **Psyda** | AI-enabled research and analytics | Third-person | Authoritative, analytical, editorial |
-| **Minhaaj.com** | Personal brand — author, coach, speaker | First-person ("I", "my") | Warm, conversational, reflective |
-| **CCIAF** | Cross-Civilization Intelligence Framework | Third-person | Scholarly, framework-oriented, precise |
-| **IbnArbi** | Islamic lunar mansion cosmology | Neutral | Contemplative, spiritual, educational |
-| **Matrix** | CCIAF Identity Module (BaZi + Numerology) | Second-person ("you") | Personal, diagnostic, insightful |
+## Wordmark
 
----
+CCIAF has no image logo — the identity is the wordmark itself. Render `CCIAF` in Cormorant Garamond, weight 300, 0.20em uppercase tracking, with the letters wrapped in `<em>` so the gold accent lands on the wordmark:
 
-## Voice & Tone
+```css
+.brand {
+  font-family: var(--font-heading);
+  font-size: 15px; font-weight: 300;
+  letter-spacing: .20em; text-transform: uppercase;
+  color: var(--ink-1);
+}
+.brand em { color: var(--gold); font-style: normal; }
+```
 
-### Universal Principles
-- **Intellectual yet warm** — rigorous academic precision with spiritual/humanist depth
-- **Calm confidence** — nothing shouts; everything is precise
-- **Editorial** — think a beautifully typeset academic journal crossed with a luxury magazine layout
+```html
+<a class="brand" href="#hero"><em>CCIAF</em></a>
+```
 
-### Casing
-- **Sentence case** for body copy and most headings
-- **ALL CAPS** (spaced tracking 0.14–0.28em) for:
-  - Labels and eyebrows
-  - Metadata and category tags
-  - Button text
-  - Section superheads
-- **Title Case** — avoided except for proper nouns (book titles, organization names)
+## Tagline patterns
 
-### Punctuation
-- **Em dashes** — used freely for emphasis and parenthetical asides
-- **Ellipsis…** — for contemplative pauses
-- **Oxford comma** — required in all lists
-- **Dots** — dot-separated triplets for labels: `Data · Insights · Impact`
+- "Every serious decision has a *when*."
+- "Five analytical layers. One calibrated decision logic."
+- "Strategic consultancies map what to do. We map *when*."
 
-### Emoji
-- **Never used** in UI, marketing copy, or any brand communications
+## Color & asset rules
 
----
+- Single gold accent per surface — never introduce a second hue
+- No aggressive gradients; flat warm backgrounds only (atmospheric radial tints behind heroes are decorative, <8% opacity)
+- No emoji in UI or marketing copy
+- Sentence case for body; ALL CAPS + tracking for labels/eyebrows
+- Em dashes freely used; Oxford comma required
 
-## Copy Patterns
+## Imagery
 
-### Eyebrows / Labels
-Short, dot-separated triplets in ALL CAPS:
-- `Data · Insights · Impact`
-- `Visual · Digital · Interactive`
-- `Layer · Question · Method`
-
-### Headlines
-- Short, punchy, often two-line
-- Italic emphasis on a key word using `<em>` or italic font style
-- Example: `Bringing *Analytics* to Life.`
-
-### Body Copy
-- One measured sentence per paragraph in hero areas
-- No bullet lists in hero sections
-- Max ~440–580px wide prose columns
-
-### CTAs
-- Minimal text + arrow or directional cue
-- `Our LinkedIn →`
-- `Explore research →`
-- `Read more →`
-
-### Pull Quotes
-- Italicized serif, in quotation marks
-- Narrative voice, not header-like
-- `"Data is a language. We translate it into something you can feel."`
-
-### Metadata Tags
-Archival-style annotation format:
-- `ISSUE N°03 · SPREAD`
-- `FIG. 01 · TIME SERIES`
-- `03°42′N  030°03′E`
-
----
-
-## Numbers in UI
-
-| Context | Style | Example |
+| Asset | Path | Use |
 |---|---|---|
-| List indices | Roman numerals | i. ii. iii. |
-| Data | Arabic numerals | n=412, σ = 0.94 |
-| Chapter numbers | Large italic serif | V, X, XII |
-| Pricing | Arabic, formatted | $2,998 |
-| Coordinates | Degree/minute marks | 03°42′N 030°03′E |
+| Founder portrait | `assets/imagery/founder.jpeg` | 84px circular avatar; about/bio |
+| Timing diagram | `assets/imagery/timing-activation-windows.svg` | activation-window explainer |
 
----
+CCIAF uses **no arbitrary stock photography** in the UI. Imagery is limited to the founder portrait and framework diagrams.
 
-## Logos
+## Naming & usage
 
-### Psyda
-- **P. logo mark** — Bold sans-serif "P" with a small circular period/dot. Charcoal `#3D3C38` on white. Favicon use.
-- **Nav logo** — SVG circle with "P"-like interior path (circle + two strokes). Rendered at 30px.
-- **Wordmark** — Full "Psyda" wordmark in brand typography.
+- Brand spoken as letters: "C-C-I-A-F", never "see-af"
+- Full name used once per page (footer or about), acronym thereafter
+- Matrix shares the CCIAF token set and should be treated as a sub-product, not a separate brand
 
-### Files
-All logo variants in `assets/logos/`:
-- `psyda-logo.jpg` — Default P. logo
-- `psyda-logo-dark.jpg` — Dark variant for light backgrounds
-- `psyda-logo-mark.jpg` — Logo mark only (no wordmark)
-- `psyda-logo-wordmark.jpg` — Wordmark only
+## Author attribution
 
----
-
-## Color Vibe of Imagery
-
-Warm, archival, sepia-adjacent. Nothing cool-toned or blue-shifted.
-
-- **Light panels:** beige-to-stone gradients (`#EDE8DE` → `#C8BFAE`)
-- **Dark bleed panels:** near-black to dark grey (`#14120F` → `#2A2620`)
-- **Photo grading:** Warm-toned, slightly desaturated, archival feel
-- **IbnArbi dark mode:** Subtle radial gradient overlays at page level (`hsl(260 40% 10%)` → transparent) for atmospheric depth
-
----
-
-## Iconography Conventions
-
-| Brand | Icon Source | Style |
-|---|---|---|
-| Psyda / Minhaaj.com | Custom inline SVG only | No icon library. Arrow glyphs, simple geometric shapes |
-| IbnArbi | Custom Islamic SVG icons + Lucide React | 1.5px stroke, round caps, no fills, 24×24 |
-| CCIAF | Font Awesome 6.5.1 (self-hosted) | Solid and regular styles via `assets/fa/all.min.css` |
+Founder and principal: **Minhaaj Rehman**. Use in footer brand line and about sections.

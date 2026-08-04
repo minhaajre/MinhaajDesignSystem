@@ -1,90 +1,74 @@
-# Editorial Art & Imagery
+# Editorial
 
-## Design Philosophy
+CCIAF's editorial language is a beautifully typeset academic journal crossed with a luxury magazine. Precision over spectacle.
 
-Psyda and Minhaaj.com use **bespoke SVG editorial art** — not photographs or stock imagery. The aesthetic is archival, scientific, and figurative: data visualizations treated as art.
+## Voice
 
-**CCIAF** uses photographs with warm editorial styling (banners, hero photos). **IbnArbi** uses no imagery — relies entirely on glass cards, typography, and Islamic iconography.
+- **Person:** Third-person, institutional. Authoritative but not cold.
+- **Casing:** Sentence case for body copy. ALL CAPS (spaced tracking 0.14–0.28em) for labels, eyebrows, metadata.
+- **Punctuation:** Em dashes for emphasis. Ellipsis for contemplative pauses. Oxford comma required.
+- **Emoji:** Never used in UI or copy.
 
----
+## Section anatomy
 
-## Psyda / Minhaaj.com — SVG Editorial Art
+Every content section follows the same rhythm:
 
-### Art Styles
-- **Scatter plots** — clusters of dots on warm parchment, representing data as visual texture
-- **Concentric circles** — radar/ripple patterns for analytics metaphors
-- **Waveforms** — undulating signal lines for AI/data-flow concepts
-- **Grid overlays** — fine-line graphing paper grids with data points
-
-### Color Palette for Art
-- **Light panels:** `#EDE8DE` → `#C8BFAE` gradient (warm beige-to-stone)
-- **Dark bleed panels:** `#14120F` → `#2A2620` gradient (near-black to dark grey)
-- **Line/stroke colors:** `#6B6457` (warm grey), `#8C7355` (copper)
-- **Dot/data colors:** `#8C7355` accent dots with varying opacity
-
-### Implementation
-- Embedded as inline SVG (not external files)
-- 100% width, `aspect-ratio` constrained
-- Used as full-bleed chapter separators and hero backgrounds
-- Subtle parallax on scroll (~15% of position)
-
-### What NOT to use
-- No photographs in Psyda UI (hero art is always SVGs)
-- No stock photography
-- No gradient-rich illustrations
-- No clip art or icon sets
-
----
-
-## CCIAF — Photography
-
-### Photo Treatment
-- **Warm, archival, sepia-adjacent** color grading
-- **Border:** 1px solid `rgba(26,21,16,.12)` (subtle warm dark border)
-- **Shadow:** `--shadow-strong` (0 24px 70px) for depth
-- **Radius:** 2px (near-square, minimal rounding)
-- **Object-position:** top-aligned (hero photo: `50% 12%`, bio: `50% 30%`, philanthropy: `50% 34%`)
-
-### Aspect Ratios
-- **Hero photo:** 4/5 (portrait)
-- **Book covers:** 3/4
-- **Video thumbnails / media:** 16/9
-- **Banners:** fluid height via `clamp(340px, 42vw, 560px)`
-
-### Photo Frame (Hero)
-Hero photo uses a decorative offset frame:
-```css
-.hero-photo-frame::after {
-  content: '';
-  position: absolute;
-  width: min(400px, 72%);
-  aspect-ratio: 4/5;
-  transform: translate(16px, 16px);
-  border: 1px solid var(--gold-light);
-  z-index: -1;
-}
+```
+eyebrow (gold, uppercase, 0.22em)   → .eye
+rule (50px × 1.5px gold)            → .rule   (optional)
+H2 (Cormorant Garamond, weight 300) → .h2
+prose (EB Garamond, max 60ch)       → .prose
 ```
 
-### Banner Variants
-- `.banner-bio img` — `object-position: 50% 30%`
-- `.banner-phil img` — `object-position: 50% 34%`
+```css
+.eye  { font-family: var(--font-heading); font-size: var(--text-eyebrow);
+        font-weight: 300; letter-spacing: var(--ls-eyebrow);
+        text-transform: uppercase; color: var(--gold); }
+.rule { width: 50px; height: 1.5px; background: var(--gold); }
+.h2   { font-family: var(--font-heading); font-size: var(--text-h2);
+        font-weight: 300; line-height: var(--lh-h2); color: var(--ink-1); }
+.prose{ font-family: var(--font-serif); font-size: var(--text-body);
+        color: var(--ink-2); line-height: var(--lh-body); max-width: 60ch; }
+```
 
----
+## Contrast sections
 
-## IbnArbi — Iconography
+The "gap" / problem sections flip to a dark-on-light (light mode) or light-on-dark (dark mode) treatment to interrupt the reading rhythm. See [color.md](./color.md) for the inversion tokens.
 
-### Islamic Icon Set
-Custom stroke icons (24×24 viewBox, 1.5px stroke, round caps/joins, no fills):
-- Mosque, Crescent Moon, Crescent Star, Lantern, Prayer Beads
-- Quran, Kaaba, Prayer Rug, Eight-Pointed Star, Dua Hands
-- Sunrise, Minharah, Islamic Pattern, Dome, Tasbih
-- Mihrab, Calligraphy, Zodiac Wheel
-- Element Fire, Water, Air, Earth
+```css
+.section-contrast { background: var(--cs-bg); }
+.section-contrast .eye { color: var(--cs-gold); }
+.section-contrast .h2  { color: var(--cs-h); }
+.section-contrast .prose { color: var(--cs-body); }
+```
 
-### Library Icons
-- **Lucide React** for generic UI icons (Info, standard interactions)
+Blockquotes within use a 2px gold left border:
 
-### Rules
-- No emoji or Unicode symbols in UI
-- All icons: pure stroke, no fills
-- 1.5px stroke width
+```css
+.blockquote { border-left: 2px solid var(--cs-gold); padding-left: 28px;
+  font-family: var(--font-heading); font-size: clamp(1.2rem, 2.4vw, 1.65rem);
+  font-style: italic; font-weight: 300; line-height: var(--lh-quote);
+  color: var(--cs-h); }
+```
+
+## Ornament
+
+A centered ornamental divider (a spaced middot or fleuron) separates major movements:
+
+```css
+.orn { font-family: var(--font-heading); font-size: 1.8rem;
+  color: var(--border); text-align: center; padding: 28px 0;
+  letter-spacing: .5em; user-select: none; }
+```
+
+## Founder portraiture
+
+The framework is personified by the founder. Use `assets/imagery/founder.jpeg` (84px circular avatar in testimonials; larger in about/bio contexts). Pair with an italic Cormorant Garamond attribution.
+
+## Timing diagram
+
+`assets/imagery/timing-activation-windows.svg` visualizes activation windows — embed inline or as an `<img>` within a bordered surface (`border-radius: 2px`).
+
+## Layer & tier grids
+
+The framework is presented as a five-column layer grid and a three-column engagement grid (see [cards.md](./../components/cards.md)). These are the signature editorial artifacts of the system.

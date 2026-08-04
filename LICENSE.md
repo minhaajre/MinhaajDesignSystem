@@ -1,6 +1,6 @@
 All Rights Reserved
 
-Copyright (c) 2026 Minhaaj Rehman / Psyda Solutions
+Copyright (c) 2026 Minhaaj Rehman
 
 All rights reserved. This source code and associated documentation files
 are the proprietary property of Minhaaj Rehman. No part of this software

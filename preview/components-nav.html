@@ -1,85 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8"/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"/>
 <style>
+  [data-theme="light"]{--bg:#F9F6F0;--border:#DDD8CE;--ink-1:#1A1510;--ink-3:#6B6358;--gold:#8B6510;--nav-bg:rgba(249,246,240,.95);--tog-bg:#DDD8CE;--tog-knob:#8B6510;}
+  [data-theme="dark"]{--bg:#131008;--border:#2E2918;--ink-1:#F0EAD8;--ink-3:#7A7260;--gold:#C8A03A;--nav-bg:rgba(19,16,8,.95);--tog-bg:#2E2918;--tog-knob:#C8A03A;}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:#F7F3EC;padding:28px 36px;display:flex;flex-direction:column;gap:16px}
-  .label{font-family:'DM Sans',sans-serif;font-size:8px;letter-spacing:0.24em;text-transform:uppercase;color:#9A9383;margin-bottom:6px}
-  .rule{height:1px;background:#D6CFC3}
+  body{font-family:'EB Garamond',Georgia,serif;background:var(--bg);padding:40px 48px;transition:background .4s}
+  .label{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);margin:0 0 24px}
+  .rule{height:1px;background:var(--border);margin:14px 0 28px}
 
-  /* Psyda nav */
-  .psyda-nav{
-    display:flex;align-items:center;justify-content:space-between;
-    height:56px;padding:0 32px;
-    background:rgba(247,243,236,0.78);backdrop-filter:blur(18px);
-    border-bottom:1px solid rgba(30,28,24,0.08);
-  }
-  .nav-logo{display:flex;align-items:center;gap:10px;color:#1E1C18}
-  .nav-logo-mark{width:24px;height:24px}
-  .nav-logo-text{font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;letter-spacing:0.28em;color:#1E1C18}
-  .nav-links{display:flex;gap:28px;align-items:center}
-  .nav-link{
-    font-family:'DM Sans',sans-serif;font-size:0.68rem;font-weight:400;
-    letter-spacing:0.22em;text-transform:uppercase;color:#6B6457;
-    padding:4px 0;position:relative;cursor:pointer;transition:color 0.3s;
-  }
-  .nav-link::after{
-    content:'';position:absolute;left:0;right:100%;bottom:0;height:1px;
-    background:#1E1C18;transition:right 0.5s cubic-bezier(0.22,1,0.36,1);
-  }
-  .nav-link:hover{color:#1E1C18}
-  .nav-link:hover::after{right:0}
-  .nav-link.active{color:#1E1C18}
-  .nav-link.active::after{right:0;background:#8C7355}
-
-  /* Side rail */
-  .side-rail{display:flex;flex-direction:column;gap:16px;align-items:flex-end}
-  .sr-item{display:flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;font-size:0.58rem;letter-spacing:0.25em;text-transform:uppercase;color:#9A9383;cursor:pointer}
-  .sr-dot{width:6px;height:6px;border-radius:50%;border:1px solid #8C7355;background:transparent;flex-shrink:0}
-  .sr-item.active{color:#1E1C18}
-  .sr-item.active .sr-dot{background:#8C7355}
-
-  /* Progress bar */
-  .progress-bar{height:3px;background:#8C7355;box-shadow:0 0 8px rgba(140,115,85,0.25);width:60%}
-
-  /* Mobile drawer */
-  .mobile-drawer{background:#F7F3EC;padding:32px 24px;display:flex;flex-direction:column;gap:20px;border-top:1px solid rgba(30,28,24,0.08)}
-  .drawer-link{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:#1E1C18}
+  /* Nav */
+  header{background:var(--nav-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:58px;padding:0 40px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:relative;margin-bottom:32px}
+  .brand{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:300;letter-spacing:.20em;text-transform:uppercase;color:var(--ink-1)}
+  .brand em{color:var(--gold);font-style:normal}
+  .top-nav{display:flex;gap:28px;align-items:center}
+  .top-nav a{font-size:15px;color:var(--ink-3);letter-spacing:.04em;text-decoration:none;transition:color .2s}
+  .top-nav a:hover{color:var(--ink-1)}
+  .hdr-right{display:flex;align-items:center;gap:14px}
+  .hbg{display:none;background:none;border:1px solid var(--border);border-radius:5px;padding:6px 10px;cursor:pointer;font-family:'EB Garamond',serif;font-size:14px;color:var(--ink-3)}
+  .tog{width:46px;height:26px;border-radius:13px;background:var(--tog-bg);border:1px solid var(--border);cursor:pointer;position:relative;-webkit-appearance:none;appearance:none}
+  .tog::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--tog-knob);transition:transform .3s ease}
+  [data-theme="dark"] .tog::after{transform:translateX(20px)}
+  .cap{font-family:'Cormorant Garamond',serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin:24px 0 8px}
+  @media(max-width:760px){.top-nav{display:none}.hbg{display:block}}
 </style>
 </head>
 <body>
-  <div class="label">Fixed Navigation — Psyda (frosted glass on scroll)</div>
-  <div class="progress-bar"></div>
-  <div class="psyda-nav">
-    <div class="nav-logo">
-      <svg class="nav-logo-mark" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="#1E1C18" stroke-width="1"/><path d="M10 22 L10 10 L18 10 C21 10 22 12 22 14 C22 16 21 18 18 18 L13 18" stroke="#1E1C18" stroke-width="1.2" stroke-linecap="square"/></svg>
-      <span class="nav-logo-text">PSYDA</span>
-    </div>
-    <div class="nav-links">
-      <div class="nav-link active">Home</div>
-      <div class="nav-link">Analytics</div>
-      <div class="nav-link">Research</div>
-      <div class="nav-link">Media</div>
-      <div class="nav-link">Contact</div>
-    </div>
-  </div>
+  <div class="label">CCIAF — Navigation</div>
   <div class="rule"></div>
-  <div class="label" style="margin-top:4px">Side Rail — Section Progress (desktop only)</div>
-  <div class="side-rail">
-    <div class="sr-item active"><span>Home</span><div class="sr-dot"></div></div>
-    <div class="sr-item"><span>Analytics</span><div class="sr-dot"></div></div>
-    <div class="sr-item"><span>Research</span><div class="sr-dot"></div></div>
-    <div class="sr-item"><span>Media</span><div class="sr-dot"></div></div>
-    <div class="sr-item"><span>Contact</span><div class="sr-dot"></div></div>
-  </div>
-  <div class="rule"></div>
-  <div class="label">Mobile Drawer — Cormorant Garamond nav links</div>
-  <div class="mobile-drawer">
-    <div class="drawer-link">Home</div>
-    <div class="drawer-link">Analytics</div>
-    <div class="drawer-link">Research</div>
-  </div>
+
+  <header>
+    <a class="brand" href="#"><em>CCIAF</em></a>
+    <nav class="top-nav" aria-label="Primary navigation">
+      <a href="#">The Problem</a>
+      <a href="#">The Framework</a>
+      <a href="#">Traditions</a>
+      <a href="#">Engagement</a>
+      <a href="#">About</a>
+    </nav>
+    <div class="hdr-right">
+      <button class="hbg" aria-label="Open navigation menu">Menu</button>
+      <button class="tog" role="switch" aria-checked="false" aria-label="Toggle dark mode"></button>
+    </div>
+  </header>
+
+  <div class="cap">Fixed 58px · glassmorphism (blur 12px) · wordmark with gold em · centered links · theme toggle · hamburger ≤760px</div>
 </body>
 </html>

@@ -1,49 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8"/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"/>
 <style>
+  [data-theme="light"]{--bg:#F9F6F0;--bg-alt:#F2EDE3;--surface:#fff;--border:#DDD8CE;--ink-1:#1A1510;--ink-2:#3D3830;--ink-3:#6B6358;--ink-4:#A09890;--gold:#8B6510;--gold-light:#D4AE60;--pad-x:clamp(20px,8vw,120px);--sec-py:clamp(70px,9vw,120px);}
+  [data-theme="dark"]{--bg:#131008;--bg-alt:#1B170D;--surface:#1E1A10;--border:#2E2918;--ink-1:#F0EAD8;--ink-2:#C0B89E;--ink-3:#7A7260;--ink-4:#4A4438;--gold:#C8A03A;--gold-light:#E0BC70;}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'DM Sans',sans-serif;background:#F7F3EC;padding:28px 32px;display:flex;flex-direction:column;gap:16px}
-  .label{font-size:8px;letter-spacing:0.24em;text-transform:uppercase;color:#9A9383;margin-bottom:6px}
-  .row{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
-  .token{display:flex;flex-direction:column;align-items:center;gap:5px}
-  .bar{background:#8C7355;width:36px}
-  .token-name{font-size:7.5px;letter-spacing:0.1em;color:#9A9383;text-align:center}
-  .token-val{font-size:7.5px;color:#1E1C18;text-align:center;font-weight:500}
-  .rule{height:1px;background:#D6CFC3}
-  .layout-row{display:flex;gap:6px;align-items:center;margin-top:4px}
-  .layout-box{background:#EDE8DE;border:1px solid #D6CFC3;display:flex;align-items:center;justify-content:center;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:#9A9383}
+  body{font-family:'EB Garamond',Georgia,serif;background:var(--bg);color:var(--ink-2);padding:40px 48px;line-height:1.7;transition:background .4s,color .4s}
+  .label{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);margin:0 0 24px}
+  .rule{height:1px;background:var(--border);margin:14px 0 28px}
+  .sec{padding:var(--sec-py) var(--pad-x);border:1px solid var(--border);margin-bottom:24px;font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+  .row{display:flex;align-items:center;gap:16px;padding:10px 0;border-bottom:1px solid var(--border)}
+  .box{height:48px;background:var(--bg-alt);border:1px solid var(--border)}
+  .tag{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-4);min-width:150px}
+  .val{font-family:'EB Garamond',serif;font-size:14px;color:var(--ink-2)}
+  .px{font-size:11px;color:var(--ink-3);margin-left:auto}
 </style>
 </head>
 <body>
-  <div class="label">Spacing Scale</div>
-  <div class="row">
-    <div class="token"><div class="bar" style="height:4px"></div><div class="token-name">space-1</div><div class="token-val">4px</div></div>
-    <div class="token"><div class="bar" style="height:8px"></div><div class="token-name">space-2</div><div class="token-val">8px</div></div>
-    <div class="token"><div class="bar" style="height:12px"></div><div class="token-name">space-3</div><div class="token-val">12px</div></div>
-    <div class="token"><div class="bar" style="height:16px"></div><div class="token-name">space-4</div><div class="token-val">16px</div></div>
-    <div class="token"><div class="bar" style="height:20px"></div><div class="token-name">space-5</div><div class="token-val">20px</div></div>
-    <div class="token"><div class="bar" style="height:24px"></div><div class="token-name">space-6</div><div class="token-val">24px</div></div>
-    <div class="token"><div class="bar" style="height:32px"></div><div class="token-name">space-8</div><div class="token-val">32px</div></div>
-    <div class="token"><div class="bar" style="height:40px"></div><div class="token-name">space-10</div><div class="token-val">40px</div></div>
-    <div class="token"><div class="bar" style="height:48px"></div><div class="token-name">space-12</div><div class="token-val">48px</div></div>
-    <div class="token"><div class="bar" style="height:64px"></div><div class="token-name">space-16</div><div class="token-val">64px</div></div>
-    <div class="token"><div class="bar" style="height:80px"></div><div class="token-name">space-20</div><div class="token-val">80px</div></div>
-    <div class="token"><div class="bar" style="height:96px"></div><div class="token-name">space-24</div><div class="token-val">96px</div></div>
-  </div>
+  <div class="label">CCIAF — Spacing &amp; Layout Tokens</div>
   <div class="rule"></div>
-  <div class="label">Layout Tokens</div>
-  <div class="layout-row">
-    <div class="layout-box" style="width:76px;height:28px">nav-h · 76px</div>
-    <div class="layout-box" style="width:120px;height:28px">max-w · 1280px</div>
-    <div class="layout-box" style="width:80px;height:28px">pad-x · clamp</div>
-    <div class="layout-box" style="width:72px;height:28px">sidebar · 280px</div>
-  </div>
-  <div class="layout-row">
-    <div class="layout-box" style="width:280px;height:36px">sidebar (280px)</div>
-    <div class="layout-box" style="flex:1;height:36px">content (1fr)</div>
-  </div>
+
+  <div class="label" style="margin-bottom:8px">Section padding</div>
+  <div class="sec">padding: var(--sec-py) var(--pad-x)</div>
+  <div class="val" style="margin:-16px 0 28px">Vertical: clamp(70px, 9vw, 120px) · Horizontal: clamp(20px, 8vw, 120px)</div>
+
+  <div class="label">Spacing scale (rem / px)</div>
+  <div class="row"><div class="tag">--space-1</div><div class="val">0.25rem</div><div class="px">4px</div><div class="box" style="width:4px"></div></div>
+  <div class="row"><div class="tag">--space-2</div><div class="val">0.5rem</div><div class="px">8px</div><div class="box" style="width:8px"></div></div>
+  <div class="row"><div class="tag">--space-3</div><div class="val">0.75rem</div><div class="px">12px</div><div class="box" style="width:12px"></div></div>
+  <div class="row"><div class="tag">--space-4</div><div class="val">1rem</div><div class="px">16px</div><div class="box" style="width:16px"></div></div>
+  <div class="row"><div class="tag">--space-5</div><div class="val">1.25rem</div><div class="px">20px</div><div class="box" style="width:20px"></div></div>
+  <div class="row"><div class="tag">--space-6</div><div class="val">1.5rem</div><div class="px">24px</div><div class="box" style="width:24px"></div></div>
+  <div class="row"><div class="tag">--space-8</div><div class="val">2rem</div><div class="px">32px</div><div class="box" style="width:32px"></div></div>
+  <div class="row"><div class="tag">--space-10</div><div class="val">2.5rem</div><div class="px">40px</div><div class="box" style="width:40px"></div></div>
+  <div class="row"><div class="tag">--space-12</div><div class="val">3rem</div><div class="px">48px</div><div class="box" style="width:48px"></div></div>
+  <div class="row"><div class="tag">--space-16</div><div class="val">4rem</div><div class="px">64px</div><div class="box" style="width:64px"></div></div>
+  <div class="row"><div class="tag">--space-20</div><div class="val">5rem</div><div class="px">80px</div><div class="box" style="width:80px"></div></div>
+  <div class="row"><div class="tag">--space-24</div><div class="val">6rem</div><div class="px">96px</div><div class="box" style="width:96px"></div></div>
+
+  <div class="label" style="margin-top:32px">Layout tokens</div>
+  <div class="row"><div class="tag">--nav-h</div><div class="val">58px</div><div class="px">fixed nav height</div></div>
+  <div class="row"><div class="tag">--content-wide</div><div class="val">1180px</div><div class="px">hero, grids</div></div>
+  <div class="row"><div class="tag">--content-prose</div><div class="val">760px</div><div class="px">long-form copy</div></div>
 </body>
 </html>

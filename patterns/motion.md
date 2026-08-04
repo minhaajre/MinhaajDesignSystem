@@ -1,155 +1,64 @@
-# Motion & Animation
+# Motion
 
-## Easing Curves
+CCIAF motion is restrained and purposeful. Nothing bounces, spins, or shouts. Every motion is tied to meaning (reveal, hover, theme transition) and is fully killable under `prefers-reduced-motion`.
+
+## Principles
+
+- **Calm:** transitions are short (0.2–0.4s) with a soft ease-out
+- **Reveal, don't distract:** content fades up on scroll into view
+- **Theme transition:** background and text color cross-fade over 0.4s
+- **Reduced motion respected:** all animation disabled when requested
+
+## Durations & easing
 
 | Token | Value | Use |
 |---|---|---|
-| `--ease-out` | `cubic-bezier(0.22, 1, 0.36, 1)` | Reveal animations, hover states |
-| `--ease-in-out` | `cubic-bezier(0.65, 0.05, 0.36, 1)` | Theme transitions |
-| `--ease-spring` | `cubic-bezier(0.34, 1.56, 0.64, 1)` | Bouncy micro-interactions |
+| `--dur-fast` | 0.2s | hover color/border |
+| `--dur-base` | 0.35s | toggle, general UI |
+| `--dur-slow` | 0.4s | theme background/color cross-fade |
+| `--dur-reveal` | 0.7s | scroll reveal |
+| `--ease-out` | `cubic-bezier(0.22, 1, 0.36, 1)` | all easing |
 
-## Transition Durations
+## Scroll reveal
 
-| Token | Value | Use |
-|---|---|---|
-| `--dur-fast` | 0.2s | Hover states, active states |
-| `--dur-base` | 0.35s | Theme toggle, border changes |
-| `--dur-slow` | 0.4–0.5s | Color/background transitions |
-| `--dur-reveal` | 0.7–0.9s | Scroll reveal animations |
-
----
-
-## Scroll Reveal (CCIAF)
-
-### Fade-up (`.r`)
-Used across all CCIAF pages for content reveal on scroll:
 ```css
-.r { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
-.r.on { opacity: 1; transform: none; }
+.fade-up { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+.fade-up.visible { opacity: 1; transform: none; }
 ```
-- Triggered by IntersectionObserver at `threshold: 0.1`
-- `.on` class added when element enters viewport
-- All elements revealed on first load via `fallback` (no animation if observer is unsupported)
 
-### Fade-up keyframe (`.hero` staggered entries)
+Elements gain `.visible` via an IntersectionObserver when they enter the viewport. Hero elements instead use a one-time staggered `fu` keyframe entrance (see [hero.md](./../components/hero.md)).
+
 ```css
 @keyframes fu {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: none; }
 }
 ```
-Applied to hero elements with staggered delays:
-- `.hero-eye`: 0.15s
-- `.hero-title`: 0.3s
-- `.hero-photo`: 0.35s
-- `.hero-rule`: 0.5s
-- `.hero-body`: 0.6s (subsequent bodies: +0.12s each)
-- `.hero-note`: 0.9s
 
----
+## Theme cross-fade
 
-## Scroll Reveal (Psyda)
+`body`, `header`, and section wrappers all carry `transition: background .4s, color .4s, border-color .4s` so switching `data-theme` on `<html>` animates smoothly.
 
-### Word-split reveal
-Words split into `.word > span` wrappers via JavaScript:
-```css
-.word span { display: block; transform: translateY(105%); transition: transform 0.9s var(--ease-out); }
-.word span.revealed { transform: translateY(0); }
-```
-- Staggered delay: 50ms per word
+## Hover micro-interactions
 
-### Fade-up (general)
-```css
-.fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
-.fade-up.visible { opacity: 1; transform: none; }
-```
-
----
-
-## Hover States
-
-### CCIAF
-
-| Element | Effect | Duration |
+| Element | Transition | Effect |
 |---|---|---|
-| Buttons (outline) | Fills to `--ink-1` bg, `--bg` text, translateY(-1px) | 0.2s |
-| Buttons (solid) | Fills to `--gold` bg, translateY(-1px) | 0.2s |
-| Social icons | translateY(-2px), fills to `--ink-1` | 0.2s |
-| Book covers (book row) | scale(1.025) | 0.45s ease |
-| Video thumbnails | scale(1.025), opacity 0.82→1 | 0.45s ease |
-| Links | color change to `--ink-1` | 0.2s |
-| Contact link | bottom-border underline appears | 0.2s |
+| Nav link | `color .2s` | ink-3 → ink-1 |
+| Layer / tier card | `background .2s` | → `--bg-alt` on hover |
+| Pill button | `color/background/border .2s, transform .2s` | fill swap + `translateY(-1px)` |
+| Social icon | `.2s` | ink-1 fill + `translateY(-2px)` |
+| Theme toggle knob | `transform .3s ease` | slide 20px |
 
-### Psyda
+## Reduced motion
 
-| Element | Effect | Duration |
-|---|---|---|
-| Links | Underline grows `right: 100%` → `right: 0` | 0.5s ease-out |
-| Buttons (fill-sweep) | `translateY(101%)` → `0` sweep fill from bottom | 0.45s ease-out |
-| Editorial list items | `padding-left: 1rem` slide | 0.5s ease |
-| Media rows | Left padding + semi-transparent bg | 0.5s ease |
-
----
-
-## Theme Transitions
-
-- **Body:** `background .4s, color .4s` — smooth theme switch
-- **All themed elements:** individual `transition: background .4s, color .4s, border-color .4s`
-- **Theme toggle knob:** `translateX(20px)` — 0.3s ease (dark mode)
-- **Theme toggle track:** `background .35s, border-color .35s`
-
----
-
-## Marquee (Psyda)
-
-```css
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-.marquee-inner { animation: marquee 38s linear infinite; }
-```
-- Continuous horizontal scroll
-- Duplicate content for seamless loop
-- Pauses on interaction
-
----
-
-## Parallax (Psyda)
-
-Bleed-figure SVGs shift ~40px on scroll:
-```javascript
-const offset = rect.top * 0.15;
-figure.style.transform = `translateY(${offset}px)`;
-```
-- Implemented via `getBoundingClientRect` in scroll handler
-- Subtle effect (~15% of scroll position)
-
----
-
-## Nav Scroll State
-
-| Brand | Past scroll threshold | Effect |
-|---|---|---|
-| Psyda | 40px | bg → `rgba(247,243,236,0.78)` + `backdrop-filter: blur(18px)` |
-| CCIAF | Always | bg → `var(--nav-bg)` with `backdrop-filter: blur(12px)` |
-
----
-
-## Reduced Motion
-
-All brands respect `prefers-reduced-motion: reduce`:
 ```css
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
+  * {
+    animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
-    transition-duration: .01ms !important;
   }
+  .fade-up { opacity: 1; transform: none; }
 }
 ```
-
-- All animations killed; elements appear in final state
-- All transitions set to near-instant duration
-- Scroll behavior set to `auto`

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+  [data-theme="light"]{--bg:#F9F6F0;--bg-alt:#F2EDE3;--surface:#FFFFFF;--border:#DDD8CE;--ink-1:#1A1510;--ink-3:#6B6358;--gold:#8B6510;--shadow:0 6px 24px rgba(0,0,0,.08);}
+  [data-theme="dark"]{--bg:#131008;--bg-alt:#1B170D;--surface:#1E1A10;--border:#2E2918;--ink-1:#F0EAD8;--ink-3:#7A7260;--gold:#C8A03A;--shadow:0 6px 24px rgba(0,0,0,.5);}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'EB Garamond',Georgia,serif;background:var(--bg);padding:40px 48px;transition:background .4s;color:var(--ink-1)}
+  .label{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);margin:0 0 24px}
+  .rule{height:1px;background:var(--border);margin:14px 0 28px}
+  .cap{font-family:'Cormorant Garamond',serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin:24px 0 8px}
+  section{max-width:640px;padding:120px 0;border-bottom:1px solid var(--border);scroll-margin-top:80px}
+  section h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:26px;margin-bottom:12px}
+  section p{font-size:15px;line-height:1.7;color:var(--ink-3)}
+  .fix-note{position:fixed;bottom:84px;left:48px;font-size:13px;color:var(--ink-3);font-style:italic;opacity:.8}
+
+  /* Side nav dots */
+  .sn{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:400;display:flex;flex-direction:column;gap:12px}
+  .sn-d{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;position:relative;transition:background .25s,transform .25s}
+  .sn-d:hover,.sn-d.on{background:var(--gold)}
+  .sn-d.on{transform:scale(1.35)}
+  .sn-d::before{content:attr(data-lbl);position:absolute;right:18px;top:50%;transform:translateY(-50%);font-family:'EB Garamond',serif;font-size:13px;color:var(--ink-3);white-space:nowrap;background:var(--surface);border:1px solid var(--border);padding:3px 9px;border-radius:4px;opacity:0;pointer-events:none;transition:opacity .2s}
+  .sn-d:hover::before{opacity:1}
+
+  /* Scroll top */
+  .st{position:fixed;bottom:28px;right:22px;z-index:400;width:42px;height:42px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .3s,background .2s,border-color .4s}
+  .st.on{opacity:1;pointer-events:all}
+  .st:hover{background:var(--bg-alt)}
+  .st svg{stroke:var(--ink-3);transition:stroke .2s}
+  .st:hover svg{stroke:var(--gold)}
+  .pt{position:absolute;top:500px;left:0;width:1px;height:1px;pointer-events:none}
+</style>
+</head>
+<body>
+  <div class="pt" id="pt" aria-hidden="true"></div>
+  <div class="label">CCIAF — Scroll to Top + Side Navigation</div>
+  <div class="rule"></div>
+  <div class="cap">Scroll this page — dots track the active section · hover a dot for its label · the top button appears after 500px</div>
+
+  <section id="intro"><h2>Introduction</h2><p>Fixed rail, right edge, vertically centered. One 8px dot per section, gold when active, scale 1.35.</p></section>
+  <section id="framework"><h2>The Framework</h2><p>Clicking a dot smooth-scrolls to its section. The active dot is the last one whose top has passed 38% of the viewport height.</p></section>
+  <section id="traditions"><h2>Traditions</h2><p>Hover reveals a surface-backed tooltip label at 13px EB Garamond with a 1px border — the only text in the rail.</p></section>
+  <section id="engagement"><h2>Engagement</h2><p>Both fixtures sit at z-index 400 — below the fixed nav (500), above all content.</p></section>
+
+  <p class="fix-note">Scroll to top button: 42×42px, radius 50%, appears at scrollY &gt; 500</p>
+
+  <div class="sn">
+    <div class="sn-d" data-t="intro" data-lbl="Introduction"></div>
+    <div class="sn-d" data-t="framework" data-lbl="The Framework"></div>
+    <div class="sn-d" data-t="traditions" data-lbl="Traditions"></div>
+    <div class="sn-d" data-t="engagement" data-lbl="Engagement"></div>
+  </div>
+
+  <button class="st" id="st" aria-label="Scroll to top">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 11.5 9 5.5l6 6"/>
+    </svg>
+  </button>
+
+<script>
+  const st = document.getElementById('st');
+  new IntersectionObserver(([e]) => st.classList.toggle('on', !e.isIntersecting), {threshold:0})
+    .observe(document.getElementById('pt'));
+  st.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+  const secs = ['intro','framework','traditions','engagement'];
+  const dots = document.querySelectorAll('.sn-d');
+  dots.forEach(d => d.addEventListener('click', () => document.getElementById(d.dataset.t)?.scrollIntoView({behavior:'smooth'})));
+  const active = new Set();
+  const dotObs = new IntersectionObserver(entries => {
+    entries.forEach(e => e.isIntersecting ? active.add(e.target.id) : active.delete(e.target.id));
+    const cur = secs.filter(id => active.has(id)).pop() ?? secs[0];
+    dots.forEach(d => d.classList.toggle('on', d.dataset.t === cur));
+  }, {rootMargin:'0px 0px -62% 0px', threshold:0});
+  secs.forEach(id => { const el = document.getElementById(id); if (el) dotObs.observe(el); });
+</script>
+</body>
+</html>
