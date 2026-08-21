@@ -25,6 +25,7 @@ These decisions are already resolved. Do not re-litigate them, do not "fix" the 
 | One corner-radius system | **Documented exception** | All-sharp 2px surfaces + 9999px pills only. No third value. |
 | Nav height max 80px | **Passes** | CCIAF nav is 58px — below the ceiling. |
 | One accent per page | **Passes** | Single gold accent is absolute; emphasis via weight, spacing, tone. |
+| diagram-design default skin (white-smoke `#f5f5f5` + atomic-tangerine `#eb6c36`) | **Onboard** | Before first diagram, run `references/onboarding.md` and map CCIAF tokens into `references/style-guide.md` (paper=cream, ink=ink, accent=gold). Do not ship upstream's default tangerine skin into a CCIAF project. |
 
 ## Gates
 

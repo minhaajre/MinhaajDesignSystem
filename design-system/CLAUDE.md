@@ -8,7 +8,7 @@ The goal of this system is one thing: **no AI slop**. Every page produced must b
 
 ## The Stack
 
-Five tools. Each has a specific role in the pipeline. Do not skip layers.
+Six tools. Each has a specific role in the pipeline. Do not skip layers.
 
 | Layer | Tool | Role | When |
 |-------|------|------|------|
@@ -17,6 +17,7 @@ Five tools. Each has a specific role in the pipeline. Do not skip layers.
 | 3 | **Anthropic frontend-design** | Aesthetic judgment, token system, self-critique | Every generation pass |
 | 4 | **Emil Kowalski skills** (`emilkowalski/skills`) | Animation quality, motion vocabulary, Apple design principles | Any UI with motion; polish pass |
 | 5 | **impeccable detect** (CLI) | 60 deterministic rules, CI gate | Before every merge |
+| 6 | **diagram-design** (`cathrynlavery/diagram-design`) | Editorial in-content diagrams — 39 visual types, semantic patterns, brand onboarding, drawio/Mermaid redraw | Any diagram, chart, or schematic inside a page or doc |
 
 ---
 
@@ -129,6 +130,27 @@ npx impeccable detect src/ --json
 
 **Rule:** If `npx impeccable detect` exits with code `2`, the PR does not merge.
 
+### Role 6 — Diagram Director (diagram-design)
+
+**Responsible for:** In-content diagrams and schematics — choosing the right visual type, enforcing the editorial skin, running the pre-output taste gate, and onboarding brand tokens.
+
+**Activates at:** Any time a reader would learn more from a visual than from prose, a table, or a bulleted list — architecture sketches, flowcharts, sequence/state diagrams, quadrants, charts, timelines, org charts, and 33 other types (see `skills/diagram-design/SKILL.md` §3).
+
+**The editorial philosophy (shared with this council):**
+- **Deletion over addition.** Every node earns its place; target density 4/10. Above 9 nodes it is probably two diagrams.
+- **One accent.** `accent` lands on 1–2 focal elements max — mirrors the Color Consistency Lock (Role 2). Coral/atomic-tangerine is editorial, not a flag.
+- **No shadows, no `rounded-2xl`, no 3-equal-card grids.** Same bans as the Art Director. Max radius 6–10px.
+- **4px grid.** Every font size, coord, width, height, and gap divisible by 4.
+
+**Mandatory before drawing:**
+1. Choose a semantic pattern first if behavior/state/risk carries meaning, then the nearest visual type (`references/semantic-patterns.md` + the linked `type-*.md`).
+2. Run the §9 Pre-Output Checklist (taste gate): type fit, remove test, signal check, technical SVG contract, typography.
+3. Onboard brand tokens before first diagram in a new project — `references/onboarding.md` pulls palette + fonts from a URL, a local design-system directory, or pasted tokens into `references/style-guide.md`. For CCIAF, onboard to the gold/cream token set so diagrams match the page.
+
+**Skin lint:** `python3 skills/diagram-design/scripts/self_check.py <diagram.html>` must pass (accessible-SVG contract, single-file safety, motion basics). Repo-level geometry/verify gates (`scripts/verify-geometry.py`, `lint-skin.py`) live in the upstream repo, not this mirror — run them from a full upstream checkout when available.
+
+**Loads only what it needs:** `SKILL.md` always; `type-*.md`, `semantic-patterns.md`, `animation.md`, `primitive-*.md`, and `style-guide.md` only when relevant (progressive disclosure keeps context tight).
+
 ---
 
 ## Loading Sequence
@@ -176,6 +198,15 @@ npx impeccable detect src/ --json
 4. impeccable detect        → gate
 ```
 
+### Diagram / in-content visual
+
+```
+1. diagram-design SKILL.md  → pick semantic pattern (if behavior matters) + visual type
+2. load type-*.md + style-guide.md → build self-contained HTML/SVG from confirmed tokens
+3. self_check.py            → accessible-SVG + single-file + motion-basics gate
+4. pre-output checklist (§9) → type fit, remove test, signal (≤2 accent), technical, typography
+```
+
 ---
 
 ## Skill File Locations
@@ -189,7 +220,12 @@ skills/
 ├── emit-design-eng/SKILL.md          # Emil — animation + design
 ├── improve-animations/SKILL.md       # Emil — animation audit
 ├── apple-design/SKILL.md             # Emil — Apple design principles
-└── output-skill/SKILL.md             # taste-skill — anti-lazy output enforcement
+├── output-skill/SKILL.md             # taste-skill — anti-lazy output enforcement
+└── diagram-design/                   # cathrynlavery/diagram-design — editorial diagrams
+    ├── SKILL.md                      # philosophy, 39-type selection guide, taste gate
+    ├── references/                   # type-*.md, semantic-patterns, style-guide, onboarding, import/export
+    ├── assets/                       # templates + 3-variant examples per type + gallery
+    └── scripts/                      # drawio/mermaid extractors, self_check.py
 ```
 
 ---
