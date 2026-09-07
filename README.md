@@ -69,10 +69,23 @@ Root size `18px`. Type scale uses `clamp()` for fluid scaling:
 
 ---
 
+## Byte-identical contract for agents
+
+Every AI agent must read `AGENTS.md` before any frontend work — it is the replication contract that makes new projects render byte-identical to `cciaf.minhaaj.com` by copying `templates/cciaf-starter.html` verbatim. Also see `VERIFY.md` for the visual gate.
+
+**For agents:**
+```
+Read: AGENTS.md (mandatory first)
+Copy: templates/cciaf-starter.html → your index.html
+Verify: VERIFY.md (light + dark side-by-side)
+```
+
 ## Repository Structure
 
 ```
 /
+├── AGENTS.md              # ★ Byte-identical replication contract — agents read this first
+├── VERIFY.md              # Visual verification gate (ship only on pass)
 ├── CLAUDE.md              # Agent orchestration — loads design-system/ council + CCIAF overrides
 ├── README.md              # This file
 ├── SKILL.md               # Agent skill definition
@@ -89,8 +102,13 @@ Root size `18px`. Type scale uses `clamp()` for fluid scaling:
 │   ├── scripts/setup.sh   #   Bootstrap installer for consuming projects
 │   └── .github/           #   Optional CI design-check workflow (not wired by default)
 │
+├── templates/
+│   ├── cciaf-starter.html # ★ Byte-identical starter — exact live site copy (copy this)
+│   ├── cciaf.css          #   Extracted CSS from starter (for split imports)
+│   └── cciaf.js           #   Extracted JS from starter (for split imports)
+│
 ├── tokens/
-│   └── cciaf.css          # ★ Single source of truth — all CSS custom properties
+│   └── cciaf.css          # Single source of truth — all CSS custom properties (also inlined in starter)
 │
 ├── components/            # Component specifications
 │   ├── navigation.md
@@ -136,29 +154,35 @@ Root size `18px`. Type scale uses `clamp()` for fluid scaling:
 
 ---
 
-## Usage
+## Usage — byte-identical (agents must follow AGENTS.md)
 
-### Web (CSS)
+### Plain HTML — copy starter (recommended, zero drift)
 
-All tokens are CSS custom properties. Import and use directly:
+```bash
+cp templates/cciaf-starter.html my-project/index.html
+# Edit text inside existing .h-h1/.h-p/.prose/.lc/.tc/.et only — keep every class/id/wrapper.
+```
+
+`templates/cciaf-starter.html` already contains all tokens, layout, and JS inline — no import needed.
+
+### Split CSS/JS (when you must separate files)
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens/cciaf.css">
+<link rel="stylesheet" href="templates/cciaf.css">
+<script defer src="templates/cciaf.js"></script>
+```
+
+HTML must keep `<html data-theme="light">` and `html{font-size:18px}` at root. Theme persists to `localStorage:cciaf-theme`.
+
+### Tokens-only (for non-CCIAF extensions)
 
 ```css
 @import url('tokens/cciaf.css');
-
-.my-component {
-  background: var(--bg);
-  color: var(--ink-1);
-  font-family: var(--font-heading);
-}
+.my-component { background: var(--bg); color: var(--ink-1); }
 ```
-
-Light/dark mode is driven by a `data-theme` attribute on `<html>`:
-
-```html
-<html data-theme="light">   <!-- or "dark" -->
-```
-
-The theme toggle persists to `localStorage` under `minhaaj-theme` and defaults to `prefers-color-scheme`.
 
 ### Fonts
 
@@ -172,7 +196,7 @@ This fetches Cormorant Garamond + EB Garamond into `fonts/`.
 
 ### Prototyping
 
-Use `ui_kits/cciaf/index.html` as a starting point — a standalone, interactive prototype with working light/dark mode. Open it directly in a browser.
+Use `templates/cciaf-starter.html` as the byte-identical starting point (exact live copy). Legacy `ui_kits/cciaf/index.html` remains as a secondary reference.
 
 ### Token previews
 

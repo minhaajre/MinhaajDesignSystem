@@ -4,9 +4,9 @@ description: Use this skill to generate well-branded CCIAF / Matrix interfaces a
 user-invocable: true
 ---
 
-Read the README.md and explore `tokens/`, `components/`, and `patterns/` for the full design system. Use `ui_kits/cciaf/` for an interactive prototype. Open `preview/index.html` to browse live token visualizations.
+**Byte-identical contract:** Read `AGENTS.md` first — it is the replication contract. Then copy `templates/cciaf-starter.html` verbatim as your starting point. Do not rebuild from `tokens/` + `components/` alone; that introduces drift. See `VERIFY.md` before shipping.
 
-If creating visual artifacts (slides, mocks, prototypes), copy assets from `assets/imagery/` and create static HTML files. If working on production code, import `tokens/cciaf.css` and follow the component specs.
+If creating visual artifacts (slides, mocks, prototypes), copy assets from `assets/imagery/` and create static HTML files that still import `templates/cciaf.css`. If working on production code, copy the starter then edit text inside existing classes.
 
 If the user invokes this skill without guidance, ask what they want to build, ask clarifying questions, and act as an expert CCIAF designer.
 
@@ -35,5 +35,6 @@ If the user invokes this skill without guidance, ask what they want to build, as
 - Founder portrait: `assets/imagery/founder.jpeg`
 - Timing diagram: `assets/imagery/timing-activation-windows.svg`
 
-**Tokens:** `tokens/cciaf.css` (single source of truth)
-**UI Kit:** `ui_kits/cciaf/`  ·  **Previews:** `preview/index.html`
+**Canonical:** `templates/cciaf-starter.html` (byte-identical live copy) + `templates/cciaf.css` / `ccaf.js` (split) + `VERIFY.md`
+**Tokens:** `tokens/cciaf.css` (also inlined in starter)
+**Legacy UI Kit:** `ui_kits/cciaf/`  ·  **Previews:** `preview/index.html` + `design-system-reference.html`
