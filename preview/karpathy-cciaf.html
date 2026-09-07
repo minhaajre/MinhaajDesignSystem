@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Andrej Karpathy — I like to train deep neural nets on large datasets</title>
+<link rel="icon" href="favicon.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
+
+/* ─── DESIGN TOKENS ─────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg:           #F9F6F0;
+  --bg-alt:       #F2EDE3;
+  --bg-contrast:  #1A1510;   /* dark section bg in light mode */
+  --surface:      #FFFFFF;
+  --border:       #DDD8CE;
+  --ink-1:        #1A1510;   /* headings */
+  --ink-2:        #3D3830;   /* body */
+  --ink-3:        #6B6358;   /* secondary */
+  --ink-4:        #A09890;   /* muted */
+  --gold:         #8B6510;
+  --gold-mid:     #B8922A;
+  --gold-light:   #D4AE60;
+  /* contrast section — always readable */
+  --cs-bg:        #1A1510;
+  --cs-h:         #F5F0E8;
+  --cs-body:      rgba(245,240,232,.70);
+  --cs-border:    rgba(245,240,232,.15);
+  --cs-gold:      #D4AE60;
+  /* nav */
+  --nav-bg:       rgba(249,246,240,.95);
+  /* toggle */
+  --tog-bg:       #DDD8CE;
+  --tog-knob:     #8B6510;
+  --shadow:       0 1px 3px rgba(26,21,16,.08),0 4px 16px rgba(26,21,16,.05);
+}
+[data-theme="dark"] {
+  --bg:           #131008;
+  --bg-alt:       #1B170D;
+  --bg-contrast:  #0D0B06;   /* darker than bg for contrast sections */
+  --surface:      #1E1A10;
+  --border:       #2E2918;
+  --ink-1:        #F0EAD8;
+  --ink-2:        #C0B89E;
+  --ink-3:        #7A7260;
+  --ink-4:        #4A4438;
+  --gold:         #C8A03A;
+  --gold-mid:     #A07818;
+  --gold-light:   #E0BC70;
+  /* contrast section — inverted in dark = lighter */
+  --cs-bg:        #F5F0E8;
+  --cs-h:         #1A1510;
+  --cs-body:      rgba(26,21,16,.68);
+  --cs-border:    rgba(26,21,16,.14);
+  --cs-gold:      #7A5810;
+  /* nav */
+  --nav-bg:       rgba(19,16,8,.95);
+  /* toggle */
+  --tog-bg:       #2E2918;
+  --tog-knob:     #C8A03A;
+  --shadow:       0 1px 3px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.2);
+}
+
+/* ─── RESET ──────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:18px;scroll-behavior:smooth;}
+body{
+  font-family:'EB Garamond',Georgia,'Times New Roman',serif;
+  background:var(--bg); color:var(--ink-2);
+  line-height:1.75; -webkit-font-smoothing:antialiased;
+  transition:background .4s,color .4s;
+}
+img{max-width:100%;display:block;}
+a{color:var(--gold);text-decoration:none;transition:color .2s;}
+a:hover{color:var(--ink-1);}
+a:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px;}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+
+/* ─── TYPOGRAPHY SCALE ───────────────────────────────────────── */
+/* Display  — hero h1             clamp(2.6rem,6vw,5rem)   */
+/* Title    — section h2          clamp(1.7rem,3vw,2.5rem) */
+/* Subtitle — section h3          clamp(1.2rem,2vw,1.5rem) */
+/* Body     — default prose       1.1rem (≈20px)            */
+/* Small    — labels, captions    0.85rem (≈15px)           */
+
+/* ─── HEADER ─────────────────────────────────────────────────── */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  background:var(--nav-bg);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  height:58px; padding:0 clamp(20px,5vw,72px);
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  transition:background .4s,border-color .4s;
+}
+.brand{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:15px;font-weight:300;
+  letter-spacing:.20em;text-transform:uppercase;
+  color:var(--ink-1);flex-shrink:0;
+  transition:color .4s;
+}
+.brand em{color:var(--gold);font-style:normal;}
+.top-nav{display:flex;gap:28px;align-items:center;}
+.top-nav a{
+  font-size:15px;color:var(--ink-3);
+  letter-spacing:.04em;
+  transition:color .2s;
+}
+.top-nav a:hover{color:var(--ink-1);}
+.hdr-right{display:flex;align-items:center;gap:14px;flex-shrink:0;}
+
+/* ─── THEME TOGGLE ───────────────────────────────────────────── */
+.tog{
+  width:46px;height:26px;border-radius:13px;
+  background:var(--tog-bg);border:1px solid var(--border);
+  cursor:pointer;position:relative;flex-shrink:0;
+  transition:background .35s,border-color .35s;
+  -webkit-appearance:none;appearance:none;
+}
+.tog::after{
+  content:'';position:absolute;top:3px;left:3px;
+  width:18px;height:18px;border-radius:50%;
+  background:var(--tog-knob);
+  transition:transform .3s ease,background .35s;
+}
+[data-theme="dark"] .tog::after{transform:translateX(20px);}
+.tog-label{
+  font-size:13px;color:var(--ink-4);
+  display:flex;align-items:center;gap:8px;cursor:pointer;
+}
+
+/* ─── HAMBURGER ──────────────────────────────────────────────── */
+.hbg{
+  display:none;background:none;
+  border:1px solid var(--border);border-radius:5px;
+  padding:6px 10px;cursor:pointer;
+  font-family:'EB Garamond',Georgia,serif;
+  font-size:14px;color:var(--ink-3);
+  transition:color .2s,border-color .2s;
+}
+.hbg:hover{color:var(--ink-1);border-color:var(--ink-3);}
+.mob-menu{
+  display:none;position:fixed;
+  top:58px;left:0;right:0;z-index:490;
+  background:var(--nav-bg);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  flex-direction:column;
+  transition:background .4s;
+}
+.mob-menu.open{display:flex;}
+.mob-menu a{
+  font-size:16px;color:var(--ink-2);
+  padding:14px 24px;
+  border-bottom:1px solid var(--border);
+  transition:background .15s,color .15s;
+}
+.mob-menu a:hover{background:var(--bg-alt);color:var(--ink-1);}
+.mob-menu a:last-child{border-bottom:none;}
+
+/* ─── SCROLL NAV DOTS ────────────────────────────────────────── */
+.sn{
+  position:fixed;right:20px;top:50%;
+  transform:translateY(-50%);z-index:400;
+  display:flex;flex-direction:column;gap:12px;
+}
+.sn-d{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--border);cursor:pointer;
+  transition:background .25s,transform .25s;
+  position:relative;
+}
+.sn-d:hover,.sn-d.on{background:var(--gold);}
+.sn-d.on{transform:scale(1.35);}
+.sn-d::before{
+  content:attr(data-lbl);
+  position:absolute;right:18px;top:50%;transform:translateY(-50%);
+  font-family:'EB Garamond',Georgia,serif;
+  font-size:13px;color:var(--ink-3);white-space:nowrap;
+  background:var(--surface);border:1px solid var(--border);
+  padding:3px 9px;border-radius:4px;
+  opacity:0;pointer-events:none;transition:opacity .2s;
+}
+.sn-d:hover::before{opacity:1;}
+@media(max-width:720px){.sn{display:none;}}
+
+/* ─── SCROLL TOP ─────────────────────────────────────────────── */
+.st{
+  position:fixed;bottom:28px;right:22px;z-index:400;
+  width:42px;height:42px;border-radius:50%;
+  background:var(--surface);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;box-shadow:var(--shadow);
+  opacity:0;pointer-events:none;
+  transition:opacity .3s,background .2s,border-color .4s;
+}
+.st.on{opacity:1;pointer-events:all;}
+.st:hover{background:var(--bg-alt);}
+.st svg{stroke:var(--ink-3);transition:stroke .2s;}
+.st:hover svg{stroke:var(--gold);}
+
+/* ─── REVEAL ─────────────────────────────────────────────────── */
+.r{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;}
+.r.on{opacity:1;transform:none;}
+
+/* ─── HERO ───────────────────────────────────────────────────── */
+#hero{
+  min-height:100vh;padding-top:58px;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:calc(58px + clamp(40px,8vw,80px)) clamp(20px,8vw,120px) clamp(60px,8vw,100px);
+  position:relative;overflow:hidden;
+  background:var(--bg);transition:background .4s;
+}
+#hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 78% 35%, rgba(184,146,42,.07) 0%, transparent 65%),
+    radial-gradient(ellipse 35% 60% at 15% 75%, rgba(139,101,16,.04) 0%, transparent 60%);
+}
+.h-eye{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:13px;font-weight:300;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:28px;
+  opacity:0;animation:fu .8s ease .15s forwards;
+}
+.h-h1{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:clamp(2.6rem,6vw,5rem);
+  font-weight:300;line-height:1.08;letter-spacing:-.01em;
+  color:var(--ink-1);
+  max-width:900px;margin-bottom:36px;
+  opacity:0;animation:fu .9s ease .3s forwards;
+  transition:color .4s;
+}
+.h-h1 em{font-style:italic;color:var(--ink-3);}
+.h-rule{
+  width:50px;height:1.5px;background:var(--gold);
+  margin-bottom:32px;
+  opacity:0;animation:fu .8s ease .5s forwards;
+}
+.h-p{
+  font-size:clamp(1rem,1.8vw,1.2rem);
+  color:var(--ink-2);max-width:58ch;line-height:1.8;
+  margin-bottom:18px;
+  opacity:0;animation:fu .8s ease .6s forwards;
+  transition:color .4s;
+}
+.h-p+.h-p{animation-delay:.72s;}
+.h-note{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:14px;font-style:italic;color:var(--ink-4);
+  margin-top:40px;
+  opacity:0;animation:fu .8s ease .9s forwards;
+  transition:color .4s;
+}
+@keyframes fu{
+  from{opacity:0;transform:translateY(16px);}
+  to{opacity:1;transform:none;}
+}
+
+/* ─── SECTION WRAPPER ────────────────────────────────────────── */
+.sec{
+  padding:clamp(70px,9vw,120px) clamp(20px,8vw,120px);
+  transition:background .4s;
+}
+.div{height:1px;background:var(--border);transition:background .4s;}
+
+.s-eye{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:12px;font-weight:300;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:20px;
+}
+.s-h2{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:clamp(1.7rem,3vw,2.6rem);
+  font-weight:300;line-height:1.15;
+  color:var(--ink-1);max-width:700px;margin-bottom:36px;
+  transition:color .4s;
+}
+.prose{
+  font-size:clamp(1rem,1.5vw,1.1rem);
+  color:var(--ink-2);max-width:60ch;line-height:1.82;
+  transition:color .4s;
+}
+.prose p+p{margin-top:1.4em;}
+
+/* ─── CONTRAST SECTION (THE GAP) ────────────────────────────── */
+/* Flips between dark-on-light (light mode) and light-on-dark (dark mode) */
+#gap{background:var(--cs-bg);transition:background .4s;}
+#gap .s-eye{color:var(--cs-gold);}
+#gap .s-h2{color:var(--cs-h);transition:color .4s;}
+#gap .prose{color:var(--cs-body);}
+#bio{background:var(--cs-bg);transition:background .4s;}
+#bio .s-eye{color:var(--cs-gold);}
+#bio .s-h2{color:var(--cs-h);transition:color .4s;}
+#bio .prose{color:var(--cs-body);}
+
+.gap-q{
+  border-left:2px solid var(--cs-gold);
+  padding-left:28px;margin:44px 0;max-width:600px;
+}
+.gap-q p{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:clamp(1.2rem,2.4vw,1.65rem);
+  font-style:italic;font-weight:300;line-height:1.42;
+  color:var(--cs-h);transition:color .4s;
+}
+.gap-q footer{
+  margin-top:12px;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--cs-body);font-style:normal;
+}
+
+/* ─── LAYERS ─────────────────────────────────────────────────── */
+.layers{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  border:1px solid var(--border);margin:44px 0;
+  transition:border-color .4s;
+}
+.lc{
+  padding:26px 20px;
+  border-right:1px solid var(--border);
+  transition:border-color .4s,background .2s;
+}
+.lc:last-child{border-right:none;}
+.lc:hover{background:var(--bg-alt);}
+.lc-n{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:12px;font-weight:300;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:12px;
+}
+.lc-t{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:1.15rem;font-weight:400;
+  color:var(--ink-1);margin-bottom:8px;line-height:1.2;
+  transition:color .4s;
+}
+.lc-q{
+  font-style:italic;font-size:14px;
+  color:var(--ink-3);margin-bottom:12px;line-height:1.4;
+  transition:color .4s;
+}
+.lc-s{font-size:13px;color:var(--ink-4);line-height:1.65;transition:color .4s;}
+@media(max-width:900px){
+  .layers{grid-template-columns:1fr 1fr;}
+  .lc{border-bottom:1px solid var(--border);}
+  .lc:nth-child(even){border-right:none;}
+  .lc:nth-last-child(-n+2):not(:nth-child(even)){border-bottom:none;}
+  .lc:last-child{border-bottom:none;}
+}
+@media(max-width:540px){
+  .layers{grid-template-columns:1fr;}
+  .lc{border-right:none;border-bottom:1px solid var(--border);}
+  .lc:last-child{border-bottom:none;}
+}
+
+/* ─── TRADITIONS ─────────────────────────────────────────────── */
+#trad{background:var(--bg-alt);}
+.tg{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:40px 72px;margin:44px 0;max-width:920px;
+}
+.tc{border-top:2px solid var(--border);padding-top:22px;transition:border-color .4s;}
+.tc-n{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:1.15rem;font-weight:400;
+  color:var(--ink-1);margin-bottom:5px;transition:color .4s;
+}
+.tc-o{
+  font-size:12px;color:var(--gold);
+  letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;
+}
+.tc-r{font-size:15px;color:var(--ink-2);line-height:1.72;transition:color .4s;}
+@media(max-width:620px){.tg{grid-template-columns:1fr;gap:30px;}}
+
+/* ─── ENGAGEMENT ─────────────────────────────────────────────── */
+.eg{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border:1px solid var(--border);margin:44px 0;
+  transition:border-color .4s;
+}
+.et{
+  padding:30px 26px;
+  border-right:1px solid var(--border);
+  transition:border-color .4s,background .2s;
+}
+.et:last-child{border-right:none;}
+.et:hover{background:var(--bg-alt);}
+.et-eye{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:12px;font-weight:300;
+  letter-spacing:.20em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:12px;
+}
+.et-n{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:1.3rem;font-weight:400;
+  color:var(--ink-1);margin-bottom:8px;transition:color .4s;
+}
+.et-w{
+  font-size:14px;color:var(--ink-3);
+  font-style:italic;line-height:1.65;margin-bottom:18px;
+  transition:color .4s;
+}
+.et-aud{
+  font-size:13.5px;color:var(--ink-3);
+  line-height:1.55;margin:-6px 0 18px;
+  padding-left:14px;border-left:2px solid var(--gold-light);
+  transition:color .4s,border-color .4s;
+}
+.et-l{list-style:none;border-top:1px solid var(--border);padding-top:14px;transition:border-color .4s;}
+.et-l li{
+  font-size:15px;color:var(--ink-2);
+  padding:5px 0;
+  border-bottom:1px dashed rgba(0,0,0,.08);
+  line-height:1.4;transition:color .4s,border-color .4s;
+}
+[data-theme="dark"] .et-l li{border-bottom:1px dashed rgba(255,255,255,.06);}
+.et-l li:last-child{border-bottom:none;}
+@media(max-width:800px){
+  .eg{grid-template-columns:1fr;}
+  .et{border-right:none;border-bottom:1px solid var(--border);}
+  .et:last-child{border-bottom:none;}
+}
+
+/* ─── CONTACT ────────────────────────────────────────────────── */
+#contact{text-align:center;}
+.ct-eye{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:12px;font-weight:300;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:28px;
+}
+#contact .s-h2{margin:0 auto 28px;text-align:center;}
+.ct-p{
+  font-size:clamp(1rem,1.5vw,1.1rem);
+  color:var(--ink-3);max-width:46ch;
+  margin:0 auto 36px;line-height:1.8;transition:color .4s;
+}
+.ct-a{
+  display:inline-block;
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:15px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold);border-bottom:1px solid var(--gold-light);padding-bottom:3px;
+  transition:color .2s,border-color .2s;
+}
+.ct-a:hover{color:var(--ink-1);border-color:var(--ink-1);}
+.ct-note{
+  margin-top:40px;margin-left:auto;margin-right:auto;
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:14px;font-style:italic;color:var(--ink-4);
+  max-width:44ch;line-height:1.75;transition:color .4s;
+}
+/* contact form */
+.ct-form{
+  margin:36px auto 0;
+  max-width:540px;
+  text-align:left;
+}
+.ct-form .cf-field{margin-bottom:20px;}
+.ct-form .cf-field input,
+.ct-form .cf-field textarea{
+  width:100%;
+  border:1px solid var(--border);
+  padding:12px 15px;
+  font-family:'EB Garamond',Georgia,'Times New Roman',serif;
+  font-size:16px;color:var(--ink-2);
+  background:var(--field-bg,var(--surface));
+  border-radius:0;outline:none;
+  transition:border-color .2s,box-shadow .2s,background .4s,color .4s;
+  -webkit-appearance:none;appearance:none;
+}
+.ct-form .cf-field input:focus,
+.ct-form .cf-field textarea:focus{
+  border-color:var(--gold-mid);
+  box-shadow:0 0 0 3px rgba(139,101,16,.10);
+}
+[data-theme="dark"] .ct-form .cf-field input,
+[data-theme="dark"] .ct-form .cf-field textarea{
+  box-shadow:none;
+}
+[data-theme="dark"] .ct-form .cf-field input:focus,
+[data-theme="dark"] .ct-form .cf-field textarea:focus{
+  box-shadow:0 0 0 3px rgba(200,160,58,.10);
+}
+.ct-form .cf-field textarea{min-height:120px;resize:vertical;}
+.ct-form .cf-field .cf-err{
+  display:none;font-size:13px;color:#B84040;margin-top:5px;
+}
+.ct-form .cf-field .cf-err.show{display:block;}
+.ct-form .cf-btn{
+  display:inline-flex;align-items:center;
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:14px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--surface);background:var(--gold);
+  border:1px solid var(--gold);padding:13px 32px;
+  cursor:pointer;
+  transition:background .25s,border-color .25s;
+  -webkit-appearance:none;appearance:none;
+}
+.ct-form .cf-btn:hover{background:var(--gold-mid);border-color:var(--gold-mid);}
+[data-theme="dark"] .ct-form .cf-btn{color:var(--bg);}
+#ct-success{
+  display:none;
+  margin:36px auto 0;max-width:540px;
+  padding:36px 40px;
+  border:1px solid var(--border);
+  text-align:center;
+  animation:fu .6s ease both;
+  transition:border-color .4s;
+}
+.cts-eye{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:11px;font-weight:300;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:16px;transition:color .4s;
+}
+.cts-body{
+  font-size:15px;color:var(--ink-3);line-height:1.75;transition:color .4s;
+}
+
+/* ─── ORN ─────────────────────────────────────────────────────── */
+.orn{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:1.8rem;color:var(--border);
+  text-align:center;padding:28px 0;
+  letter-spacing:.5em;user-select:none;transition:color .4s;
+}
+
+/* ─── FOOTER ─────────────────────────────────────────────────── */
+footer{
+  border-top:1px solid var(--border);
+  padding:26px clamp(20px,8vw,120px);
+  display:flex;justify-content:space-between;align-items:flex-start;
+  gap:24px;flex-wrap:wrap;
+  font-size:13.5px;color:var(--ink-4);
+  transition:border-color .4s,color .4s;
+}
+.f-disc{max-width:640px;line-height:1.6;font-style:italic;}
+.about-link{margin-top:14px;font-size:15px;color:var(--ink-3);}
+.about-link a{color:var(--gold);font-weight:500;}
+
+/* ─── REFERENCES (collapsible) ───────────────────────────────── */
+.refs{
+  border-top:1px solid var(--border);
+  padding:64px clamp(20px,8vw,120px) 80px;
+  background:var(--bg-alt);
+  transition:background .4s,border-color .4s;
+}
+.refs-h{
+  text-align:center;
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-weight:300;letter-spacing:.18em;text-transform:uppercase;
+  font-size:13px;color:var(--ink-3);margin-bottom:6px;
+  transition:color .4s;
+}
+.refs-h2{
+  text-align:center;
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-weight:400;font-size:clamp(1.4rem,2.4vw,2rem);
+  color:var(--ink-1);margin-bottom:32px;
+  transition:color .4s;
+}
+.refs-detail{
+  max-width:920px;margin:0 auto;
+  border:1px solid var(--border);
+  background:var(--surface);
+  border-radius:2px;
+  transition:border-color .4s,background .4s;
+}
+.refs-summary{
+  list-style:none;cursor:pointer;
+  padding:18px 26px;
+  font-family:'EB Garamond',serif;
+  font-size:1rem;color:var(--ink-1);
+  display:flex;align-items:center;justify-content:space-between;
+  transition:color .4s;
+}
+.refs-summary::-webkit-details-marker{display:none;}
+.refs-summary::after{
+  content:'+';font-size:24px;color:var(--gold);font-weight:300;
+  transition:transform .3s;
+}
+.refs-detail[open] .refs-summary::after{content:'−';}
+.refs-body{
+  padding:8px 26px 28px;
+  border-top:1px solid var(--border);
+  transition:border-color .4s;
+}
+.refs-trad{
+  padding:18px 0;
+  border-bottom:1px solid var(--border);
+  transition:border-color .4s;
+}
+.refs-trad:last-child{border-bottom:none;}
+.refs-trad-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.05rem;font-weight:500;color:var(--ink-1);
+  margin-bottom:8px;letter-spacing:.02em;
+  transition:color .4s;
+}
+.refs-trad ul{
+  list-style:none;padding-left:14px;
+}
+.refs-trad li{
+  font-size:14.5px;color:var(--ink-2);
+  line-height:1.6;padding:3px 0;
+  position:relative;
+  transition:color .4s;
+}
+.refs-trad li::before{
+  content:'·';position:absolute;left:-12px;color:var(--gold);
+}
+.refs-trad em{font-style:italic;}
+.refs-foot{
+  font-size:13px;color:var(--ink-4);
+  text-align:center;padding-top:18px;line-height:1.6;
+  font-style:italic;
+  transition:color .4s;
+}
+
+/* ─── REBUILT FOOTER ─────────────────────────────────────────── */
+.f-grid{
+  display:grid;grid-template-columns:1.4fr 1fr 1fr;
+  gap:36px;align-items:flex-start;
+  max-width:1200px;margin:0 auto;
+  padding:0 0 22px;
+}
+.f-col h4{
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:400;
+  margin-bottom:14px;transition:color .4s;
+}
+.f-col ul{list-style:none;}
+.f-col li{padding:4px 0;font-size:14px;}
+.f-col a{color:var(--ink-2);transition:color .4s;}
+.f-col a:hover{color:var(--gold);}
+.f-bottom{
+  border-top:1px solid var(--border);
+  padding-top:18px;display:flex;
+  justify-content:space-between;align-items:flex-start;
+  gap:24px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-4);
+  transition:border-color .4s,color .4s;
+}
+.f-sub{font-size:12.5px;color:var(--ink-4);font-style:italic;}
+@media(max-width:760px){
+  .f-grid{grid-template-columns:1fr;gap:24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a class="brand" href="#hero"><em>KARPATHY</em></a>
+  <nav class="top-nav" aria-label="Primary navigation">
+    <a href="#bio">bio</a>
+    <a href="#history">history</a>
+    <a href="#featured-talks">featured talks</a>
+    <a href="#teaching">teaching</a>
+    <a href="#featured-writing">featured writing</a>
+    <a href="#pet-projects">pet projects</a>
+    <a href="#publications">publications</a>
+    <a href="#misc">misc unsorted</a>
+  </nav>
+  <div class="hdr-right">
+    <button class="hbg" id="hbg" aria-label="Open navigation menu">Menu</button>
+    <label class="tog-label" aria-label="Toggle dark mode">
+      <button class="tog" id="tog" role="switch" aria-checked="false"></button>
+    </label>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<nav class="mob-menu" id="mobMenu" aria-label="Mobile navigation">
+  <a href="#bio"        onclick="cm()">bio</a>
+  <a href="#history"        onclick="cm()">history</a>
+  <a href="#featured-talks"        onclick="cm()">featured talks</a>
+  <a href="#teaching"        onclick="cm()">teaching</a>
+  <a href="#featured-writing"        onclick="cm()">featured writing</a>
+  <a href="#pet-projects"        onclick="cm()">pet projects</a>
+  <a href="#publications"        onclick="cm()">publications</a>
+  <a href="#misc"        onclick="cm()">misc unsorted</a>
+</nav>
+
+<!-- SCROLL DOTS -->
+<div class="sn" role="navigation" aria-label="Page sections">
+  <div class="sn-d" data-t="hero"       data-lbl="Introduction"  tabindex="0" role="button" aria-label="Go to Introduction"></div>
+  <div class="sn-d" data-t="bio"       data-lbl="bio"  tabindex="0" role="button" aria-label="Go to bio"></div>
+  <div class="sn-d" data-t="history"       data-lbl="history"  tabindex="0" role="button" aria-label="Go to history"></div>
+  <div class="sn-d" data-t="featured-talks"       data-lbl="featured talks"  tabindex="0" role="button" aria-label="Go to featured talks"></div>
+  <div class="sn-d" data-t="teaching"       data-lbl="teaching"  tabindex="0" role="button" aria-label="Go to teaching"></div>
+  <div class="sn-d" data-t="featured-writing"       data-lbl="featured writing"  tabindex="0" role="button" aria-label="Go to featured writing"></div>
+  <div class="sn-d" data-t="pet-projects"       data-lbl="pet projects"  tabindex="0" role="button" aria-label="Go to pet projects"></div>
+  <div class="sn-d" data-t="publications"       data-lbl="publications"  tabindex="0" role="button" aria-label="Go to publications"></div>
+  <div class="sn-d" data-t="misc"       data-lbl="misc unsorted"  tabindex="0" role="button" aria-label="Go to misc unsorted"></div>
+</div>
+
+<!-- SCROLL TOP -->
+<button class="st" id="st" aria-label="Scroll to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke-width="1.8"
+       stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 15V3M4 8l5-5 5 5"/>
+  </svg>
+</button>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section id="hero" aria-labelledby="hero-h1">
+  <p class="h-eye">karpathy.ai — Andrej Karpathy</p>
+  <h1 class="h-h1" id="hero-h1">
+    I like to train <em>deep neural nets</em><br>
+    on large datasets.
+  </h1>
+  <div class="h-rule" role="separator"></div>
+  <p class="h-p">
+    Andrej Karpathy — AI researcher and educator. Founding member, OpenAI. Previously Director of AI, Tesla Autopilot. PhD, Stanford Vision Lab, advised by Fei-Fei Li.
+  </p>
+  <p class="h-p">
+    Research focus on convolutional and recurrent neural networks for vision, language, and their intersection — and a practice of rebuilding primitives from scratch so they can be taught.
+  </p>
+  <p class="h-note">
+    <a href="https://twitter.com/karpathy" target="_blank" rel="noopener">𝕏 @karpathy</a> &nbsp;·&nbsp; <a href="https://github.com/karpathy" target="_blank" rel="noopener">github.com/karpathy</a> &nbsp;·&nbsp; <a href="https://karpathy.github.io" target="_blank" rel="noopener">karpathy.github.io</a>
+  </p>
+</section>
+
+<div class="div" role="separator"></div>
+
+<section class="sec" id="bio" aria-labelledby="bio-h2">
+  <p class="s-eye r">bio</p>
+  <h2 class="s-h2 r" id="bio-h2">bio</h2>
+  <div class="prose r">
+    <p>Andrej Karpathy is an AI researcher and educator. He was a founding member of OpenAI and later the Director of AI at Tesla, where he led the computer vision team of the Autopilot. During his PhD at Stanford he was the architect and lead instructor of the first deep learning course at Stanford (CS231n), which has become one of its most popular classes.</p>
+  </div>
+</section>
+
+<div class="div" role="separator"></div>
+
+<section class="sec" id="history" aria-labelledby="history-h2">
+  <p class="s-eye r">history</p>
+  <h2 class="s-h2 r" id="history-h2">history</h2>
+  <div class="prose r">
+    <p>Seven periods — from Toronto to independent teaching — with the current decade spent on large-scale training and educational work that explains it.</p>
+  </div>
+  <div class="tg">
+    <div class="tc r">
+      <div class="tc-n">2024 —</div>
+      <div class="tc-o">Independent · Education</div>
+      <div class="tc-r">I create educational videos on AI on my <a href="https://www.youtube.com/@AndrejKarpathy" target="_blank" rel="noopener">YouTube channel</a>. The videos come in two parallel tracks: a technical track and a general audience track. Technical track: follow the <a href="https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ" target="_blank" rel="noopener">Zero to Hero</a> playlist. General audience: <a href="https://www.youtube.com/watch?v=7xTGNNLPyMI" target="_blank" rel="noopener">Deep Dive into LLMs like ChatGPT</a>, <a href="https://www.youtube.com/watch?v=EWvNQjAaOHw" target="_blank" rel="noopener">How I use LLMs</a>, and <a href="https://www.youtube.com/watch?v=zjkBMFhNj_g" target="_blank" rel="noopener">Intro to Large Language Models</a>. For the latest, <a href="https://twitter.com/karpathy" target="_blank" rel="noopener">𝕏/Twitter</a> or <a href="https://www.github.com/karpathy" target="_blank" rel="noopener">GitHub</a>.</div>
+    </div>
+    <div class="tc r">
+      <div class="tc-n">2023 – 2024</div>
+      <div class="tc-o">OpenAI · Mid-training</div>
+      <div class="tc-r">I came back to <a href="https://openai.com/" target="_blank" rel="noopener">OpenAI</a> where I built a new team working on midtraining and synthetic data generation.</div>
+    </div>
+    <div class="tc r">
+      <div class="tc-n">2017 – 2022</div>
+      <div class="tc-o">Tesla · Director of AI</div>
+      <div class="tc-r">I was the <a href="https://techcrunch.com/2017/06/20/tesla-hires-deep-learning-expert-andrej-karpathy-to-lead-autopilot-vision/" target="_blank" rel="noopener">Director of AI at Tesla</a>, where I led the computer vision team of <a href="https://www.tesla.com/autopilot" target="_blank" rel="noopener">Tesla Autopilot</a> and (very briefly) <a href="https://en.wikipedia.org/wiki/Optimus_(robot)" target="_blank" rel="noopener">Tesla Optimus</a>. My team handled all in-house data labeling, neural network training and deployment on Tesla's custom inference chip. Today the Autopilot increases safety and convenience of driving, but the goal is <a href="https://www.youtube.com/watch?v=tlThdr3O5Qo" target="_blank" rel="noopener">Full Self-Driving</a> at scale. See Aug 2021 <a href="https://youtu.be/j0z4FweCy4M?t=2900" target="_blank" rel="noopener">Tesla AI Day</a>.</div>
+    </div>
+    <div class="tc r">
+      <div class="tc-n">2015 – 2017</div>
+      <div class="tc-o">OpenAI · Research scientist</div>
+      <div class="tc-r">I was a research scientist and a founding member at <a href="https://openai.com/index/introducing-openai/" target="_blank" rel="noopener">OpenAI</a>.</div>
+    </div>
+    <div class="tc r">
+      <div class="tc-n">2011 – 2015</div>
+      <div class="tc-o">Stanford · PhD</div>
+      <div class="tc-r">My PhD was focused on convolutional/recurrent neural networks and their applications in computer vision, natural language processing and their intersection. Adviser <a href="http://vision.stanford.edu/" target="_blank" rel="noopener">Fei-Fei Li</a> at the Stanford Vision Lab; also worked with <a href="https://ai.stanford.edu/users/koller/" target="_blank" rel="noopener">Daphne Koller</a>, <a href="http://www.robotics.stanford.edu/~ang/contact.html" target="_blank" rel="noopener">Andrew Ng</a>, <a href="http://robots.stanford.edu/" target="_blank" rel="noopener">Sebastian Thrun</a> and <a href="http://vladlen.info/" target="_blank" rel="noopener">Vladlen Koltun</a>. Designed and was primary instructor for the first deep learning class at Stanford — <a href="http://cs231n.stanford.edu/" target="_blank" rel="noopener">CS 231n: Convolutional Neural Networks for Visual Recognition</a> (150 enrolled 2015 → 330 in 2016 → 750 in 2017). Internships at Google Brain (2011, unsupervised learning from video), Google Research (2013, large-scale supervised learning on YouTube), DeepMind (2015, deep RL with <a href="https://io.google/2024/speakers/koray-kavukcuoglu/" target="_blank" rel="noopener">Koray Kavukcuoglu</a> and <a href="https://www.cs.toronto.edu/~vmnih/" target="_blank" rel="noopener">Vlad Mnih</a>).</div>
+    </div>
+    <div class="tc r">
+      <div class="tc-n">2009 – 2011</div>
+      <div class="tc-o">UBC · MSc</div>
+      <div class="tc-r">MSc at the University of British Columbia where I worked with <a href="https://www.cs.ubc.ca/~van/" target="_blank" rel="noopener">Michiel van de Panne</a> on learning controllers for physically-simulated figures (machine-learning for agile robotics in physical simulation).</div>
+    </div>
+    <div class="tc r">
+      <div class="tc-n">2005 – 2009</div>
+      <div class="tc-o">U of Toronto · BSc</div>
+      <div class="tc-r">BSc at the University of Toronto with a double major in computer science and physics and a minor in math. First got into deep learning attending <a href="https://www.cs.toronto.edu/~hinton/" target="_blank" rel="noopener">Geoff Hinton's</a> class and reading groups.</div>
+    </div>
+  </div>
+</section>
+
+<div class="div" role="separator"></div>
+
+<section class="sec" id="featured-talks" aria-labelledby="ft-h2">
+  <p class="s-eye r">featured talks</p>
+  <h2 class="s-h2 r" id="ft-h2">featured talks</h2>
+  <div class="prose r">
+    <p>Talks, interviews, and keynotes — the lecture as a second paper. Titles and venues below are verbatim from the source.</p>
+  </div>
+  <div class="tg">
+    <div class="tc r"><div class="tc-n">Dwarkesh podcast 2025</div><div class="tc-r"><a href="https://www.youtube.com/watch?v=lXUZvyajciY" target="_blank" rel="noopener">youtube.com/watch?v=lXUZvyajciY</a></div></div>
+    <div class="tc r"><div class="tc-n">YC AI Startup School 2025</div><div class="tc-r"><a href="https://www.youtube.com/watch?v=LCEmiRjPEtQ" target="_blank" rel="noopener">youtube.com/watch?v=LCEmiRjPEtQ</a></div></div>
+    <div class="tc r"><div class="tc-n">GPU Mode 2024</div><div class="tc-r"><a href="https://www.youtube.com/watch?v=FH5wiwOyPX4&t=3246s" target="_blank" rel="noopener">youtube.com/watch?v=FH5wiwOyPX4</a></div></div>
+    <div class="tc r"><div class="tc-n">No Priors podcast 2024</div><div class="tc-r"><a href="https://www.youtube.com/watch?v=hM_h0UA7upI" target="_blank" rel="noopener">youtube.com/watch?v=hM_h0UA7upI</a></div></div>
+    <div class="tc r"><div class="tc-n">UC Berkeley AI Hackathon 2024</div><div class="tc-r"><a href="https://youtu.be/tsTeEkzO9xc?si=b0sGk9TWgN3A-5UR&t=245" target="_blank" rel="noopener">youtu.be/tsTeEkzO9xc</a></div></div>
+    <div class="tc r"><div class="tc-n">State of GPT @ Microsoft Build 2023</div><div class="tc-r"><a href="https://www.youtube.com/watch?v=bZQun8Y4L2A" target="_blank" rel="noopener">youtube.com/watch?v=bZQun8Y4L2A</a> — <a href="stateofgpt.pdf" target="_blank" rel="noopener">slides (pdf)</a></div></div>
+    <div class="tc r"><div class="tc-n">Lex Fridman podcast 2022</div><div class="tc-r"><a href="https://www.youtube.com/watch?v=cdiD-9MMpb0" target="_blank" rel="noopener">youtube.com/watch?v=cdiD-9MMpb0</a></div></div>
+    <div class="tc r"><div class="tc-n">Tesla AI Day 2021</div><div class="tc-r"><a href="https://youtu.be/j0z4FweCy4M?t=2900" target="_blank" rel="noopener">youtu.be/j0z4FweCy4M</a></div></div>
+    <div class="tc r"><div class="tc-n">AI for Full Self-Driving @ CVPR 2021</div><div class="tc-r"><a href="https://www.youtube.com/watch?v=g6bOwQdCJrc" target="_blank" rel="noopener">youtube.com/watch?v=g6bOwQdCJrc</a></div></div>
+    <div class="tc r"><div class="tc-n">AI for Full Self-Driving @ ScaledML 2020</div><div class="tc-r"><a href="https://www.youtube.com/watch?v=hx7BXih7zx8" target="_blank" rel="noopener">youtube.com/watch?v=hx7BXih7zx8</a></div></div>
+    <div class="tc r"><div class="tc-n">Tesla Autonomy Day 2019</div><div class="tc-r"><a href="https://www.youtube.com/watch?v=Ucp0TTmvqOE&feature=youtu.be&t=6678" target="_blank" rel="noopener">youtube.com/watch?v=Ucp0TTmvqOE</a></div></div>
+    <div class="tc r"><div class="tc-n">PyTorch at Tesla @ PyTorch DevCon 2019</div><div class="tc-r"><a href="https://www.youtube.com/watch?v=oBklltKXtDE" target="_blank" rel="noopener">youtube.com/watch?v=oBklltKXtDE</a></div></div>
+  </div>
+</section>
+
+<div class="div" role="separator"></div>
+
+<section class="sec" id="teaching" aria-labelledby="teaching-h2">
+  <p class="s-eye r">teaching</p>
+  <h2 class="s-h2 r" id="teaching-h2">teaching</h2>
+  <div class="prose r">
+    <p>I have a <a href="https://www.youtube.com/@AndrejKarpathy" target="_blank" rel="noopener">YouTube channel</a>, where I post lectures on LLMs and AI more generally.</p>
+    <p>In 2015 I designed and was the primary instructor for the first deep learning class at Stanford — <a href="http://cs231n.stanford.edu/" target="_blank" rel="noopener">CS 231n: Convolutional Neural Networks for Visual Recognition</a>. The class became one of the largest at Stanford and has grown from 150 enrolled in 2015 to 330 students in 2016, and 750 students in 2017.</p>
+    <ul style="margin:18px 0 0 14px; line-height:1.7;">
+      <li><a href="https://www.youtube.com/playlist?list=PLkt2uSq6rBVctENoVBg1TpCC7OQi31AlC" target="_blank" rel="noopener">my 2016 lecture videos</a></li>
+      <li><a href="https://cs231n.github.io/" target="_blank" rel="noopener">course notes</a></li>
+      <li><a href="http://cs231n.stanford.edu/syllabus.html" target="_blank" rel="noopener">course syllabus</a></li>
+      <li><a href="https://www.reddit.com/r/cs231n" target="_blank" rel="noopener">r/cs231n</a></li>
+    </ul>
+  </div>
+</section>
+
+<div class="div" role="separator"></div>
+
+<section class="sec" id="featured-writing" aria-labelledby="fw-h2">
+  <p class="s-eye r">featured writing</p>
+  <h2 class="s-h2 r" id="fw-h2">featured writing</h2>
+  <div class="prose r">
+    <p>I have three blogs. This <a href="https://karpathy.github.io" target="_blank" rel="noopener">GitHub blog</a> is my oldest one. I then briefly switched to my <a href="https://karpathy.medium.com" target="_blank" rel="noopener">second blog</a> on Medium. I now have a <a href="https://karpathy.bearblog.dev/blog/" target="_blank" rel="noopener">Bear blog</a>. Here is the collection of some of my most popular posts:</p>
+  </div>
+  <div class="tg">
+    <div class="tc r"><div class="tc-n">Mar 2021</div><div class="tc-o">Blockchain</div><div class="tc-r"><a href="https://karpathy.github.io/2021/06/21/blockchain/" target="_blank" rel="noopener">A from-scratch tour of Bitcoin in Python</a></div></div>
+    <div class="tc r"><div class="tc-n">Mar 2021</div><div class="tc-o">AI discourse</div><div class="tc-r"><a href="https://karpathy.github.io/2021/03/27/forward-pass/" target="_blank" rel="noopener">Short Story on AI: Forward Pass</a></div></div>
+    <div class="tc r"><div class="tc-n">Jun 2020</div><div class="tc-o">Biohacking</div><div class="tc-r"><a href="https://karpathy.github.io/2020/06/11/biohacking-lite/" target="_blank" rel="noopener">Biohacking Lite</a></div></div>
+    <div class="tc r"><div class="tc-n">Apr 2019</div><div class="tc-o">Training guide</div><div class="tc-r"><a href="https://karpathy.github.io/2019/04/25/recipe/" target="_blank" rel="noopener">A Recipe for Training Neural Networks</a></div></div>
+    <div class="tc r"><div class="tc-n">Nov 2017</div><div class="tc-o">Medium</div><div class="tc-r"><a href="https://karpathy.medium.com/software-2-0-a64152b37c35" target="_blank" rel="noopener">Software 2.0</a></div></div>
+    <div class="tc r"><div class="tc-n">Sep 2016</div><div class="tc-o">PhD guide</div><div class="tc-r"><a href="https://karpathy.github.io/2016/09/07/phd/" target="_blank" rel="noopener">A Survival Guide to a PhD</a></div></div>
+    <div class="tc r"><div class="tc-n">May 2015</div><div class="tc-o">RNNs</div><div class="tc-r"><a href="https://karpathy.github.io/2015/05/21/rnn-effectiveness/" target="_blank" rel="noopener">The Unreasonable Effectiveness of Recurrent Neural Networks</a></div></div>
+    <div class="tc r"><div class="tc-n">Sep 2014</div><div class="tc-o">ImageNet</div><div class="tc-r"><a href="https://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet/" target="_blank" rel="noopener">What I learned from competing against a ConvNet on ImageNet</a></div></div>
+  </div>
+</section>
+
+<div class="div" role="separator"></div>
+
+<section class="sec" id="pet-projects" aria-labelledby="pet-h2">
+  <p class="s-eye r">pet projects</p>
+  <h2 class="s-h2 r" id="pet-h2">pet projects</h2>
+  <div class="prose r">
+    <p>This list is now very outdated, see my up to date projects on my <a href="https://github.com/karpathy" target="_blank" rel="noopener">GitHub</a>.</p>
+  </div>
+  <div class="tg">
+    <div class="tc r"><div class="tc-n">micrograd</div><div class="tc-r"><a href="https://github.com/karpathy/micrograd" target="_blank" rel="noopener">micrograd</a> is a tiny scalar-valued autograd engine (with a bite!). It implements backpropagation (reverse-mode autodiff) over a dynamically built DAG and a small neural networks library on top of it with a PyTorch-like API.</div></div>
+    <div class="tc r"><div class="tc-n">char-rnn</div><div class="tc-r"><a href="https://github.com/karpathy/char-rnn" target="_blank" rel="noopener">char-rnn</a> was a Torch character-level language model built out of LSTMs/GRUs/RNNs. Related to this also see the <a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/" target="_blank" rel="noopener">Unreasonable Effectiveness of Recurrent Neural Networks</a> blog post, or the <a href="https://gist.github.com/karpathy/d4dee566867f8291f086" target="_blank" rel="noopener">minimal RNN gist</a>.</div></div>
+    <div class="tc r"><div class="tc-n">arxiv-sanity</div><div class="tc-r"><a href="https://github.com/karpathy/arxiv-sanity-preserver" target="_blank" rel="noopener">arxiv-sanity</a> tames the overwhelming flood of papers on Arxiv. It allows researchers to discover relevant papers, search/sort by similarity, see recent/popular papers, and get recommendations. Deployed live at <a href="http://www.arxiv-sanity.com/" target="_blank" rel="noopener">arxiv-sanity.com</a>. Update: my most recent <a href="https://arxiv-sanity-lite.com" target="_blank" rel="noopener">arxiv-sanity-lite</a> from-scratch rewrite is much better.</div></div>
+    <div class="tc r"><div class="tc-n">neuraltalk2</div><div class="tc-r"><a href="https://github.com/karpathy/neuraltalk2" target="_blank" rel="noopener">neuraltalk2</a> was an early image captioning project in (lua)Torch. Also see our later extension with Justin Johnson to <a href="https://github.com/jcjohnson/densecap" target="_blank" rel="noopener">dense captioning</a>.</div></div>
+    <div class="tc r"><div class="tc-n">ImageNet reference human</div><div class="tc-r">I am sometimes jokingly referred to as the reference human for ImageNet because I competed against an early ConvNet on categorizing images into 1,000 classes. This required a bunch of custom tooling and a lot of learning about dog breeds. See the blog post <a href="http://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet/" target="_blank" rel="noopener">What I learned from competing against a ConvNet on ImageNet</a>. Also a <a href="https://www.wired.com/2015/01/karpathy/" target="_blank" rel="noopener">Wired article</a>.</div></div>
+    <div class="tc r"><div class="tc-n">ConvNetJS</div><div class="tc-r"><a href="https://cs.stanford.edu/people/karpathy/convnetjs/" target="_blank" rel="noopener">ConvNetJS</a> is a deep learning library written from scratch entirely in Javascript. This enables nice web-based demos that train convolutional neural networks entirely in the browser.</div></div>
+  </div>
+</section>
+
+<div class="div" role="separator"></div>
+
+<section class="refs" id="publications" aria-labelledby="pubs-h2">
+  <p class="refs-h">publications</p>
+  <h2 class="refs-h2" id="pubs-h2">publications</h2>
+  <details class="refs-detail" open>
+    <summary class="refs-summary"><span>All entries below are verbatim from the source</span></summary>
+    <div class="refs-body">
+      <div class="refs-trad"><div class="refs-trad-name">ICML 2017</div>
+        <ul><li><a href="http://proceedings.mlr.press/v70/shi17a/shi17a.pdf" target="_blank" rel="noopener">World of Bits: An Open-Domain Platform for Web-Based Agents</a> — Tianlin (Tim) Shi, Andrej Karpathy, Linxi (Jim) Fan, Jonathan Hernandez, Percy Liang</li></ul>
+      </div>
+      <div class="refs-trad"><div class="refs-trad-name">ICLR 2017</div>
+        <ul><li><a href="https://openreview.net/pdf?id=BJrFC6ceg" target="_blank" rel="noopener">PixelCNN++: A PixelCNN Implementation with Discretized Logistic Mixture Likelihood and Other Modifications</a> — Tim Salimans, Andrej Karpathy, Xi Chen, Diederik P. Kingma, Yaroslav Bulatov</li></ul>
+      </div>
+      <div class="refs-trad"><div class="refs-trad-name">PhD thesis 2016</div>
+        <ul><li><a href="https://cs.stanford.edu/people/karpathy/main.pdf" target="_blank" rel="noopener">Connecting Images and Natural Language (PhD thesis)</a> — Andrej Karpathy</li></ul>
+      </div>
+      <div class="refs-trad"><div class="refs-trad-name">CVPR 2016 / ICLR 2016</div>
+        <ul>
+          <li><a href="https://cs.stanford.edu/people/karpathy/densecap/" target="_blank" rel="noopener">DenseCap: Fully Convolutional Localization Networks for Dense Captioning</a> — CVPR 2016 (Oral) — Justin Johnson, Andrej Karpathy, Li Fei-Fei</li>
+          <li><a href="http://arxiv.org/abs/1506.02078" target="_blank" rel="noopener">Visualizing and Understanding Recurrent Networks</a> — ICLR 2016 Workshop — Karpathy, Johnson, Fei-Fei</li>
+        </ul>
+      </div>
+      <div class="refs-trad"><div class="refs-trad-name">CVPR 2015 / IJCV 2015</div>
+        <ul>
+          <li><a href="http://cs.stanford.edu/people/karpathy/deepimagesent/" target="_blank" rel="noopener">Deep Visual-Semantic Alignments for Generating Image Descriptions</a> — CVPR 2015 (Oral) — Karpathy, Fei-Fei</li>
+          <li><a href="http://arxiv.org/abs/1409.0575" target="_blank" rel="noopener">ImageNet Large Scale Visual Recognition Challenge</a> — IJCV 2015</li>
+        </ul>
+      </div>
+      <div class="refs-trad"><div class="refs-trad-name">Earlier</div>
+        <ul>
+          <li><a href="https://cs.stanford.edu/people/karpathy/nips2014.pdf" target="_blank" rel="noopener">Deep Fragment Embeddings for Bidirectional Image-Sentence Mapping</a> — NIPS 2014</li>
+          <li><a href="https://cs.stanford.edu/people/karpathy/deepvideo/" target="_blank" rel="noopener">Large-Scale Video Classification with Convolutional Neural Networks</a> — CVPR 2014 (Oral)</li>
+          <li><a href="http://nlp.stanford.edu/~socherr/SocherKarpathyLeManningNg_TACL2013.pdf" target="_blank" rel="noopener">Grounded Compositional Semantics for Finding and Describing Images</a> — TACL 2013</li>
+          <li><a href="https://cs.stanford.edu/~karpathy/discovery/" target="_blank" rel="noopener">Object Discovery in 3D scenes via Shape Analysis</a> — ICRA 2013</li>
+          <li><a href="https://cs.stanford.edu/people/karpathy/nips2012.pdf" target="_blank" rel="noopener">Emergence of Object-Selective Features in Unsupervised Feature Learning</a> — NIPS 2012</li>
+          <li>Locomotion Skills for Simulated Quadrupeds — SIGGRAPH 2011</li>
+        </ul>
+      </div>
+      <p class="refs-foot">Also on <a href="https://scholar.google.com/citations?user=l8WuQJgAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener">Google Scholar</a>. All entries verbatim from karpathy.ai.</p>
+    </div>
+  </details>
+</section>
+
+<div class="div" role="separator"></div>
+
+<section class="sec" id="misc" aria-labelledby="misc-h2">
+  <p class="s-eye r">misc unsorted</p>
+  <h2 class="s-h2 r" id="misc-h2">misc unsorted</h2>
+  <div class="prose r">
+    <ul style="margin-left:14px; line-height:1.7;">
+      <li><a href="zero-to-hero.html" target="_blank" rel="noopener">Neural Networks: Zero To Hero lecture series</a></li>
+      <li>My <a href="http://karpathy.github.io/" target="_blank" rel="noopener">first blog</a>, <a href="https://medium.com/@karpathy" target="_blank" rel="noopener">second blog</a> and <a href="https://karpathy.bearblog.dev/blog/" target="_blank" rel="noopener">current blog</a></li>
+      <li>Also on <a href="https://scholar.google.com/citations?user=l8WuQJgAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener">Google Scholar</a></li>
+      <li>0 frameworks were used to make this simple responsive website because I am becoming seriously allergic to <a href="https://motherfuckingwebsite.com/" target="_blank" rel="noopener">500-pound websites</a>. This one is pure HTML and CSS in two static files and that's it.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="f-grid">
+    <div class="f-col">
+      <h4>Andrej Karpathy</h4>
+      <p style="font-size:14px;color:var(--ink-3);line-height:1.6;">AI researcher and educator. Source text verbatim from karpathy.ai. Presented here in the CCIAF design shell — same tokens, layout primitives, and behavior as cciaf.minhaaj.com, without carrying CCIAF prose.</p>
+      <p style="margin-top:10px;font-size:12.5px;color:var(--ink-4);font-style:italic;">Source: <a href="https://karpathy.ai" target="_blank" rel="noopener">karpathy.ai</a></p>
+    </div>
+    <div class="f-col">
+      <h4>Sections</h4>
+      <ul>
+        <li><a href="#bio">bio</a></li>
+        <li><a href="#history">history</a></li>
+        <li><a href="#featured-talks">featured talks</a></li>
+        <li><a href="#teaching">teaching</a></li>
+        <li><a href="#featured-writing">featured writing</a></li>
+        <li><a href="#pet-projects">pet projects</a></li>
+        <li><a href="#publications">publications</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="https://twitter.com/karpathy" target="_blank" rel="noopener">𝕏 @karpathy</a></li>
+        <li><a href="https://github.com/karpathy" target="_blank" rel="noopener">github.com/karpathy</a></li>
+        <li><a href="https://www.youtube.com/@AndrejKarpathy" target="_blank" rel="noopener">YouTube</a></li>
+        <li><a href="https://karpathy.github.io" target="_blank" rel="noopener">karpathy.github.io</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="f-bottom">
+    <span>© Rendering 2026 — content by Andrej Karpathy (karpathy.ai) · design shell MinhaajDesignSystem `templates/cciaf-starter.html`</span>
+    <p class="f-disc">Page is a verbatim scrape of karpathy.ai reorganized into CCIAF primitives. No CCIAF content has been carried. Run `VERIFY.md` content-origin gate before shipping.</p>
+  </div>
+</footer>
+<script>
+(function(){
+  // ── THEME
+  const html = document.documentElement;
+  const tog  = document.getElementById('tog');
+  const saved = localStorage.getItem('cciaf-theme') || 'light';
+  html.setAttribute('data-theme', saved);
+  tog.setAttribute('aria-checked', saved === 'dark');
+
+  tog.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', next);
+    tog.setAttribute('aria-checked', next === 'dark');
+    localStorage.setItem('cciaf-theme', next);
+  });
+
+  // ── HAMBURGER
+  const hbg  = document.getElementById('hbg');
+  const mob  = document.getElementById('mobMenu');
+  function cm(){ mob.classList.remove('open'); }
+  window.cm = cm;
+  hbg.addEventListener('click', e => {
+    e.stopPropagation();
+    mob.classList.toggle('open');
+  });
+  document.addEventListener('click', e => {
+    if (!mob.contains(e.target) && e.target !== hbg) cm();
+  });
+
+  // ── SCROLL TOP
+  const st = document.getElementById('st');
+  window.addEventListener('scroll', () => {
+    st.classList.toggle('on', window.scrollY > 500);
+  }, { passive: true });
+  st.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // ── SCROLL DOTS
+  const secs  = ['hero','bio','history','featured-talks','teaching','featured-writing','pet-projects','publications','misc'];
+  const dots  = document.querySelectorAll('.sn-d');
+
+  dots.forEach(d => {
+    d.addEventListener('click', () => {
+      document.getElementById(d.dataset.t)?.scrollIntoView({ behavior:'smooth' });
+    });
+    d.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        document.getElementById(d.dataset.t)?.scrollIntoView({ behavior:'smooth' });
+      }
+    });
+  });
+
+  function updateDots(){
+    const mid = window.innerHeight * .38;
+    let cur = secs[0];
+    secs.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top <= mid) cur = id;
+    });
+    dots.forEach(d => d.classList.toggle('on', d.dataset.t === cur));
+  }
+  window.addEventListener('scroll', updateDots, { passive:true });
+  updateDots();
+
+  // ── REVEAL
+  const revs = document.querySelectorAll('.r');
+  const obs  = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting){
+        setTimeout(() => e.target.classList.add('on'), i * 55);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: .06, rootMargin: '0px 0px -30px 0px' });
+  revs.forEach(el => obs.observe(el));
+
+  // ── CONTACT FORM
+  const ctForm    = document.getElementById('ct-form');
+  const ctWrap    = document.getElementById('ct-form-wrap');
+  const ctSuccess = document.getElementById('ct-success');
+
+  if (ctForm) {
+    const CT_FIELDS = [
+      ['ct-name',    'ct-err-name',    v => v.trim().length > 0],
+      ['ct-email',   'ct-err-email',   v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())],
+      ['ct-message', 'ct-err-message', v => v.trim().length > 0],
+    ];
+
+    function ctValidate() {
+      let first = null, ok = true;
+      CT_FIELDS.forEach(([fid, eid, check]) => {
+        const f = document.getElementById(fid);
+        const valid = check(f.value);
+        f.style.borderColor = valid ? '' : '#B84040';
+        document.getElementById(eid).classList.toggle('show', !valid);
+        if (!valid) { ok = false; if (!first) first = f; }
+      });
+      if (first) { first.scrollIntoView({ behavior:'smooth', block:'center' }); first.focus(); }
+      return ok;
+    }
+
+    CT_FIELDS.forEach(([fid, eid]) => {
+      document.getElementById(fid).addEventListener('input', () => {
+        document.getElementById(fid).style.borderColor = '';
+        document.getElementById(eid).classList.remove('show');
+      });
+    });
+
+    ctForm.addEventListener('submit', async function(e){
+      e.preventDefault();
+      if (!ctValidate()) return;
+      const btn = ctForm.querySelector('.cf-btn');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      try {
+        const res  = await fetch('https://api.web3forms.com/submit', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            access_key: 'c5813381-0b5c-433e-b59b-537a4c16af09',
+            subject:    'CCIAF Website Enquiry — ' + document.getElementById('ct-name').value.trim(),
+            from_name:  'CCIAF Website',
+            name:       document.getElementById('ct-name').value.trim(),
+            email:      document.getElementById('ct-email').value.trim(),
+            message:    document.getElementById('ct-message').value.trim()
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          ctWrap.style.display    = 'none';
+          ctSuccess.style.display = 'block';
+          ctSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          btn.disabled = false; btn.textContent = 'Send enquiry';
+          alert('Could not send. Write directly to contact@psyda.org.');
+        }
+      } catch {
+        btn.disabled = false; btn.textContent = 'Send enquiry';
+        alert('Network error. Write directly to contact@psyda.org.');
+      }
+    });
+  }
+})();
+
+</script>
+</body>
+</html>
