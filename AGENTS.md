@@ -86,7 +86,7 @@ If no analogue exists for a primitive, delete that block — do not retain theme
 
 - Tokens: `tokens/cciaf.css`
 - Starter (visual ref): `templates/cciaf-starter.html` or split `templates/cciaf.css` + `templates/cciaf.js`
-- Editorial rhythm: `patterns/editorial.md:14-32`; motion: `patterns/motion.md`
+- Editorial rhythm: `patterns/editorial.md:14-32`; motion: `patterns/motion.md`; dashboards: `patterns/dashboard.md` — decision instruments, read before building or editing any data dashboard
 
 ## Run commands
 
