@@ -103,3 +103,11 @@ open preview/index.html                     # token gallery
 - `hero` dual radial gradients at `78% 35%` and `15% 75%` — flat backgrounds elsewhere.
 
 Verification: `VERIFY.md` (content-origin + visual). Ship only on both passing.
+
+## Decisions as multichoice (mandatory)
+
+- Whenever a user decision is required — action items, choices, recommendations — present it as a
+  multiple-choice question with pickable options (2–5, one line each) via the surface's question
+  popup (Hermes: the `clarify` tool, "the questioner"). Never as prose options buried in a report or
+  narrative. One question at a time; the popup carries the decision, the message carries the reasoning.
+- Source of truth: `master-llm-instructions/settings/AGENTS.md` ("Decisions as multichoice").
